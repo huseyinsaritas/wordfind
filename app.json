@@ -12,22 +12,48 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/64039ab8-8c99-4b0c-851e-e7b41d81a5c0"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ayiyazilim.wordfind"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.ayiyazilim.wordfind"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
-  }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "64039ab8-8c99-4b0c-851e-e7b41d81a5c0"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "plugins": ["expo-build-properties"]
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-3105662444743172~9118850389",
+    "ios_app_id": "ca-app-pub-3105662444743172~8927278696"
+  },
+  "plugins": [
+    [
+      "expo-build-properties",
+      {
+        "android": {
+          "compileSdkVersion": 33
+        }
+      }
+    ]
+  ]
 }

@@ -2,20 +2,24 @@
   "expo": {
     "name": "wordfind",
     "slug": "wordfind",
+    "privacy": "unlisted",
+    "sdkVersion": "46.0.0",
     "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
+    "scheme": "wordfind",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/64039ab8-8c99-4b0c-851e-e7b41d81a5c0"
+      "url": "https://u.expo.dev/ec090143-64a0-4f38-8383-5c85886c1e70"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -27,26 +31,35 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.ayiyazilim.wordfind"
+      "versionCode": 1,
+      "package": "com.ayiyazilim.wordfind",
+      "permissions": ["INTERNET"]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "name": "wordfind"
     },
     "extra": {
       "eas": {
-        "projectId": "64039ab8-8c99-4b0c-851e-e7b41d81a5c0"
+        "projectId": "ec090143-64a0-4f38-8383-5c85886c1e70"
       }
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
-    "plugins": ["expo-build-properties"]
+    "plugins": ["expo-tracking-transparency"]
   },
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-3105662444743172~9118850389",
     "ios_app_id": "ca-app-pub-3105662444743172~8927278696"
   },
   "plugins": [
+    [
+      "expo-tracking-transparency",
+      {
+        "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+      }
+    ],
     [
       "expo-build-properties",
       {

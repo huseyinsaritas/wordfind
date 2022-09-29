@@ -1,7 +1,11 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export const HeaderContainer: React.FC<{ children: JSX.Element | JSX.Element[] }> = ({ children }) => {
+type Props = {
+  children: JSX.Element | JSX.Element[];
+};
+
+export const HeaderContainer: React.FC<Props> = ({ children }) => {
   return <View style={styles.headerContainer}>{children}</View>;
 };
 
@@ -9,10 +13,13 @@ const styles = StyleSheet.create({
   headerContainer: {
     display: "flex",
     flexDirection: "row",
-    height: 64,
-    marginTop: 12,
-    paddingBottom: 12,
-    paddingHorizontal: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15,
+    paddingBottom: 8,
+    paddingLeft: 5,
+    paddingRight: 15,
+    width: "100%",
     overflow: "hidden",
   },
 });

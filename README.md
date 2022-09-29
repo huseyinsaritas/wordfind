@@ -6,8 +6,8 @@
 
 eas.json > build.development.ios.simulator = true
 
-# eas build -p ios --profile development --local
 # eas build -p android --profile development --local
+# eas build -p ios --profile development --local
 # brew install fastlane
 # brew install cocoapods
 

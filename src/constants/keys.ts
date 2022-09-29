@@ -163,4 +163,9 @@ export const alphabetData = [
     c: "Ç",
     l: 2,
   },
+  // {
+  //   id: 32,
+  //   c: "DEL",
+  //   l: 2,
+  // },
 ];

@@ -26,6 +26,10 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "./api-6723528568689239438-473523-efd6dddf681e.json"
+      }
+    }
   }
 }

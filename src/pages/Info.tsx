@@ -3,18 +3,18 @@ import { StyleSheet, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Background } from "../components/Background";
 import { RootScreenParamList } from "../types";
-import { COLORS } from "../const";
 import GoBack from "../components/Header/GoBack";
+import { COLORS } from "../constants/Colors";
 
 export const InfoPage: React.FC<NativeStackScreenProps<RootScreenParamList, "Info">> = ({ navigation }) => {
   const onPressGoBack = () => {
-    navigation.navigate("Game");
+    navigation.goBack();
   };
 
   return (
     <Background>
-      <GoBack onPress={onPressGoBack} width="30px" />
-      <Text style={styles.info}>Info</Text>
+      <GoBack onPress={onPressGoBack} size={30} />
+      <Text>Info</Text>
     </Background>
   );
 };

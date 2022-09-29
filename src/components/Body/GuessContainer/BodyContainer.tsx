@@ -1,7 +1,11 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export const BodyContainer: React.FC<{ children: JSX.Element | JSX.Element[] }> = ({ children }) => {
+type Props = {
+  children: any;
+};
+
+export const BodyContainer: React.FC<Props> = ({ children }) => {
   return <View style={styles.bodyContainer}>{children}</View>;
 };
 

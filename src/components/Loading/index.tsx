@@ -1,10 +1,15 @@
 import React from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { COLORS, FONT_FAMILY } from "../../const";
+import { COLORS } from "../../constants/Colors";
+import { FONT_FAMILY } from "../../constants/Layout";
 import { FullScreen } from "../Background/FullScreen";
 import { SafeArea } from "../Background/SafeArea";
 
-export const Loading: React.FC<{ message: string }> = ({ message }) => {
+type Props = {
+  message: string;
+};
+
+export const Loading: React.FC<Props> = ({ message }) => {
   return (
     <FullScreen>
       <SafeArea>

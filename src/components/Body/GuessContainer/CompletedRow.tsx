@@ -1,17 +1,21 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { getRowColors } from "../../../util";
 import { RowItem } from "./RowItem";
 
 type Props = {
-  row?: string[];
+  answer: string[];
+  may: string[];
 };
 
-export const Row: React.FC<Props> = ({ row }) => {
+export const CompletedRow: React.FC<Props> = ({ answer, may }) => {
+  const colors = getRowColors(answer, may);
+
   return (
     <View style={styles.answersGroupWrapper}>
       <View style={styles.answersGroupContent}>
-        {row?.map((r, i) => {
-          return <RowItem val={r} key={i} />;
+        {may?.map((r, i) => {
+          return <RowItem val={r} color={colors[i]} key={i} id={i} animation />;
         })}
       </View>
     </View>

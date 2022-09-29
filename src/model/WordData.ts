@@ -1,4 +1,4 @@
-export type WordData = {
+export type IWordData = {
   len: number;
   items: string[];
 }[];

@@ -1,18 +1,18 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
 import { Background } from "../components/Background";
-import { Keyboard } from "../components/Body/Keyboard";
-import { Submit } from "../components/Footer/Submit";
 import { Header } from "../components/Header";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootScreenParamList } from "../types";
-import { Char } from "../model/Char";
-import { GuessContainer } from "../components/Body/GuessContainer";
-import { useData } from "../hooks/useData";
+import { IChar } from "../model/Char";
 import { Loading } from "../components/Loading";
+import { Body } from "../components/Body";
+import { Alert } from "../components/Alert/Alert";
+import { useGame } from "../hooks/useGame";
+import { Footer } from "../components/Footer";
 
-export const GamePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation }) => {
-  const { gameLoading, data, newGame } = useData(6);
+export const GamePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation, route }) => {
+  const { length } = route.params;
+  const { gameLoading, gameFinished, data, alertMessage, onCloseAlert, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon } = useGame(length);
 
   const onPressGoBack = () => {
     navigation.navigate("Home");
@@ -22,38 +22,40 @@ export const GamePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Gam
     navigation.navigate("Info");
   };
 
-  const onPressSubmit = () => {
-    console.log("Submit");
+  const onPressNewGame = () => {
+    newGame();
   };
 
-  const onKeyboardPress = (char: Char) => {
-    console.log("keyIndex", char);
+  const onPressSubmit = () => {
+    submitData();
+  };
+
+  const onPressCancel = () => {
+    removeCurrentMay();
+  };
+
+  const onPressKeyboard = (char: IChar) => {
+    addCurrentMay(char);
   };
 
   if (gameLoading || data === undefined) return <Loading message="Oyun Yukleniyor.." />;
 
   return (
-    <Background>
-      <Header onPressGoBack={onPressGoBack} onPressInfo={onPressInfo} />
-      <GuessContainer data={data} />
-      <View style={styles.keyboardContent}>
-        <Keyboard onPress={onKeyboardPress} />
-      </View>
-      <View style={styles.submitContent}>
-        <Submit onPress={onPressSubmit} />
-      </View>
-    </Background>
+    <>
+      {alertMessage.show && <Alert alertMessage={alertMessage} onClose={onCloseAlert} closeMs={1000} />}
+      <Background>
+        <Header onPressGoBack={onPressGoBack} onPressInfo={onPressInfo} onPressNewGame={onPressNewGame} />
+        <Body
+          data={data}
+          onPressKeyboard={onPressKeyboard}
+          onPressSubmit={onPressSubmit}
+          onPressCancel={onPressCancel}
+          gameFinished={gameFinished}
+          isValid={isValid}
+          gameWon={gameWon}
+        />
+        <Footer />
+      </Background>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  keyboardContent: {
-    marginTop: 10,
-  },
-  submitContent: {
-    display: "flex",
-    flex: 1,
-    width: "100%",
-    alignItems: "center",
-  },
-});

@@ -3,15 +3,15 @@ import { StyleSheet, View } from "react-native";
 import { RowItem } from "./RowItem";
 
 type Props = {
-  row?: string[];
+  answer: string[];
 };
 
-export const Row: React.FC<Props> = ({ row }) => {
+export const EmptyRow: React.FC<Props> = ({ answer }) => {
   return (
     <View style={styles.answersGroupWrapper}>
       <View style={styles.answersGroupContent}>
-        {row?.map((r, i) => {
-          return <RowItem val={r} key={i} />;
+        {answer.map((r, i) => {
+          return <RowItem key={i} />;
         })}
       </View>
     </View>

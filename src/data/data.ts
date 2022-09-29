@@ -1,6 +1,6 @@
-import { WordData } from "../model/WordData";
+import { IWordData } from "../model/WordData";
 
-export const fakeWordData: WordData = [
+export const fakeWordData: IWordData = [
   {
     len: 5,
     items: [
@@ -40,7 +40,7 @@ export const fakeWordData: WordData = [
   },
   {
     len: 7,
-    items: ["İTİLMEK", "METİLİK"],
+    items: ["MEGAVAT"],
   },
   {
     len: 8,

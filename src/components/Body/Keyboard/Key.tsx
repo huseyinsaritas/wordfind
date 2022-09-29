@@ -1,55 +1,74 @@
-import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import { COLORS, FONT_FAMILY } from "../../../const";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Text, TouchableOpacity, Animated, Easing } from "react-native";
+import { COLORS } from "../../../constants/Colors";
+import { FONT_FAMILY } from "../../../constants/Layout";
+import { getColor } from "../../../util";
 
-export const Key: React.FC<{ val: string; onPress: () => void }> = ({ val, onPress }) => {
+type Props = {
+  val: string;
+  color?: string;
+  onPress: () => void;
+  gameFinished?: boolean;
+};
+
+export const Key: React.FC<Props> = ({ val, color, onPress, gameFinished }) => {
+  const currentColor = COLORS.COLOR_TONE2;
+  // const [keyColor, setKeyColor] = useState<string | undefined>();
   if (val === "") return <View style={styles.key} />;
+  const keyColor = getColor(color);
+  // const colorAnimation = new Animated.Value(0);
+  // const animate = () => {
+  //   Animated.timing(colorAnimation, {
+  //     toValue: 1,
+  //     duration: 1000,
+  //     useNativeDriver: true,
+  //   }).start(() => {
+  //     // const keyColor = getColor(color);
+  //     // setKeyColor(keyColor);
+  //   });
+  // };
+  // const interpolateColor = colorAnimation.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: [currentColor, keyColor || currentColor],
+  // });
+
+  const animatedStyle = {
+    // backgroundColor: interpolateColor || keyColor,
+    backgroundColor: keyColor ? keyColor : currentColor,
+  };
+  const viewStyle = [styles.key, { ...animatedStyle }];
+
+  // useEffect(() => {
+  //   animate();
+  // }, []);
 
   return (
-    <TouchableOpacity style={styles.key} onPress={onPress}>
-      <View style={styles.keyCenter}>
+    <TouchableOpacity delayPressIn={0} disabled={gameFinished} onPress={onPress}>
+      <Animated.View style={viewStyle}>
         <Text style={styles.font}>{val}</Text>
-      </View>
+      </Animated.View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   key: {
-    width: 30,
-    height: 50,
-    padding: 2,
+    minWidth: 30,
+    height: 55,
+    padding: 3,
     marginHorizontal: 1,
-    marginVertical: 1,
+    marginVertical: 3,
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 4,
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.YELLOW,
-    borderColor: COLORS.BLACK,
-    shadowColor: "#ccc",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 2,
-    borderBottomWidth: 2,
-    borderBottomColor: "#6E7582",
-  },
-  keyCenter: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-    /* borderWidth: 1, */
+    backgroundColor: COLORS.COLOR_TONE2,
+    color: COLORS.COLOR_TONE1,
+    borderColor: COLORS.COLOR_TONE4,
   },
   font: {
     fontSize: 24,
-    /* lineHeight: 24, */
     includeFontPadding: false,
     color: "#fff",
     fontFamily: FONT_FAMILY.Black,

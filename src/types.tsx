@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 export type RootScreenParamList = {
   Home: undefined;
-  Game: undefined;
+  Game: { length: number };
   Info: undefined;
 };
 

@@ -1,8 +1,12 @@
 import React from "react";
 import { StyleSheet, SafeAreaView, View, Platform, StatusBar } from "react-native";
-import { COLORS } from "../../const";
+import { COLORS } from "../../constants/Colors";
 
-export const SafeArea: React.FC<{ children: JSX.Element | JSX.Element[] }> = ({ children }) => {
+type Props = {
+  children: JSX.Element | JSX.Element[];
+};
+
+export const SafeArea: React.FC<Props> = ({ children }) => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.view}>{children}</View>
@@ -20,6 +24,6 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     display: "flex",
-    backgroundColor: COLORS.FULL_BACKGOUND,
+    backgroundColor: COLORS.COLOR_TONE7,
   },
 });

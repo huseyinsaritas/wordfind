@@ -1,7 +1,12 @@
 import React from "react";
 import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 
-export const FullScreen: React.FC<{ onLayout?: (event: LayoutChangeEvent) => void; children: JSX.Element | JSX.Element[] }> = ({ onLayout, children }) => {
+type Props = {
+  onLayout?: (event: LayoutChangeEvent) => void;
+  children: JSX.Element | JSX.Element[];
+};
+
+export const FullScreen: React.FC<Props> = ({ onLayout, children }) => {
   return (
     <View style={styles.fullScreen} onLayout={onLayout}>
       {children}

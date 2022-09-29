@@ -1,7 +1,5 @@
-import { IRowData } from "./RowData";
-
-export type GameData = {
+export type IGameData = {
   answer: string[];
-  rows: IRowData[];
-  mays: string[];
+  mays: string[][];
+  currentMay: string;
 };

@@ -37,8 +37,8 @@ export const GameOver: React.FC<Props> = ({ data, gameWon }) => {
             <Icon name="close" size={30} color={COLORS.COLOR_TONE2} />
           </TouchableOpacity>
           <View>
-            <Text style={styles.modalText}>Cevap: {data.answer}</Text>
-            {/* <Text style={styles.modalText}>{gameWon ? `${data.mays.length}. seferde kazandınız!` : "Kaybettiniz!"} </Text> */}
+            <Text style={styles.modalText}>{gameWon ? `${data.mays.length}. seferde kazandınız!` : "Kaybettiniz!"} </Text>
+            {!gameWon && <Text style={styles.modalAnswer}>Cevap: {data.answer}</Text>}
             <View style={styles.modalContent}>
               {items.map((_, i) => (
                 <View key={i} style={styles.graphContainer}>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").height - 550,
     backgroundColor: COLORS.COLOR_TONE6,
     borderRadius: 20,
-    paddingVertical: 35,
+    paddingVertical: 25,
     paddingLeft: 30,
     paddingRight: 50,
     // alignItems: "center",
@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     position: "absolute",
-    top: 10,
-    right: 10,
+    top: 15,
+    right: 15,
     // backgroundColor: COLORS.COLOR_TONE2,
     borderRadius: 50,
     padding: 1,
@@ -99,6 +99,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     minWidth: 150,
     color: COLORS.COLOR_TONE1,
+  },
+  modalAnswer: {
+    paddingVertical: 10,
+    textAlign: "center",
+    fontFamily: FONT_FAMILY.Black,
+    fontSize: 16,
+    color: COLORS.COLOR_TONE1,
+    // borderWidth: 1,
+    // borderColor: COLORS.GREEN,
+    // borderRadius: 10,
   },
   graphContainer: {
     width: "100%",

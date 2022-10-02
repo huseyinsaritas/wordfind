@@ -29,6 +29,11 @@ const linking: LinkingOptions<AppStackParamList> = {
               InfoScreen: "info",
             },
           },
+          Settings: {
+            screens: {
+              InfoScreen: "settings",
+            },
+          },
         },
       },
       NotFound: "*",

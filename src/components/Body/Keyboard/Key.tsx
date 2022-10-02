@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Animated, Easing } from "react-native";
 import { COLORS } from "../../../constants/Colors";
 import { FONT_FAMILY } from "../../../constants/Layout";
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.COLOR_TONE4,
   },
   font: {
-    fontSize: 24,
+    fontSize: 25,
     includeFontPadding: false,
     color: "#fff",
     fontFamily: FONT_FAMILY.Black,

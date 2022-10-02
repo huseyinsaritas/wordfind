@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     paddingBottom: 8,
     paddingLeft: 5,
-    paddingRight: 15,
+    paddingRight: 5,
     width: "100%",
     overflow: "hidden",
   },

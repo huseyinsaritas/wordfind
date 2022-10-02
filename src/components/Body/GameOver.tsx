@@ -5,13 +5,16 @@ import { IGameData } from "../../model/GameData";
 import Icon from "@expo/vector-icons/Ionicons";
 import { COLORS } from "../../constants/Colors";
 import { howMayFindCharByOneRow } from "../../util";
+import { Button } from "../Base/Button/Button";
 
 type Props = {
   data: IGameData;
   gameWon: boolean;
+  onPressHomePage: () => void;
+  onPressNewGame: () => void;
 };
 
-export const GameOver: React.FC<Props> = ({ data, gameWon }) => {
+export const GameOver: React.FC<Props> = ({ data, gameWon, onPressHomePage, onPressNewGame }) => {
   const [modalVisible, setModalVisible] = useState(true);
   const items = Array.from(Array(data.answer.length));
 
@@ -20,6 +23,16 @@ export const GameOver: React.FC<Props> = ({ data, gameWon }) => {
   const calcWith = (index: number): number => {
     const correctLetterNumbr = howMayFindCharByOneRow(data.answer, data.mays[index]);
     return (100 / data.answer.length) * correctLetterNumbr + 12;
+  };
+
+  const newGameClicked = () => {
+    setModalVisible(!modalVisible);
+    onPressNewGame();
+  };
+
+  const homePageClicked = () => {
+    setModalVisible(!modalVisible);
+    onPressHomePage();
   };
 
   return (
@@ -37,7 +50,7 @@ export const GameOver: React.FC<Props> = ({ data, gameWon }) => {
             <Icon name="close" size={30} color={COLORS.COLOR_TONE2} />
           </TouchableOpacity>
           <View>
-            <Text style={styles.modalText}>{gameWon ? `${data.mays.length}. seferde kazandınız!` : "Kaybettiniz!"} </Text>
+            <Text style={styles.modalText}>{gameWon ? `Kazandınız!` : "Kaybettiniz!"} </Text>
             {!gameWon && <Text style={styles.modalAnswer}>Cevap: {data.answer}</Text>}
             <View style={styles.modalContent}>
               {items.map((_, i) => (
@@ -49,6 +62,10 @@ export const GameOver: React.FC<Props> = ({ data, gameWon }) => {
                   </View>
                 </View>
               ))}
+            </View>
+            <View style={styles.modalFooter}>
+              <Button text="YENI OYUN" onPress={() => newGameClicked()} backgroundColor={COLORS.DARKANDGREEN} />
+              <Button text="ANA SAYFA" onPress={() => homePageClicked()} />
             </View>
           </View>
         </View>
@@ -64,12 +81,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalView: {
-    width: Dimensions.get("window").height - 550,
+    width: Dimensions.get("window").width - 50,
+    height: Dimensions.get("window").height - 500,
     backgroundColor: COLORS.COLOR_TONE6,
     borderRadius: 20,
     paddingVertical: 25,
-    paddingLeft: 30,
-    paddingRight: 50,
+    paddingHorizontal: 20,
     // alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -91,6 +108,8 @@ const styles = StyleSheet.create({
   modalContent: {
     marginTop: 15,
     width: "100%",
+    paddingLeft: 10,
+    paddingRight: 40,
   },
   modalText: {
     paddingBottom: 15,
@@ -145,5 +164,14 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: COLORS.COLOR_TONE1,
     paddingLeft: 5,
+  },
+  modalFooter: {
+    marginTop: 30,
+    width: "100%",
+    paddingHorizontal: 20,
+    height: 100,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
 });

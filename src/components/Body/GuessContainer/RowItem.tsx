@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, Animated } from "react-native";
-import { COLORS } from "../../../constants/Colors";
-import { DISCLOSE_TIME_MS } from "../../../constants/Layout";
+import { DISCLOSE_TIME_MS, FONT_FAMILY } from "../../../constants/Layout";
 import { IRowItemColor } from "../../../model/RowItemColor";
 import { getColor } from "../../../util";
+import { COLORS } from "../../../constants/Colors";
 
 type Props = {
   val?: string;
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
   },
 
   tStyle: {
-    fontWeight: "800",
     fontSize: 25,
-    color: COLORS.COLOR_TONE1,
+    fontFamily: FONT_FAMILY.Black,
+    color: "#fff",
   },
 });

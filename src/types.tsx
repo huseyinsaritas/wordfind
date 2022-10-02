@@ -5,6 +5,7 @@ export type RootScreenParamList = {
   Home: undefined;
   Game: { length: number };
   Info: undefined;
+  Settings: undefined;
 };
 
 export type AppStackParamList = {

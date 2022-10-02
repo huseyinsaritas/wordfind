@@ -11,6 +11,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import { HomePage } from "../pages/Home";
 import { GamePage } from "../pages/Game";
 import { InfoPage } from "../pages/Info";
+import { SettingsPage } from "../pages/Settings";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -36,5 +37,6 @@ const RootNavigator = () => (
     <RootStackNavigator.Screen name="Home" component={HomePage} />
     <RootStackNavigator.Screen name="Game" component={GamePage} />
     <RootStackNavigator.Screen name="Info" component={InfoPage} />
+    <RootStackNavigator.Screen name="Settings" component={SettingsPage} />
   </RootStackNavigator.Navigator>
 );

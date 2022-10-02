@@ -2,24 +2,30 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { COLORS } from "../../constants/Colors";
 import { AdBanner } from "../Adds/AdBanner";
-import GoBack from "./GoBack";
+import GoBack from "../Base/IconButtons/GoBack";
 import { HeaderContainer } from "./HeaderContainer";
-import { InfoButton } from "./InfoButton";
-import { NewGame } from "./NewGame";
+import { StatisticsButton } from "../Base/IconButtons/StatisticsButton";
+import { Clue } from "./Clue";
 
 type Props = {
   onPressGoBack: () => void;
-  onPressInfo: () => void;
+  onPressStatistics: () => void;
   onPressNewGame: () => void;
 };
 
-export const Header: React.FC<Props> = ({ onPressGoBack, onPressInfo, onPressNewGame }) => {
+export const Header: React.FC<Props> = ({ onPressGoBack, onPressStatistics, onPressNewGame }) => {
   return (
     <>
       <HeaderContainer>
         <GoBack onPress={onPressGoBack} size={30} />
-        <NewGame onPress={onPressNewGame} />
-        <InfoButton onPress={onPressInfo} size={30} />
+        {/* <View style={styles.newGame}>
+          <NewGame onPress={onPressNewGame} />
+        </View> */}
+        {/* <View style={styles.rightButtons}> */}
+        <Clue onPressClue={onPressStatistics} />
+        {/* <ClueButton onPress={onPressStatistics} color={COLORS.YELLOW} size={25} /> */}
+        <StatisticsButton onPress={onPressStatistics} size={30} />
+        {/* </View> */}
       </HeaderContainer>
       <View style={styles.horizontalLine} />
       <View style={styles.banner}>
@@ -30,6 +36,9 @@ export const Header: React.FC<Props> = ({ onPressGoBack, onPressInfo, onPressNew
 };
 
 const styles = StyleSheet.create({
+  newGame: {
+    paddingLeft: 20,
+  },
   horizontalLine: {
     width: "100%",
     height: 2,
@@ -43,7 +52,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems: "center",
     width: "100%",
-    // borderWidth: 1,
-    // borderColor: "#fff",
+  },
+  rightButtons: {
+    display: "flex",
+    flexDirection: "row",
   },
 });

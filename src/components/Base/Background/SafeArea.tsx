@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, SafeAreaView, View, Platform, StatusBar } from "react-native";
-import { COLORS } from "../../constants/Colors";
+import { COLORS } from "../../../constants/Colors";
 
 type Props = {
   children: JSX.Element | JSX.Element[];

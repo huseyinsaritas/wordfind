@@ -1,13 +1,13 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { COLORS } from "../../../constants/Colors";
-import { alphabetData } from "../../../constants/keys";
-import { FONT_FAMILY } from "../../../constants/Layout";
 import { IChar } from "../../../model/Char";
-import { getKeyColors } from "../../../util";
+import { StyleSheet, View } from "react-native";
+import { alphabetData } from "../../../constants/keys";
 import BackKey from "./BackKey";
 import EnterKey from "./EnterKey";
 import { Key } from "./Key";
+import { getKeyColors } from "../../../util";
+import { FONT_FAMILY } from "../../../constants/Layout";
+import { COLORS } from "../../../constants/Colors";
 
 type Props = {
   onPress: (char: IChar) => void;

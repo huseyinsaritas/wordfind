@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { IAlert } from "../../model/Alert";
+import { IAlert } from "../../../model/Alert";
 
 type Props = {
   alertMessage?: IAlert;
@@ -8,7 +8,7 @@ type Props = {
   onClose: () => void;
 };
 
-export const Alert: React.FC<Props> = ({ alertMessage, closeMs, onClose }) => {
+export const AlertModal: React.FC<Props> = ({ alertMessage, closeMs, onClose }) => {
   useEffect(() => {
     const t: NodeJS.Timeout | undefined = setTimeout(() => {
       onClose();

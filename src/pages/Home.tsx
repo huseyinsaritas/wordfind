@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
-import { Background } from "../components/Background";
-import Layout, { FONT_FAMILY } from "../constants/Layout";
+import { FONT_FAMILY } from "../constants/Layout";
 import { RootScreenParamList } from "../types";
 import { COLORS } from "../constants/Colors";
+import { FullBackground } from "../components/Base/FullBackGround/FullBackground";
+import { InfoButton } from "../components/Base/IconButtons/InfoButton";
+import { SettingsButton } from "../components/Base/IconButtons/SettingsButton";
 
 // import { AdBanner } from "../components/Adds/AdBanner";
 
 export const HomePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Home">> = ({ navigation }) => {
   const [length, setLength] = useState<number>();
   const onGame = () => {
-    // navigation.navigate("Game");
     if (length) {
       navigation.navigate("Game", {
         length,
@@ -21,39 +21,55 @@ export const HomePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Hom
   };
 
   return (
-    <Background>
-      <Image style={styles.image} source={require("../../assets/splash.png")} />
-      <View style={styles.info}>
-        <TouchableOpacity style={[styles.button, length === 5 && styles.selected]} onPress={() => setLength(5)}>
-          <Text style={styles.buttonText}>5 HARFLİ</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, length === 6 && styles.selected]} onPress={() => setLength(6)}>
-          <Text style={styles.buttonText}>6 HARFLİ</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, length === 7 && styles.selected]} onPress={() => setLength(7)}>
-          <Text style={styles.buttonText}>7 HARFLİ</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.start}>
-        {length && (
-          <TouchableOpacity style={styles.startButton} onPress={onGame}>
-            <View style={styles.startButton}>
-              <Text style={styles.startButtonText}>OYUNA BAŞLA</Text>
-            </View>
+    <FullBackground>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View>
+            <SettingsButton style={styles.headerItem} size={25} onPress={() => navigation.navigate("Settings")} />
+          </View>
+          <View>
+            <InfoButton style={styles.headerItem} size={30} onPress={() => navigation.navigate("Info")} />
+          </View>
+        </View>
+        <View style={styles.info}>
+          <TouchableOpacity style={[styles.button, length === 5 && styles.selected]} onPress={() => setLength(5)}>
+            <Text style={styles.buttonText}>5 HARFLİ</Text>
           </TouchableOpacity>
-        )}
+          <TouchableOpacity style={[styles.button, length === 6 && styles.selected]} onPress={() => setLength(6)}>
+            <Text style={styles.buttonText}>6 HARFLİ</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, length === 7 && styles.selected]} onPress={() => setLength(7)}>
+            <Text style={styles.buttonText}>7 HARFLİ</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.start}>
+          {length && (
+            <TouchableOpacity style={styles.startButton} onPress={onGame}>
+              <View style={styles.startButton}>
+                <Text style={styles.startButtonText}>OYUNA BAŞLA</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        </View>
+        {/* <AdBanner /> */}
       </View>
-      {/* <AdBanner /> */}
-    </Background>
+    </FullBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: Layout.window.width,
-    height: Layout.window.height,
-    resizeMode: "cover",
-    zIndex: -1,
+  container: {
+    flex: 1,
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
+    paddingVertical: 20,
+  },
+  headerItem: {
+    padding: 10,
   },
   info: {
     position: "absolute",

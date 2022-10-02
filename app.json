@@ -5,7 +5,11 @@
     "privacy": "unlisted",
     "sdkVersion": "46.0.0",
     "version": "1.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "icon": "./assets/icon.png",
@@ -21,10 +25,15 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/ec090143-64a0-4f38-8383-5c85886c1e70"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ayiyazilim.wordfind"
+      "bundleIdentifier": "com.ayiyazilim.wordfind",
+      "infoPlist": {
+        "NSUserTrackingUsageDescription": "Allow this app to collect app-related data that can be used for tracking you or your device."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -33,7 +42,9 @@
       },
       "versionCode": 1,
       "package": "com.ayiyazilim.wordfind",
-      "permissions": ["INTERNET"]
+      "permissions": [
+        "INTERNET"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -47,7 +58,9 @@
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
-    "plugins": ["expo-tracking-transparency"]
+    "plugins": [
+      "expo-tracking-transparency"
+    ]
   },
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-3105662444743172~9118850389",

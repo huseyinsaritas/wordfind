@@ -1,7 +1,7 @@
 import React from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { COLORS } from "../../constants/Colors";
-import { FONT_FAMILY } from "../../constants/Layout";
+import { COLORS } from "../../../constants/Colors";
+import { FONT_FAMILY } from "../../../constants/Layout";
 import { FullScreen } from "../Background/FullScreen";
 import { SafeArea } from "../Background/SafeArea";
 
@@ -29,13 +29,13 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
-    backgroundColor: COLORS.BLUE_LIGHT,
+    backgroundColor: COLORS.LIGHTGRAY,
   },
   loading: {
     marginTop: 16,
     textAlign: "center",
     fontSize: 24,
     fontFamily: FONT_FAMILY.Black,
-    color: COLORS.YELLOW,
+    color: COLORS.COLOR_TONE2,
   },
 });

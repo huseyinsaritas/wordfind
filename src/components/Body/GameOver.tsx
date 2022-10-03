@@ -22,7 +22,11 @@ export const GameOver: React.FC<Props> = ({ data, gameWon, onPressHomePage, onPr
 
   const calcWith = (index: number): number => {
     const correctLetterNumbr = howMayFindCharByOneRow(data.answer, data.mays[index]);
-    return (100 / data.answer.length) * correctLetterNumbr + 12;
+    if (correctLetterNumbr === 0) {
+      return 7;
+    } else {
+      return (100 / data.answer.length) * correctLetterNumbr;
+    }
   };
 
   const newGameClicked = () => {
@@ -47,16 +51,15 @@ export const GameOver: React.FC<Props> = ({ data, gameWon, onPressHomePage, onPr
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <TouchableOpacity style={styles.buttonClose} onPress={() => setModalVisible(!modalVisible)}>
-            <Icon name="close" size={30} color={COLORS.COLOR_TONE2} />
+            <Icon name="close" size={30} color="#fff" />
           </TouchableOpacity>
           <View>
-            <Text style={styles.modalText}>{gameWon ? `Kazandınız!` : "Kaybettiniz!"} </Text>
             {!gameWon && <Text style={styles.modalAnswer}>Cevap: {data.answer}</Text>}
             <View style={styles.modalContent}>
               {items.map((_, i) => (
                 <View key={i} style={styles.graphContainer}>
                   <View style={styles.graph}>
-                    <View style={[styles.graphBar, styles.alignRight, correctAnswerIndex === i && styles.highlight, { width: `${calcWith(i)}%` }]}>
+                    <View style={[styles.graphBar, styles.alignRight, styles.highlight, { width: `${calcWith(i)}%` }]}>
                       <Text style={styles.numGuesses}>{howMayFindCharByOneRow(data.answer, data.mays[i])}</Text>
                     </View>
                   </View>
@@ -82,7 +85,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: Dimensions.get("window").width - 50,
-    height: Dimensions.get("window").height - 500,
     backgroundColor: COLORS.COLOR_TONE6,
     borderRadius: 20,
     paddingVertical: 25,
@@ -99,23 +101,30 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     position: "absolute",
-    top: 15,
-    right: 15,
-    // backgroundColor: COLORS.COLOR_TONE2,
-    borderRadius: 50,
+    top: 0,
+    right: 0,
     padding: 1,
+    zIndex: 500,
+    backgroundColor: "red",
+    width: 50,
+    height: 40,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderTopRightRadius: 15,
+    borderBottomLeftRadius: 15,
   },
   modalContent: {
-    marginTop: 15,
+    marginTop: 30,
     width: "100%",
-    paddingLeft: 10,
-    paddingRight: 40,
+    paddingHorizontal: 20,
+    // paddingLeft: 10,
+    // paddingRight: 40,
   },
   modalText: {
     paddingBottom: 15,
     textAlign: "center",
     fontFamily: FONT_FAMILY.Black,
-    fontSize: 16,
     minWidth: 150,
     color: COLORS.COLOR_TONE1,
   },
@@ -138,19 +147,18 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     paddingBottom: 4,
-    fontSize: 14,
-    lineHeight: 20,
+    marginVertical: 5,
   },
   graph: {
     width: "100%",
     height: "100%",
-    // paddingLeft: 5,
+    backgroundColor: COLORS.COLOR_TONE4,
+    borderRadius: 25,
   },
   graphBar: {
     height: "100%",
-    // position: "relative",
     backgroundColor: COLORS.COLOR_TONE4,
-    // display: "flex",
+    borderRadius: 25,
   },
   alignRight: {
     width: "100%",
@@ -161,7 +169,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.GREEN,
   },
   numGuesses: {
-    fontWeight: "600",
+    fontSize: 12,
+    fontWeight: "bold",
     color: COLORS.COLOR_TONE1,
     paddingLeft: 5,
   },

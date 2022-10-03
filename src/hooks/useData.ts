@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import Toast from "react-native-root-toast";
 import { getInitialData } from "../data/getInitialData";
-import { IAlert } from "../model/Alert";
 import { IChar } from "../model/Char";
 import { IGameData } from "../model/GameData";
 import * as api from "../api";
@@ -9,7 +9,7 @@ import { deepCopy } from "../util";
 export const useData = (len: number) => {
   const [gameLoading, setGameLoading] = useState(true);
   const [isValid, setIsValid] = useState<boolean>(true);
-  const [alertMessage, setAlertMessage] = useState<IAlert>({ show: false, status: 0 });
+
   const [data, setData] = useState<IGameData>();
 
   useEffect(() => {
@@ -29,17 +29,26 @@ export const useData = (len: number) => {
 
     if (data.mays.length < data.answer.length) {
       if (data?.answer.length === data?.currentMay.length) {
-        api.isValidWord(data?.currentMay).then((valid: boolean) => {
+        api.isValidWord(data?.currentMay.join("")).then((valid: boolean) => {
           if (!valid) {
             setIsValid(false);
-            setAlertMessage({ show: true, status: 2, message: "Kelime listesinde yok" });
+            Toast.show("Kelime listesinde yok!", {
+              duration: Toast.durations.LONG,
+              position: 40,
+              shadow: true,
+              animation: true,
+              hideOnPress: true,
+              backgroundColor: "#fff",
+              textColor: "#000",
+              opacity: 1,
+            });
             return false;
           }
           setData((prev) => {
             if (prev === undefined) return prev;
             const clone = deepCopy(prev);
-            const addObj = clone.currentMay.split("");
-            clone.currentMay = "";
+            const addObj = clone.currentMay;
+            clone.currentMay = [];
             clone.mays.push(addObj);
             return clone;
           });
@@ -48,27 +57,31 @@ export const useData = (len: number) => {
         });
       } else {
         setIsValid(false);
-        setAlertMessage({ show: true, status: 1, message: "Yetersiz harf!" });
+        Toast.show("Yetersiz harf!", {
+          duration: Toast.durations.LONG,
+          position: 40,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          backgroundColor: "#fff",
+          textColor: "#000",
+          opacity: 1,
+        });
       }
     }
 
     return false;
   };
 
-  const onCloseAlert = () => {
-    setAlertMessage({ show: false, status: 0, message: "" });
-    setIsValid(true);
-  };
-
-  const addCurrentMay = (char: IChar): boolean => {
+  const addCurrentMay = (char: string): boolean => {
     if (data === undefined) return false;
     setIsValid(true);
     if (data?.answer.length > data?.currentMay.length) {
       setData((prev) => {
         if (prev === undefined) return prev;
-
-        const clone = { ...prev };
-        const addObj = clone.currentMay.concat(char.c);
+        const clone = deepCopy(prev);
+        const addObj = [...clone.currentMay];
+        addObj.push(char);
         clone.currentMay = addObj;
         return clone;
       });
@@ -83,13 +96,14 @@ export const useData = (len: number) => {
     if (0 < data.currentMay.length) {
       setData((prev) => {
         if (prev === undefined) return prev;
-        const clone = { ...prev };
-        const deletedObj = clone.currentMay?.slice(0, -1);
+        const clone = deepCopy(prev);
+        const deletedObj = [...clone.currentMay];
+        deletedObj.pop();
         clone.currentMay = deletedObj;
         return clone;
       });
     }
   };
 
-  return { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, alertMessage, onCloseAlert, isValid };
+  return { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid };
 };

@@ -36,8 +36,6 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    borderBottomWidth: 1,
-    borderBottomColor: "#fff",
   },
   text: {
     textAlign: "center",

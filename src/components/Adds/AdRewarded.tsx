@@ -1,50 +1,66 @@
 import React, { useEffect, useState } from "react";
-import { TestIds, RewardedInterstitialAd, RewardedAdEventType, AdEventType } from "react-native-google-mobile-ads";
-import { Text, Button, Platform } from "react-native";
+import { TestIds, RewardedAd, RewardedAdEventType, AdEventType } from "react-native-google-mobile-ads";
+import { Platform } from "react-native";
 import { CONF } from "../../conf";
 
-// const adUnitIdRewardedInterstitial = __DEV__ ? TestIds.REWARDED_INTERSTITIAL : Platform.select(CONF.ADMOB.rewardedInterstitial) || "";
-const adUnitIdRewardedInterstitial = Platform.select(CONF.ADMOB.rewardedInterstitial) || "";
+const adUnitIdRewarded = __DEV__ ? TestIds.REWARDED : Platform.select(CONF.ADMOB.rewarded) || "";
+// const adUnitIdRewarded = Platform.select(CONF.ADMOB.rewarded) || "";
 
-const rewardedInterstitial = RewardedInterstitialAd.createForAdRequest(adUnitIdRewardedInterstitial, {
+const rewarded = RewardedAd.createForAdRequest(adUnitIdRewarded, {
   requestNonPersonalizedAdsOnly: true,
 });
 
-export const AdRewarded = () => {
-  const [rewardedInterstitialLoaded, setRewardedInterstitialLoaded] = useState(false);
+export const AdRewarded: React.FC<{ show: boolean; onEarned: () => void; onClosed: () => void; onFailed: () => void }> = ({ show, onEarned, onClosed, onFailed }) => {
+  const [rewardedLoaded, setRewardedLoaded] = useState(false);
+  const [err, setErr] = useState("");
 
-  const loadRewardedInterstitial = () => {
-    const unsubscribeLoaded = rewardedInterstitial.addAdEventListener(RewardedAdEventType.LOADED, () => {
-      setRewardedInterstitialLoaded(true);
+  const loadRewarded = () => {
+    const unsubscribeLoaded = rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
+      setRewardedLoaded(true);
     });
 
-    const unsubscribeEarned = rewardedInterstitial.addAdEventListener(RewardedAdEventType.EARNED_REWARD, (reward) => {
-      console.log(`User earned reward of ${reward.amount} ${reward.type}`);
+    const unsubscribeEarned = rewarded.addAdEventListener(RewardedAdEventType.EARNED_REWARD, (reward) => {
+      console.log(reward);
+      onEarned();
     });
 
-    const unsubscribeClosed = rewardedInterstitial.addAdEventListener(AdEventType.CLOSED, () => {
-      setRewardedInterstitialLoaded(false);
-      rewardedInterstitial.load();
+    const unsubscribeClosed = rewarded.addAdEventListener(AdEventType.CLOSED, () => {
+      setRewardedLoaded(false);
+      // rewarded.load();
+      onClosed();
     });
 
-    rewardedInterstitial.load();
+    const unsubscribeFail = rewarded.addAdEventListener(AdEventType.ERROR, (err) => {
+      setErr(err.message);
+      onFailed();
+      console.log("err", err.message);
+    });
+
+    rewarded.load();
 
     return () => {
       unsubscribeLoaded();
       unsubscribeClosed();
       unsubscribeEarned();
+      unsubscribeFail();
     };
   };
 
   useEffect(() => {
-    const unsubscribeRewardedInterstitialEvents = loadRewardedInterstitial();
+    const unsubscribeRewardedInterstitialEvents = loadRewarded();
 
     return () => {
       unsubscribeRewardedInterstitialEvents();
     };
   }, []);
 
-  if (rewardedInterstitialLoaded) return <Button color={"white"} title="Show Rewarded Interstitial" onPress={() => rewardedInterstitial.show()} />;
+  useEffect(() => {
+    if (rewardedLoaded && show) rewarded.show();
+  }, [rewardedLoaded, show]);
 
-  return <Text style={{ color: "white" }}>Loading Rewarded Interstitial...</Text>;
+  if (rewardedLoaded === false) return null;
+  if (rewardedLoaded && !show) return null;
+  if (rewardedLoaded && show) return null;
+
+  return null;
 };

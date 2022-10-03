@@ -12,6 +12,10 @@ export const CONF = {
       ios: "ca-app-pub-3105662444743172/2827143897",
       android: "ca-app-pub-3105662444743172/7887898883<",
     },
+    rewarded: {
+      ios: "ca-app-pub-3105662444743172/8920926292",
+      android: "ca-app-pub-3105662444743172/3843821448",
+    },
   },
 
   // API_BASE_URL: "http://192.168.1.102:8000",

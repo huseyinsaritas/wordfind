@@ -24,7 +24,7 @@ export const GuessContainer: React.FC<Props> = ({ data, isValid }) => {
     <View style={styles.body}>
       <BodyContainer>
         {completedRows}
-        {data.mays.length < data.answer.length && <CurrentRow may={data.currentMay.split("")} answer={data.answer} isValid={isValid} />}
+        {data.mays.length < data.answer.length && <CurrentRow may={data.currentMay} answer={data.answer} isValid={isValid} />}
         {emptyRows.map((_, i) => (
           <EmptyRow answer={data.answer} key={i} />
         ))}
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     // left: 0,
     // right: 0,
     // bottom: 220,
-    height: Dimensions.get("window").height - 450,
+    height: Dimensions.get("window").height - 425,
     justifyContent: "center",
     // marginBottom: 10,
   },

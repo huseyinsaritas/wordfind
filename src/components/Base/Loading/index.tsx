@@ -1,41 +1,35 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, LayoutChangeEvent, StyleSheet, Text, View } from "react-native";
 import { COLORS } from "../../../constants/Colors";
-import { FONT_FAMILY } from "../../../constants/Layout";
-import { FullScreen } from "../Background/FullScreen";
-import { SafeArea } from "../Background/SafeArea";
+import { Background } from "../Background";
 
-type Props = {
-  message: string;
-};
-
-export const Loading: React.FC<Props> = ({ message }) => {
+export const Loading: React.FC<{ message: string }> = ({ message }) => {
   return (
-    <FullScreen>
-      <SafeArea>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={COLORS.YELLOW} />
-          <Text style={styles.loading}>{message}</Text>
-        </View>
-      </SafeArea>
-    </FullScreen>
+    <Background bgColor={COLORS.BLUE}>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.YELLOW} />
+        <Text style={styles.loading}>{message}</Text>
+      </View>
+    </Background>
   );
 };
 
 const styles = StyleSheet.create({
   loadingContainer: {
+    flex: 1,
     height: "100%",
     width: "100%",
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
-    backgroundColor: COLORS.LIGHTGRAY,
+    backgroundColor: COLORS.BLUE,
   },
   loading: {
+    /* width: "100%",
+    , */
     marginTop: 16,
     textAlign: "center",
     fontSize: 24,
-    fontFamily: FONT_FAMILY.Black,
-    color: COLORS.COLOR_TONE2,
+    color: COLORS.YELLOW,
   },
 });

@@ -9,11 +9,13 @@ import { Clue } from "./Clue";
 
 type Props = {
   onPressGoBack: () => void;
-  onPressStatistics: () => void;
-  onPressNewGame: () => void;
+  onPressClue: () => void;
+  remainingClue: number;
+  gameFinished: boolean;
+  // onPressNewGame: () => void;
 };
 
-export const Header: React.FC<Props> = ({ onPressGoBack, onPressStatistics, onPressNewGame }) => {
+export const Header: React.FC<Props> = ({ onPressGoBack, onPressClue, remainingClue, gameFinished /*, onPressNewGame*/ }) => {
   return (
     <>
       <HeaderContainer>
@@ -22,9 +24,10 @@ export const Header: React.FC<Props> = ({ onPressGoBack, onPressStatistics, onPr
           <NewGame onPress={onPressNewGame} />
         </View> */}
         {/* <View style={styles.rightButtons}> */}
-        <Clue onPressClue={onPressStatistics} />
+        <Clue gameFinished={gameFinished} remainingClue={remainingClue} onPressClue={onPressClue} />
         {/* <ClueButton onPress={onPressStatistics} color={COLORS.YELLOW} size={25} /> */}
-        <StatisticsButton onPress={onPressStatistics} size={30} />
+        <StatisticsButton onPress={() => {}} size={30} />
+
         {/* </View> */}
       </HeaderContainer>
       <View style={styles.horizontalLine} />

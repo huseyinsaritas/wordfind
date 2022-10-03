@@ -7,15 +7,18 @@ import { getColor } from "../../../util";
 type Props = {
   val: string;
   color?: string;
+  borderColor?: string;
   onPress: () => void;
   gameFinished?: boolean;
 };
 
-export const Key: React.FC<Props> = ({ val, color, onPress, gameFinished }) => {
+export const Key: React.FC<Props> = ({ val, color, borderColor, onPress, gameFinished }) => {
   const currentColor = COLORS.COLOR_TONE2;
   // const [keyColor, setKeyColor] = useState<string | undefined>();
   if (val === "") return <View style={styles.key} />;
   const keyColor = getColor(color);
+  const keyBorderColor = getColor(borderColor);
+
   // const colorAnimation = new Animated.Value(0);
   // const animate = () => {
   //   Animated.timing(colorAnimation, {
@@ -35,6 +38,7 @@ export const Key: React.FC<Props> = ({ val, color, onPress, gameFinished }) => {
   const animatedStyle = {
     // backgroundColor: interpolateColor || keyColor,
     backgroundColor: keyColor ? keyColor : currentColor,
+    borderColor: keyBorderColor ? keyBorderColor : currentColor,
   };
   const viewStyle = [styles.key, { ...animatedStyle }];
 

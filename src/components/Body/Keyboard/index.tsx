@@ -5,7 +5,7 @@ import { alphabetData } from "../../../constants/keys";
 import BackKey from "./BackKey";
 import EnterKey from "./EnterKey";
 import { Key } from "./Key";
-import { getKeyColors } from "../../../util";
+import { getKeyBorderColors, getKeyColors } from "../../../util";
 import { FONT_FAMILY } from "../../../constants/Layout";
 import { COLORS } from "../../../constants/Colors";
 
@@ -16,11 +16,13 @@ type Props = {
   answer: string[];
   mays: string[][];
   gameFinished?: boolean;
+  clueChars: string[];
 };
 
-export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCancel, answer, mays, gameFinished }) => {
+export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCancel, answer, mays, gameFinished, clueChars }) => {
   const lines = [0, 1, 2].map((i) => alphabetData.filter((k) => k.l === i));
   const colors = getKeyColors(answer, mays);
+  const borderColors = getKeyBorderColors(clueChars);
 
   return (
     <View style={styles.keyboard}>
@@ -36,6 +38,7 @@ export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCance
                       onPress(key);
                     }}
                     color={colors[key.c]}
+                    borderColor={borderColors[key.c]}
                     gameFinished={gameFinished}
                   />
                 </View>

@@ -1,19 +1,23 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { COLORS } from "../../constants/Colors";
 import { FONT_FAMILY } from "../../constants/Layout";
-import { ClueButton } from "../Base/IconButtons/ClueButton";
+import Icon from "@expo/vector-icons/Ionicons";
 
 type Props = {
+  remainingClue: number;
   onPressClue: () => void;
+  gameFinished: boolean;
 };
 
-export const Clue: React.FC<Props> = ({ onPressClue }) => {
+export const Clue: React.FC<Props> = ({ onPressClue, remainingClue, gameFinished }) => {
   return (
-    <View style={styles.clueContent}>
-      <ClueButton style={styles.clueButton} onPress={onPressClue} color={COLORS.YELLOW} size={22} />
-      <Text style={styles.clueText}>2</Text>
-    </View>
+    <TouchableOpacity disabled={gameFinished} onPress={onPressClue}>
+      <View style={styles.clueContent}>
+        <Icon style={styles.clueButton} name="ios-bulb" size={22} color={COLORS.YELLOW} />
+        <Text style={styles.clueText}>{remainingClue}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -27,6 +31,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 2,
     paddingHorizontal: 10,
+    // height: 35,
   },
   clueButton: {
     paddingRight: 5,

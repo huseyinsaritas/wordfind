@@ -40,7 +40,7 @@ export const InfoPage: React.FC<NativeStackScreenProps<RootScreenParamList, "Inf
   };
 
   return (
-    <Background>
+    <Background bgColor={COLORS.COLOR_TONE7}>
       <View>
         <Text style={styles.infoHeader}>Nasıl Oynanır?</Text>
         <Text style={styles.infoHeaderText}>Her tahmin oyuna başlarken seçtiğiniz 5,6 ya da 7 harfli seçeneklerden biri olmalıdır.</Text>

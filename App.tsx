@@ -6,6 +6,7 @@ import * as SplashScreen from "expo-splash-screen";
 import Navigation from "./src/navigation";
 import useColorScheme from "./src/hooks/base/useColorScheme";
 import useCachedResources from "./src/hooks/base/useCachedResources";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -16,9 +17,11 @@ export default function App() {
   if (!isLoadingComplete) return null;
 
   return (
-    <SafeAreaProvider>
-      <Navigation colorScheme={colorScheme} />
-      <StatusBar style="auto" />
-    </SafeAreaProvider>
+    <RootSiblingParent>
+      <SafeAreaProvider>
+        <Navigation colorScheme={colorScheme} />
+        <StatusBar style="auto" />
+      </SafeAreaProvider>
+    </RootSiblingParent>
   );
 }

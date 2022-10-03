@@ -1,17 +1,16 @@
 import React from "react";
-import { LayoutChangeEvent } from "react-native";
 import { FullScreen } from "./FullScreen";
 import { SafeArea } from "./SafeArea";
 
-type Props = {
-  onLayout?: (event: LayoutChangeEvent) => void;
-  children: JSX.Element[];
-};
-
-export const Background: React.FC<Props> = ({ onLayout, children }) => {
+export const Background: React.FC<{ bgColor: string; topColor?: string; bottomColor?: string; children: JSX.Element | JSX.Element[] }> = ({
+  bgColor,
+  topColor,
+  bottomColor,
+  children,
+}) => {
   return (
-    <FullScreen onLayout={onLayout}>
-      <SafeArea>{children}</SafeArea>
+    <FullScreen bgColor={bgColor} topColor={topColor} bottomColor={bottomColor}>
+      <SafeArea bgColor={bgColor}>{children}</SafeArea>
     </FullScreen>
   );
 };

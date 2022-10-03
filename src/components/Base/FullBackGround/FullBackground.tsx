@@ -5,7 +5,7 @@ import { COLORS } from "../../../constants/Colors";
 export const FullBackground: React.FC<{ children: JSX.Element | JSX.Element[] }> = ({ children }) => {
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("../../../../assets/splash.png")} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={require("../../../../assets/bg.png")} resizeMode="cover" style={styles.image}>
         <SafeAreaView style={styles.b}>
           <View style={styles.c}>{children}</View>
         </SafeAreaView>

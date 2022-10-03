@@ -44,9 +44,11 @@ export const CurrentRow: React.FC<Props> = ({ may, answer, isValid }) => {
   return (
     <View style={styles.answersGroupContent}>
       <Animated.View style={[styles.answersGroupContent, { ...animatedStyle }]}>
-        {may?.map((r, i) => {
-          return <RowItem val={r} key={i} />;
-        })}
+        {may &&
+          may.length > 0 &&
+          may?.map((r, i) => {
+            return <RowItem val={r} key={i} />;
+          })}
         {emptyItems.map((_, i) => (
           <RowItem key={i} />
         ))}

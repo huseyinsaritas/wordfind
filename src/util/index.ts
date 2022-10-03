@@ -69,6 +69,25 @@ export const getKeyColors = (answer: string[], mays: string[][]): { [key: string
   return char;
 };
 
+export const getKeyBorderColors = (clueChars: string[]): { [key: string]: IRowItemColor } => {
+  const char: { [key: string]: IRowItemColor } = {};
+
+  if (clueChars.length > 0) {
+    clueChars.forEach((c, i) => {
+      return (char[c] = "red");
+    });
+  }
+  return char;
+};
+
+export const getRandomClueChar = (answer: string[], clueChars: string[]): string | undefined => {
+  if (answer.length > clueChars.length) {
+    const uniqueAnswerItems = answer.filter((o) => clueChars.indexOf(o) === -1);
+    const char = uniqueAnswerItems[Math.floor(Math.random() * uniqueAnswerItems.length)];
+    return char;
+  }
+};
+
 export const howMayFindCharByOneRow = (answer: string[], may: string[]): number => {
   let count = 0;
   if (may && may.length > 0) {
@@ -87,6 +106,7 @@ export const getColor = (color?: string) => {
   if (color === "darkgray") return COLORS.COLOR_TONE4;
   if (color === "green") return COLORS.DARKANDGREEN;
   if (color === "yellow") return COLORS.DARKANDYELLOW;
+  if (color === "red") return COLORS.RED;
 };
 
 export const deepCopy = <T>(value: T): T => {

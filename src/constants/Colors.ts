@@ -12,6 +12,7 @@ export const COLORS = {
   BLACK: "#212121",
   ORANGE: "#f5793a",
   BLUE: "#85c0f9",
+  RED: "#FF0000",
   COLOR_TONE1: "#d7dadc",
   COLOR_TONE2: "#818384",
   COLOR_TONE3: "#565758",

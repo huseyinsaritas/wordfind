@@ -11,23 +11,30 @@ import { Footer } from "../components/Footer";
 import { DISCLOSE_TIME_MS } from "../constants/Layout";
 import { GameOver } from "../components/Body/GameOver";
 import { Delayed } from "../components/Base/Delayed/Delayed";
-import { COLORS } from "../constants/Colors";
 import { Background } from "../components/Base/Background";
 import { AdsModal } from "../components/AdsModal/AdsModal";
 import { getRandomClueChar } from "../util";
 import { BackHandler } from "react-native";
+import { useSounds } from "../hooks/useSounds";
+import Toast from "react-native-root-toast";
+import { useLanguage } from "../hooks/useLanguage";
+import { useGlobalState } from "../global/globalState";
 
-export const GamePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation, route }) => {
+export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation, route }) => {
   const { length } = route.params;
-  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon } = useGame(length);
+  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled } = useGame(length);
   const [clue, setClue] = useState<{ showAdd: boolean; remaining: number }>({ showAdd: false, remaining: 3 });
   const [clueChars, setClueChars] = useState<string[]>([]);
+  const { state } = useGlobalState();
+  const { t } = useLanguage();
+  const { play } = useSounds();
+
   const onPressGoBack = () => {
     if (gameFinished) navigation.replace("Home");
     else
-      Alert.alert("Emin misiniz?", "İşte gidiyorsun.", [
-        { text: "Vazgeç", style: "cancel", onPress: () => {} },
-        { text: "Evet", style: "destructive", onPress: () => navigation.replace("Home") },
+      Alert.alert(t("areYouSure"), t("leaveMessage"), [
+        { text: t("continue"), style: "cancel", onPress: () => {} },
+        { text: t("exitGame"), style: "destructive", onPress: () => navigation.replace("Home") },
       ]);
 
     return true;
@@ -40,21 +47,54 @@ export const GamePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Gam
     };
   }, []);
 
+  // useEffect(() => {
+  //   navigation.addListener("beforeRemove", (e) => {
+  //     e.preventDefault();
+  //     onPressGoBack();
+  //   });
+  //   return () => {
+  //     navigation.removeListener("beforeRemove", () => {
+  //       console.log("beforeRemove removed.");
+  //     });
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    if (gameFinished) {
+      if (gameWon) {
+        play("game-won");
+      } else {
+        play("game-over");
+      }
+    }
+  }, [gameFinished]);
+
   const onPressClue = () => {
     if (clue.remaining > 0) {
       if (!data) return undefined;
-      const char = getRandomClueChar(data.answer, clueChars);
-      // console.log(char);
+      const char = getRandomClueChar(data.answer, data.mays, clueChars);
 
-      if (char) {
+      if (clueChars.length < data.answer.length - 2 && char) {
         const newClueChars = [...clueChars];
         newClueChars.push(char);
         setClueChars(newClueChars);
+        setClue({ ...clue, remaining: clue.remaining - 1 });
+        play("bonus");
+      } else {
+        Toast.show(t("noTips"), {
+          duration: Toast.durations.SHORT,
+          position: 40,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          backgroundColor: "#fff",
+          textColor: "#000",
+          opacity: 1,
+        });
       }
-
-      setClue({ ...clue, remaining: clue.remaining - 1 });
     } else {
       setClue({ ...clue, showAdd: true });
+      play("no-bonus");
     }
   };
 
@@ -69,35 +109,44 @@ export const GamePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Gam
 
   const onPressSubmit = () => {
     submitData();
+    if (isValid === true) {
+      play("success");
+    } else {
+      play("wrong");
+    }
   };
 
   const onPressCancel = () => {
+    play("remove");
     removeCurrentMay();
   };
 
   const onPressKeyboard = (char: IChar) => {
+    play("key");
     addCurrentMay(char.c);
   };
 
   if (gameLoading || data === undefined) return <Loading message="Oyun Yukleniyor.." />;
-  console.log(clue);
 
   return (
     <>
-      {clue.showAdd && (
-        <AdsModal
-          onEarned={() => {
-            setClue({ remaining: 3, showAdd: false });
-          }}
-          onClosed={() => {
-            setClue({ ...clue, showAdd: false });
-          }}
-          onFailed={() => {
-            setClue({ ...clue, showAdd: false });
-          }}
-        />
-      )}
-      <Background bgColor={COLORS.COLOR_TONE7}>
+      <AdsModal
+        show={clue.showAdd}
+        onEarned={() => {
+          setClue({ remaining: 3, showAdd: false });
+        }}
+        onClosed={() => {
+          setClue({ ...clue, showAdd: false });
+        }}
+        onFailed={() => {
+          setClue({ ...clue, showAdd: false });
+        }}
+        onModalClose={() => {
+          setClue({ ...clue, showAdd: false });
+        }}
+      />
+
+      <Background>
         <Header gameFinished={gameFinished} remainingClue={clue.remaining} onPressGoBack={onPressGoBack} onPressClue={onPressClue} />
         <Body
           data={data}
@@ -108,6 +157,7 @@ export const GamePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Gam
           isValid={isValid}
           gameWon={gameWon}
           clueChars={clueChars}
+          keysDisabled={keysDisabled}
         />
         <Footer />
       </Background>

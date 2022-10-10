@@ -1,16 +1,16 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
+import { TouchableOpacity, StyleSheet, View, Text, Dimensions } from "react-native";
 import { COLORS } from "../../../constants/Colors";
 import { FONT_FAMILY } from "../../../constants/Layout";
 
 type Props = {
   onPress?: () => void;
-  gameFinished?: boolean;
+  disabled?: boolean;
 };
 
-const EnterKey: React.FC<Props> = ({ gameFinished, onPress }) => {
+const EnterKey: React.FC<Props> = ({ disabled, onPress }) => {
   return (
-    <TouchableOpacity disabled={gameFinished} style={styles.enterKey} onPress={onPress}>
+    <TouchableOpacity disabled={disabled} style={styles.enterKey} onPress={onPress}>
       <View style={styles.buttonKeyCenter}>
         <Text style={styles.font}>ENTER</Text>
       </View>
@@ -20,17 +20,17 @@ const EnterKey: React.FC<Props> = ({ gameFinished, onPress }) => {
 
 const styles = StyleSheet.create({
   enterKey: {
-    minWidth: 48,
+    minWidth: Dimensions.get("window").width >= 390 ? 55 : 48,
     height: 55,
     marginVertical: 1,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderRadius: 4,
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.COLOR_TONE2,
-    color: COLORS.COLOR_TONE1,
-    borderColor: COLORS.COLOR_TONE4,
+    backgroundColor: COLORS.COMMON.COLOR_TONE2,
+    color: COLORS.COMMON.COLOR_TONE1,
+    borderColor: COLORS.COMMON.COLOR_TONE4,
     shadowColor: "#ccc",
     shadowOffset: {
       width: 0,

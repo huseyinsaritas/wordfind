@@ -1,96 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IChar } from "../../../model/Char";
 import { StyleSheet, View } from "react-native";
 import { alphabetData } from "../../../constants/keys";
 import BackKey from "./BackKey";
 import EnterKey from "./EnterKey";
 import { Key } from "./Key";
-import { getKeyBorderColors, getKeyColors } from "../../../util";
-import { FONT_FAMILY } from "../../../constants/Layout";
-import { COLORS } from "../../../constants/Colors";
+import { getKeyColors, isBorder } from "../../../util";
+import { DISCLOSE_TIME_MS, FONT_FAMILY } from "../../../constants/Layout";
+import { useGlobalState } from "../../../global/globalState";
+import { IGameData } from "../../../model/GameData";
 
 type Props = {
   onPress: (char: IChar) => void;
   onPressSubmit: () => void;
   onPressCancel: () => void;
-  answer: string[];
-  mays: string[][];
+  data: IGameData;
   gameFinished?: boolean;
   clueChars: string[];
+  keysDisabled: boolean;
 };
 
-export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCancel, answer, mays, gameFinished, clueChars }) => {
-  const lines = [0, 1, 2].map((i) => alphabetData.filter((k) => k.l === i));
-  const colors = getKeyColors(answer, mays);
-  const borderColors = getKeyBorderColors(clueChars);
+export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCancel, data, gameFinished, clueChars, keysDisabled }) => {
+  const { state } = useGlobalState();
+
+  const alphabet = state.lan === "en" ? alphabetData.EN : alphabetData.TR;
+  const lines = [0, 1, 2].map((i) => alphabet.filter((k) => k.l === i));
+  const colors = getKeyColors(data.answer, data.mays);
+  const border = isBorder(clueChars);
 
   return (
     <View style={styles.keyboard}>
-      {lines.map((line, index) => {
-        return (
-          <View key={index} style={styles.line}>
-            {line.map((key, i) => {
-              return (
-                <View key={i}>
+      <View style={styles.keys}>
+        {lines.map((line, index) => {
+          return (
+            <View key={index} style={styles.line}>
+              {line.map((key, i) => {
+                return (
                   <Key
+                    key={i + 1}
                     val={key.c}
                     onPress={() => {
                       onPress(key);
                     }}
                     color={colors[key.c]}
-                    borderColor={borderColors[key.c]}
-                    gameFinished={gameFinished}
+                    isBorder={border[key.c]}
+                    disabled={keysDisabled || gameFinished}
+                    answer={data.answer}
                   />
-                </View>
-              );
-            })}
-          </View>
-        );
-      })}
-      <BackKey onPress={onPressCancel} gameFinished={gameFinished} />
-      <EnterKey onPress={onPressSubmit} gameFinished={gameFinished} />
+                );
+              })}
+            </View>
+          );
+        })}
+      </View>
+      <EnterKey onPress={onPressSubmit} disabled={keysDisabled || gameFinished} />
+      <BackKey onPress={onPressCancel} disabled={keysDisabled || gameFinished} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   keyboard: {
+    width: "100%",
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "flex-end",
     alignContent: "center",
+    justifyContent: "center",
+  },
+  keys: {
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
   },
   line: {
     display: "flex",
     flexDirection: "row",
-  },
-  buttonKey: {
-    minWidth: 29,
-    height: 50,
-    padding: 3,
-    marginHorizontal: 1,
-    marginVertical: 1,
-    borderWidth: 1,
-    borderRadius: 4,
-    justifyContent: "center",
-    alignContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.COLOR_TONE2,
-    color: COLORS.COLOR_TONE1,
-    borderColor: COLORS.COLOR_TONE4,
-    shadowColor: "#ccc",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-  },
-  buttonKeyCenter: {
-    width: "100%",
-    height: "100%",
     justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
   },
   font: {
     fontSize: 24,

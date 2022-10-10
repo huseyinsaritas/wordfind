@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Platform } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FONT_FAMILY } from "../constants/Layout";
 import { RootScreenParamList } from "../types";
@@ -7,18 +7,29 @@ import { COLORS } from "../constants/Colors";
 import { FullBackground } from "../components/Base/FullBackGround/FullBackground";
 import { InfoButton } from "../components/Base/IconButtons/InfoButton";
 import { SettingsButton } from "../components/Base/IconButtons/SettingsButton";
+import { useGlobalState } from "../global/globalState";
+import { useLanguage } from "../hooks/useLanguage";
+import { UpdateRequired } from "../components/UpdateRequired/UpdateRequired";
+import { CONF } from "../conf";
 
-// import { AdBanner } from "../components/Adds/AdBanner";
-
-export const HomePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Home">> = ({ navigation }) => {
+export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Home">> = ({ navigation }) => {
   const [length, setLength] = useState<number>();
+  const { state, setState } = useGlobalState();
+  const { t, l } = useLanguage();
+
+  const updateRequired: boolean = CONF.VER !== state.version;
+
   const onGame = () => {
     if (length) {
-      navigation.navigate("Game", {
+      const newGameCount = (state.gameCount ?? 0) + 1;
+      setState((prev) => ({ ...prev, gameCount: newGameCount }));
+      navigation.replace("GamePre", {
         length,
       });
     }
   };
+
+  if (updateRequired) return <UpdateRequired version={state.version} />;
 
   return (
     <FullBackground>
@@ -33,25 +44,24 @@ export const HomePage: React.FC<NativeStackScreenProps<RootScreenParamList, "Hom
         </View>
         <View style={styles.info}>
           <TouchableOpacity style={[styles.button, length === 5 && styles.selected]} onPress={() => setLength(5)}>
-            <Text style={styles.buttonText}>5 HARFLİ</Text>
+            <Text style={styles.buttonText}>{t("fiveLetters")}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, length === 6 && styles.selected]} onPress={() => setLength(6)}>
-            <Text style={styles.buttonText}>6 HARFLİ</Text>
+            <Text style={styles.buttonText}>{t("sixLetters")}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, length === 7 && styles.selected]} onPress={() => setLength(7)}>
-            <Text style={styles.buttonText}>7 HARFLİ</Text>
+            <Text style={styles.buttonText}>{t("sevenLetters")}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.start}>
           {length && (
             <TouchableOpacity style={styles.startButton} onPress={onGame}>
               <View style={styles.startButton}>
-                <Text style={styles.startButtonText}>OYUNA BAŞLA</Text>
+                <Text style={styles.startButtonText}>{t("newGame")}</Text>
               </View>
             </TouchableOpacity>
           )}
         </View>
-        {/* <AdBanner /> */}
       </View>
     </FullBackground>
   );
@@ -65,11 +75,12 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 10,
-    paddingVertical: 20,
+    // padding: 10,
+    // paddingVertical: 20,
   },
   headerItem: {
-    padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical: Platform.OS === "ios" ? 10 : 30,
   },
   info: {
     position: "absolute",
@@ -98,8 +109,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: COLORS.GRAY,
-    color: COLORS.WHITE,
+    borderColor: COLORS.COMMON.GRAY,
+    color: COLORS.COMMON.WHITE,
     shadowColor: "#ccc",
     shadowOffset: {
       width: 0,
@@ -110,12 +121,12 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     fontSize: 18,
-    color: COLORS.GREEN_SUPER_LIGHT,
+    color: COLORS.COMMON.GREEN_SUPER_LIGHT,
     fontFamily: FONT_FAMILY.Black,
   },
   selected: {
-    backgroundColor: COLORS.GRAY,
-    borderColor: COLORS.GREEN_SUPER_LIGHT,
+    backgroundColor: COLORS.COMMON.GRAY,
+    borderColor: COLORS.COMMON.GREEN_SUPER_LIGHT,
   },
   startButton: {},
   startButtonText: {

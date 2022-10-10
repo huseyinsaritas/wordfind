@@ -16,9 +16,10 @@ type Props = {
   isValid: boolean;
   clueChars: string[];
   gameWon: boolean;
+  keysDisabled: boolean;
 };
 
-export const Body: React.FC<Props> = ({ data, onPressKeyboard, onPressSubmit, onPressCancel, gameFinished, isValid, clueChars, gameWon }) => {
+export const Body: React.FC<Props> = ({ data, onPressKeyboard, onPressSubmit, onPressCancel, gameFinished, isValid, clueChars, gameWon, keysDisabled }) => {
   return (
     <View style={styles.body}>
       <GuessContainer data={data} isValid={isValid} />
@@ -27,10 +28,10 @@ export const Body: React.FC<Props> = ({ data, onPressKeyboard, onPressSubmit, on
           onPress={onPressKeyboard}
           onPressSubmit={onPressSubmit}
           onPressCancel={onPressCancel}
-          answer={data.answer}
-          mays={data.mays}
+          data={data}
           gameFinished={gameFinished}
           clueChars={clueChars}
+          keysDisabled={keysDisabled}
         />
       </View>
     </View>

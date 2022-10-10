@@ -8,7 +8,7 @@ import { Loading } from "../Base/Loading";
 const adUnitIdInterstitial = __DEV__ ? TestIds.INTERSTITIAL : Platform.select(CONF.ADMOB.interstitial) || "";
 // const adUnitIdInterstitial = Platform.select(CONF.ADMOB.interstitial) || "";
 
-const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+const interstitial = InterstitialAd.createForAdRequest(adUnitIdInterstitial, {
   requestNonPersonalizedAdsOnly: true,
 });
 

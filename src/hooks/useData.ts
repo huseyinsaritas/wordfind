@@ -1,39 +1,58 @@
 import { useState, useEffect } from "react";
 import Toast from "react-native-root-toast";
 import { getInitialData } from "../data/getInitialData";
-import { IChar } from "../model/Char";
 import { IGameData } from "../model/GameData";
-import * as api from "../api";
 import { deepCopy } from "../util";
+import { useGlobalState } from "../global/globalState";
+import * as api from "../api";
+import { DISCLOSE_TIME_MS } from "../constants/Layout";
+import { useSounds } from "./useSounds";
 
 export const useData = (len: number) => {
+  const { state } = useGlobalState();
   const [gameLoading, setGameLoading] = useState(true);
   const [isValid, setIsValid] = useState<boolean>(true);
-
+  const [keysDisabled, setKeysDisabled] = useState(false);
   const [data, setData] = useState<IGameData>();
+  const { play, soundsLoaded } = useSounds();
+
+  console.log("soundsLoaded", soundsLoaded);
 
   useEffect(() => {
     newGame();
   }, []);
 
   const newGame = async () => {
-    setIsValid(true);
     setGameLoading(true);
-    const data = await getInitialData(len);
+    const data = await getInitialData(len, state.lan ?? "");
     setData(data);
     setGameLoading(false);
   };
-  console.log("data", data);
   const submitData = () => {
     if (data === undefined) return false;
 
     if (data.mays.length < data.answer.length) {
       if (data?.answer.length === data?.currentMay.length) {
-        api.isValidWord(data?.currentMay.join("")).then((valid: boolean) => {
-          if (!valid) {
+        api.isValidWord(data?.currentMay.join(""), state.lan ?? "").then((valid: boolean) => {
+          if (valid === true) {
+            setIsValid(true);
+            setKeysDisabled(true);
+            setTimeout(() => {
+              setKeysDisabled(false);
+            }, DISCLOSE_TIME_MS * data.answer.length);
+
+            setData((prev) => {
+              if (prev === undefined) return prev;
+              const clone = deepCopy(prev);
+              const addObj = clone.currentMay;
+              clone.currentMay = [];
+              clone.mays.push(addObj);
+              return clone;
+            });
+          } else {
             setIsValid(false);
             Toast.show("Kelime listesinde yok!", {
-              duration: Toast.durations.LONG,
+              duration: Toast.durations.SHORT,
               position: 40,
               shadow: true,
               animation: true,
@@ -44,21 +63,10 @@ export const useData = (len: number) => {
             });
             return false;
           }
-          setData((prev) => {
-            if (prev === undefined) return prev;
-            const clone = deepCopy(prev);
-            const addObj = clone.currentMay;
-            clone.currentMay = [];
-            clone.mays.push(addObj);
-            return clone;
-          });
-
-          setIsValid(true);
         });
       } else {
-        setIsValid(false);
         Toast.show("Yetersiz harf!", {
-          duration: Toast.durations.LONG,
+          duration: Toast.durations.SHORT,
           position: 40,
           shadow: true,
           animation: true,
@@ -105,5 +113,5 @@ export const useData = (len: number) => {
     }
   };
 
-  return { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid };
+  return { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, keysDisabled };
 };

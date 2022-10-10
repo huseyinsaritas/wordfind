@@ -15,6 +15,8 @@ eas.json > build.development.ios.simulator = true
 
 # eas build --profile preview --platform android --message "animated"
 
+# eas build --profile preview --platform ios --message "animated"
+
 # eas update --branch preview --message "upp the app first"
 
 # eas update --branch preview --platform ios --message "score2"

@@ -4,25 +4,27 @@ import { FONT_FAMILY } from "../../constants/Layout";
 import Icon from "@expo/vector-icons/Ionicons";
 import { COLORS } from "../../constants/Colors";
 import { AdRewardedInterstitial } from "../Adds/AdRewardedInterstitial";
+import { useLanguage } from "../../hooks/useLanguage";
 
 type Props = {
   onEarned: () => void;
   onClosed: () => void;
   onFailed: () => void;
+  onModalClose: () => void;
+  show: boolean;
 };
 
-export const AdsModal: React.FC<Props> = ({ onEarned, onClosed, onFailed }) => {
-  const [modalVisible, setModalVisible] = useState(true);
+export const AdsModal: React.FC<Props> = ({ onEarned, onClosed, onFailed, onModalClose, show }) => {
   const [showAds, setShowAds] = useState<boolean>(false);
-  console.log("showAds", showAds);
+  const { t } = useLanguage();
 
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={modalVisible}
+      visible={show}
       onRequestClose={() => {
-        setModalVisible(!modalVisible);
+        onModalClose();
       }}
     >
       <View style={styles.centeredView}>
@@ -30,21 +32,19 @@ export const AdsModal: React.FC<Props> = ({ onEarned, onClosed, onFailed }) => {
           <TouchableOpacity
             style={styles.buttonClose}
             onPress={() => {
-              setModalVisible(!modalVisible);
-              // closeModal();
-              console.log("close");
+              onModalClose();
             }}
           >
             <Icon name="close" size={30} color="#fff" />
           </TouchableOpacity>
           <View>
-            <Text style={styles.header}>İpucu Haklarınız Bitti!</Text>
-            <Text style={styles.subText}>Reklam izleyerek yeni hak kazanabilirsiniz.</Text>
+            <Text style={styles.header}>{t("clueModalHeader")}</Text>
+            <Text style={styles.subText}>{t("clueModalText")}</Text>
           </View>
           <TouchableOpacity onPress={() => setShowAds(true)}>
             <View style={styles.buttonPlay}>
               <Icon name="play" size={20} color="#fff" />
-              <Text style={styles.buttonText}>Reklam İzle</Text>
+              <Text style={styles.buttonText}>{t("watchADS")}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -53,8 +53,7 @@ export const AdsModal: React.FC<Props> = ({ onEarned, onClosed, onFailed }) => {
         show={showAds}
         onEarned={() => {
           onEarned();
-          setShowAds(false);
-          // closeModal();
+          // setShowAds(false);
         }}
         onClosed={onClosed}
         onFailed={onFailed}
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: Dimensions.get("window").width - 50,
-    backgroundColor: COLORS.COLOR_TONE6,
+    backgroundColor: COLORS.COMMON.COLOR_TONE6,
     borderRadius: 20,
     paddingVertical: 25,
     paddingHorizontal: 20,
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: FONT_FAMILY.Black,
     minWidth: 150,
-    color: COLORS.COLOR_TONE1,
+    color: COLORS.COMMON.COLOR_TONE1,
   },
   header: {
     color: "#fff",
@@ -136,9 +135,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: COLORS.GREEN_SUPER_LIGHT,
-    backgroundColor: COLORS.GREEN,
-    color: COLORS.COLOR_TONE1,
+    borderColor: COLORS.COMMON.GREEN_SUPER_LIGHT,
+    backgroundColor: COLORS.COMMON.GREEN,
+    color: COLORS.COMMON.COLOR_TONE1,
     shadowColor: "#ccc",
     shadowOffset: {
       width: 0,
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     fontSize: 16,
-    color: COLORS.GREEN_SUPER_LIGHT,
+    color: COLORS.COMMON.GREEN_SUPER_LIGHT,
     fontFamily: FONT_FAMILY.Black,
     marginLeft: 5,
   },

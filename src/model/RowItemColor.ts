@@ -1,1 +1,1 @@
-export type IRowItemColor = "green" | "yellow" | "darkgray" | "gray" | "red";
+export type IRowItemColor = "green" | "yellow" | "darkgray" | "gray" | "white";

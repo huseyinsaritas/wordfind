@@ -24,8 +24,8 @@ const createEmptyRowData = (len: number) => {
 //   }
 // };
 
-export const getInitialData = async (len: number): Promise<IGameData | undefined> => {
-  const apiDatas = await api.getRandomGame(len);
+export const getInitialData = async (len: number, lan?: string): Promise<IGameData | undefined> => {
+  const apiDatas = await api.getRandomGame(len, lan);
 
   const initialData: IGameData = {
     answer: apiDatas.item.split(""),

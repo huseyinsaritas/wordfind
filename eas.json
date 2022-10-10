@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 2.1.0"
+    "version": ">= 2.0.0"
   },
   "build": {
     "development": {
@@ -27,6 +27,10 @@
   },
   "submit": {
     "production": {
+      "ios": {
+        "appleId": "hsynsrts@icloud.com",
+        "appleTeamId": "G75P5S2FT7"
+      },
       "android": {
         "serviceAccountKeyPath": "./api-6723528568689239438-473523-efd6dddf681e.json"
       }

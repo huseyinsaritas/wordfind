@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export const FullScreen: React.FC<{ bgColor: string; topColor?: string; bottomColor?: string; children: JSX.Element | JSX.Element[] }> = ({
+export const FullScreen: React.FC<{ bgColor?: string; topColor?: string; bottomColor?: string; children: JSX.Element | JSX.Element[] }> = ({
   bgColor,
   topColor,
   bottomColor,

@@ -69,18 +69,28 @@ export const getKeyColors = (answer: string[], mays: string[][]): { [key: string
   return char;
 };
 
-export const getKeyBorderColors = (clueChars: string[]): { [key: string]: IRowItemColor } => {
-  const char: { [key: string]: IRowItemColor } = {};
+export const isBorder = (clueChars: string[]): { [key: string]: boolean } => {
+  const char: { [key: string]: boolean } = {};
 
   if (clueChars.length > 0) {
     clueChars.forEach((c, i) => {
-      return (char[c] = "red");
+      return (char[c] = true);
     });
   }
   return char;
 };
 
-export const getRandomClueChar = (answer: string[], clueChars: string[]): string | undefined => {
+export const getRandomClueChar = (answer: string[], mays: string[][], clueChars: string[]): string | undefined => {
+  let knownLettersNumber = 0;
+  if (mays.length > 0) {
+    for (let index = 0; index < mays.length; index++) {
+      const may = mays[index];
+      may.filter((m) => {
+        if (answer.includes(m)) knownLettersNumber++;
+      });
+    }
+  }
+
   if (answer.length > clueChars.length) {
     const uniqueAnswerItems = answer.filter((o) => clueChars.indexOf(o) === -1);
     const char = uniqueAnswerItems[Math.floor(Math.random() * uniqueAnswerItems.length)];
@@ -102,11 +112,11 @@ export const howMayFindCharByOneRow = (answer: string[], may: string[]): number 
 };
 
 export const getColor = (color?: string) => {
-  if (color === "gray") return COLORS.COLOR_TONE2;
-  if (color === "darkgray") return COLORS.COLOR_TONE4;
-  if (color === "green") return COLORS.DARKANDGREEN;
-  if (color === "yellow") return COLORS.DARKANDYELLOW;
-  if (color === "red") return COLORS.RED;
+  if (color === "gray") return COLORS.COMMON.COLOR_TONE2;
+  if (color === "darkgray") return COLORS.COMMON.COLOR_TONE4;
+  if (color === "green") return COLORS.COMMON.DARKANDGREEN;
+  if (color === "yellow") return COLORS.COMMON.YELLOW;
+  if (color === "white") return COLORS.COMMON.COLOR_TONE1;
 };
 
 export const deepCopy = <T>(value: T): T => {

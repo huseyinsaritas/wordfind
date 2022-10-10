@@ -1,23 +1,19 @@
 import * as React from "react";
-import { ColorSchemeName } from "react-native";
-import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import { AppStackParamList, RootScreenParamList } from "../types";
-import LinkingConfiguration from "./LinkingConfiguration";
-
 import NotFoundScreen from "../screens/NotFoundScreen";
+import { GameScreen } from "../screens/GameScreen";
+import { HomeScreen } from "../screens/HomeScreen";
+import { InfoScreen } from "../screens/InfoScreen";
+import { SettingsScreen } from "../screens/SettingsScreen";
+import { GamePreScreen } from "../screens/GamePreScreen";
+import { ThemeContextProvider } from "../theme/ThemeContext";
 
-import { HomePage } from "../pages/Home";
-import { GamePage } from "../pages/Game";
-import { InfoPage } from "../pages/Info";
-import { SettingsPage } from "../pages/Settings";
-
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation() {
   return (
-    <NavigationContainer linking={LinkingConfiguration} theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeContextProvider>
       <AppNavigator />
-    </NavigationContainer>
+    </ThemeContextProvider>
   );
 }
 
@@ -34,9 +30,10 @@ const AppNavigator = () => {
 const RootStackNavigator = createNativeStackNavigator<RootScreenParamList>();
 const RootNavigator = () => (
   <RootStackNavigator.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-    <RootStackNavigator.Screen name="Home" component={HomePage} />
-    <RootStackNavigator.Screen name="Game" component={GamePage} />
-    <RootStackNavigator.Screen name="Info" component={InfoPage} />
-    <RootStackNavigator.Screen name="Settings" component={SettingsPage} />
+    <RootStackNavigator.Screen name="Home" component={HomeScreen} />
+    <RootStackNavigator.Screen name="Game" component={GameScreen} options={{ animation: "fade", gestureEnabled: false }} />
+    <RootStackNavigator.Screen name="GamePre" component={GamePreScreen} options={{ animation: "fade", gestureEnabled: false }} />
+    <RootStackNavigator.Screen name="Info" component={InfoScreen} />
+    <RootStackNavigator.Screen name="Settings" component={SettingsScreen} />
   </RootStackNavigator.Navigator>
 );

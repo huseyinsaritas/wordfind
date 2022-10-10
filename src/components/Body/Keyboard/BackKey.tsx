@@ -1,16 +1,16 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import Icon from "@expo/vector-icons/Feather";
 import { COLORS } from "../../../constants/Colors";
 
 type Props = {
   onPress?: () => void;
-  gameFinished?: boolean;
+  disabled?: boolean;
 };
 
-const BackKey: React.FC<Props> = ({ gameFinished, onPress }) => {
+const BackKey: React.FC<Props> = ({ disabled, onPress }) => {
   return (
-    <TouchableOpacity disabled={gameFinished} style={styles.backKey} onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity disabled={disabled} style={styles.backKey} onPress={onPress} activeOpacity={0.8}>
       <Icon name="delete" size={32} color="#fff" />
     </TouchableOpacity>
   );
@@ -18,17 +18,17 @@ const BackKey: React.FC<Props> = ({ gameFinished, onPress }) => {
 
 const styles = StyleSheet.create({
   backKey: {
-    minWidth: 48,
+    minWidth: Dimensions.get("window").width >= 390 ? 55 : 48,
     height: 55,
     marginVertical: 1,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderRadius: 4,
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.COLOR_TONE2,
-    color: COLORS.COLOR_TONE1,
-    borderColor: COLORS.COLOR_TONE4,
+    backgroundColor: COLORS.COMMON.COLOR_TONE2,
+    color: COLORS.COMMON.COLOR_TONE1,
+    borderColor: COLORS.COMMON.COLOR_TONE4,
     shadowColor: "#ccc",
     shadowOffset: {
       width: 0,

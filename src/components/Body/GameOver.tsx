@@ -6,6 +6,7 @@ import Icon from "@expo/vector-icons/Ionicons";
 import { COLORS } from "../../constants/Colors";
 import { howMayFindCharByOneRow } from "../../util";
 import { Button } from "../Base/Button/Button";
+import { useLanguage } from "../../hooks/useLanguage";
 
 type Props = {
   data: IGameData;
@@ -17,8 +18,9 @@ type Props = {
 export const GameOver: React.FC<Props> = ({ data, gameWon, onPressHomePage, onPressNewGame }) => {
   const [modalVisible, setModalVisible] = useState(true);
   const items = Array.from(Array(data.answer.length));
+  const { t } = useLanguage();
 
-  const correctAnswerIndex = data.mays.findIndex((may) => may.join("") === data.answer.join(""));
+  // const correctAnswerIndex = data.mays.findIndex((may) => may.join("") === data.answer.join(""));
 
   const calcWith = (index: number): number => {
     const correctLetterNumbr = howMayFindCharByOneRow(data.answer, data.mays[index]);
@@ -67,8 +69,8 @@ export const GameOver: React.FC<Props> = ({ data, gameWon, onPressHomePage, onPr
               ))}
             </View>
             <View style={styles.modalFooter}>
-              <Button text="YENI OYUN" onPress={() => newGameClicked()} backgroundColor={COLORS.DARKANDGREEN} />
-              <Button text="ANA SAYFA" onPress={() => homePageClicked()} />
+              <Button text={t("newGame")} onPress={() => newGameClicked()} backgroundColor={COLORS.COMMON.DARKANDGREEN} />
+              <Button text={t("mainPage")} onPress={() => homePageClicked()} />
             </View>
           </View>
         </View>
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: Dimensions.get("window").width - 50,
-    backgroundColor: COLORS.COLOR_TONE6,
+    backgroundColor: COLORS.COMMON.COLOR_TONE6,
     borderRadius: 20,
     paddingVertical: 25,
     paddingHorizontal: 20,
@@ -126,16 +128,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: FONT_FAMILY.Black,
     minWidth: 150,
-    color: COLORS.COLOR_TONE1,
+    color: COLORS.COMMON.COLOR_TONE1,
   },
   modalAnswer: {
     paddingVertical: 10,
     textAlign: "center",
     fontFamily: FONT_FAMILY.Black,
     fontSize: 16,
-    color: COLORS.COLOR_TONE1,
+    color: COLORS.COMMON.COLOR_TONE1,
     // borderWidth: 1,
-    // borderColor: COLORS.GREEN,
+    // borderColor: COLORS.COMMON.GREEN,
     // borderRadius: 10,
   },
   graphContainer: {
@@ -152,12 +154,12 @@ const styles = StyleSheet.create({
   graph: {
     width: "100%",
     height: "100%",
-    backgroundColor: COLORS.COLOR_TONE4,
+    backgroundColor: COLORS.COMMON.COLOR_TONE4,
     borderRadius: 25,
   },
   graphBar: {
     height: "100%",
-    backgroundColor: COLORS.COLOR_TONE4,
+    backgroundColor: COLORS.COMMON.COLOR_TONE4,
     borderRadius: 25,
   },
   alignRight: {
@@ -166,12 +168,12 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   highlight: {
-    backgroundColor: COLORS.GREEN,
+    backgroundColor: COLORS.COMMON.GREEN,
   },
   numGuesses: {
     fontSize: 12,
     fontWeight: "bold",
-    color: COLORS.COLOR_TONE1,
+    color: COLORS.COMMON.COLOR_TONE1,
     paddingLeft: 5,
   },
   modalFooter: {

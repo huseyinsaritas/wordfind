@@ -1,53 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Animated, Easing } from "react-native";
 import { COLORS } from "../../../constants/Colors";
-import { FONT_FAMILY } from "../../../constants/Layout";
+import { DISCLOSE_TIME_MS, FONT_FAMILY } from "../../../constants/Layout";
 import { getColor } from "../../../util";
+import Icon from "@expo/vector-icons/Feather";
+import { useGlobalState } from "../../../global/globalState";
+import { useTheme } from "../../../hooks/useTheme";
 
 type Props = {
   val: string;
   color?: string;
-  borderColor?: string;
+  isBorder?: boolean;
   onPress: () => void;
-  gameFinished?: boolean;
+  disabled?: boolean;
+  answer: string[];
 };
 
-export const Key: React.FC<Props> = ({ val, color, borderColor, onPress, gameFinished }) => {
-  const currentColor = COLORS.COLOR_TONE2;
-  // const [keyColor, setKeyColor] = useState<string | undefined>();
+export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, answer }) => {
+  const currentColor = COLORS.COMMON.COLOR_TONE2;
+  const [keyBgColor, setKeyBgColor] = useState<string>(currentColor);
+  const { state } = useGlobalState();
+  const { theme } = useTheme();
   if (val === "") return <View style={styles.key} />;
-  const keyColor = getColor(color);
-  const keyBorderColor = getColor(borderColor);
 
-  // const colorAnimation = new Animated.Value(0);
-  // const animate = () => {
-  //   Animated.timing(colorAnimation, {
-  //     toValue: 1,
-  //     duration: 1000,
-  //     useNativeDriver: true,
-  //   }).start(() => {
-  //     // const keyColor = getColor(color);
-  //     // setKeyColor(keyColor);
-  //   });
-  // };
-  // const interpolateColor = colorAnimation.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: [currentColor, keyColor || currentColor],
-  // });
+  // const keyBorderColor = getColor(borderColor);
+  const opacityAnimation = new Animated.Value(0);
+
+  useEffect(() => {
+    const keyColor = getColor(color);
+    const interval = setInterval(() => {
+      if (keyColor) {
+        setKeyBgColor(keyColor);
+      }
+    }, DISCLOSE_TIME_MS * answer.length - 500);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [color]);
+
+  useEffect(() => {
+    opacityAnimate();
+  }, [isBorder]);
+
+  const opacityAnimate = () => {
+    Animated.timing(opacityAnimation, {
+      toValue: 1,
+      duration: 2000,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start(() => {
+      opacityAnimation.setValue(1);
+    });
+  };
+
+  const opacity = opacityAnimation.interpolate({
+    inputRange: [0, 0.25, 0.5, 1],
+    outputRange: [0, 1, 0, 1],
+  });
 
   const animatedStyle = {
-    // backgroundColor: interpolateColor || keyColor,
-    backgroundColor: keyColor ? keyColor : currentColor,
-    borderColor: keyBorderColor ? keyBorderColor : currentColor,
+    backgroundColor: keyBgColor,
+    borderWidth: isBorder ? 2 : 0,
+    borderTopColor: isBorder ? theme.colors.border : currentColor,
+    borderBottomColor: isBorder ? theme.colors.border : currentColor,
+    borderLeftColor: isBorder ? theme.colors.border : currentColor,
+    borderRightColor: isBorder ? theme.colors.border : currentColor,
+    opacity: isBorder ? opacity : 1,
+    minWidth: state.lan === "en" ? 35 : 30,
   };
+
   const viewStyle = [styles.key, { ...animatedStyle }];
 
-  // useEffect(() => {
-  //   animate();
-  // }, []);
-
   return (
-    <TouchableOpacity delayPressIn={0} disabled={gameFinished} onPress={onPress}>
+    <TouchableOpacity delayPressIn={0} disabled={disabled} onPress={onPress}>
       <Animated.View style={viewStyle}>
         <Text style={styles.font}>{val}</Text>
       </Animated.View>
@@ -57,19 +83,22 @@ export const Key: React.FC<Props> = ({ val, color, borderColor, onPress, gameFin
 
 const styles = StyleSheet.create({
   key: {
-    minWidth: 30,
+    // minWidth: 35,
     height: 55,
     padding: 3,
-    marginHorizontal: 1,
+    marginHorizontal: 2,
     marginVertical: 3,
-    borderWidth: 1,
-    borderRadius: 4,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
+    // borderWidth: 1,
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.COLOR_TONE2,
-    color: COLORS.COLOR_TONE1,
-    borderColor: COLORS.COLOR_TONE4,
+    backgroundColor: COLORS.COMMON.COLOR_TONE2,
+    color: COLORS.COMMON.COLOR_TONE1,
+    // borderColor: COLORS.COMMON.COLOR_TONE4,
   },
   font: {
     fontSize: 25,

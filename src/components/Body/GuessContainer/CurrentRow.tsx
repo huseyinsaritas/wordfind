@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Animated, Easing } from "react-native";
 import { RowItem } from "./RowItem";
 
@@ -6,11 +6,11 @@ type Props = {
   may: string[];
   answer: string[];
   isValid: boolean;
+  border: boolean;
 };
 
-export const CurrentRow: React.FC<Props> = ({ may, answer, isValid }) => {
+export const CurrentRow: React.FC<Props> = ({ may, answer, isValid, border }) => {
   const emptyItems = Array.from(Array(answer.length - may.length));
-
   const shakeAnimation = new Animated.Value(0);
 
   const startShake = () => {
@@ -24,9 +24,11 @@ export const CurrentRow: React.FC<Props> = ({ may, answer, isValid }) => {
     });
   };
 
-  if (isValid === false) {
-    startShake();
-  }
+  useEffect(() => {
+    if (isValid === false) {
+      startShake();
+    }
+  }, [isValid]);
 
   const interpolateRotating = shakeAnimation.interpolate({
     inputRange: [0, 0.5, 1, 1.5, 2, 2.5, 3],
@@ -47,10 +49,10 @@ export const CurrentRow: React.FC<Props> = ({ may, answer, isValid }) => {
         {may &&
           may.length > 0 &&
           may?.map((r, i) => {
-            return <RowItem val={r} key={i} />;
+            return <RowItem border={border} val={r} key={i} />;
           })}
         {emptyItems.map((_, i) => (
-          <RowItem key={i} />
+          <RowItem key={i} border={border} />
         ))}
       </Animated.View>
     </View>

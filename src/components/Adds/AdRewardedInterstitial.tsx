@@ -60,6 +60,7 @@ export const AdRewardedInterstitial: React.FC<{ show: boolean; onEarned: () => v
     if (rewardedInterstitialLoaded && show) rewardedInterstitial.show();
   }, [rewardedInterstitialLoaded, show]);
 
+  // if (!rewardedInterstitialLoaded) return <Loading message={"Reklam Yükleniyor"} />;
   if (rewardedInterstitialLoaded === false) return null;
   if (rewardedInterstitialLoaded && !show) return null;
   if (rewardedInterstitialLoaded && show) return null;

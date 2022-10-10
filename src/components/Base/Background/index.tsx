@@ -1,16 +1,15 @@
 import React from "react";
+import { useTheme } from "../../../hooks/useTheme";
+
 import { FullScreen } from "./FullScreen";
 import { SafeArea } from "./SafeArea";
 
-export const Background: React.FC<{ bgColor: string; topColor?: string; bottomColor?: string; children: JSX.Element | JSX.Element[] }> = ({
-  bgColor,
-  topColor,
-  bottomColor,
-  children,
-}) => {
+export const Background: React.FC<{ topColor?: string; bottomColor?: string; children: JSX.Element | JSX.Element[] }> = ({ topColor, bottomColor, children }) => {
+  const { theme } = useTheme();
+
   return (
-    <FullScreen bgColor={bgColor} topColor={topColor} bottomColor={bottomColor}>
-      <SafeArea bgColor={bgColor}>{children}</SafeArea>
+    <FullScreen bgColor={theme.colors.background} topColor={topColor} bottomColor={bottomColor}>
+      <SafeArea bgColor={theme.colors.background}>{children}</SafeArea>
     </FullScreen>
   );
 };

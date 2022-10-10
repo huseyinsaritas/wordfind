@@ -14,7 +14,7 @@ export const Clue: React.FC<Props> = ({ onPressClue, remainingClue, gameFinished
   return (
     <TouchableOpacity disabled={gameFinished} onPress={onPressClue}>
       <View style={styles.clueContent}>
-        <Icon style={styles.clueButton} name="ios-bulb" size={22} color={COLORS.YELLOW} />
+        <Icon style={styles.clueButton} name="ios-bulb" size={22} color={remainingClue === 0 ? COLORS.COMMON.BLACK : COLORS.COMMON.YELLOW} />
         <Text style={styles.clueText}>{remainingClue}</Text>
       </View>
     </TouchableOpacity>
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     minWidth: 60,
     marginTop: 5,
-    backgroundColor: COLORS.BLUE_LIGHT,
+    backgroundColor: COLORS.COMMON.DARKGRAY,
     borderRadius: 10,
     paddingVertical: 2,
     paddingHorizontal: 10,

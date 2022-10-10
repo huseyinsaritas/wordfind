@@ -1,4 +1,11 @@
 export const CONF = {
+  VER: "1.0.0",
+
+  LINKS: {
+    APPSTORE: "https://apps.apple.com/",
+    GOOGLEPLAY: "https://play.google.com/",
+  },
+
   ADMOB: {
     rewardedInterstitial: {
       ios: "ca-app-pub-3105662444743172/5774254322",

@@ -4,8 +4,9 @@ import { COLORS } from "../../constants/Colors";
 import { AdBanner } from "../Adds/AdBanner";
 import GoBack from "../Base/IconButtons/GoBack";
 import { HeaderContainer } from "./HeaderContainer";
-import { StatisticsButton } from "../Base/IconButtons/StatisticsButton";
+// import { StatisticsButton } from "../Base/IconButtons/StatisticsButton";
 import { Clue } from "./Clue";
+import { useTheme } from "../../hooks/useTheme";
 
 type Props = {
   onPressGoBack: () => void;
@@ -16,17 +17,18 @@ type Props = {
 };
 
 export const Header: React.FC<Props> = ({ onPressGoBack, onPressClue, remainingClue, gameFinished /*, onPressNewGame*/ }) => {
+  const { theme } = useTheme();
   return (
     <>
       <HeaderContainer>
-        <GoBack onPress={onPressGoBack} size={30} />
+        <GoBack onPress={onPressGoBack} size={30} color={theme.colors.primary} />
         {/* <View style={styles.newGame}>
           <NewGame onPress={onPressNewGame} />
         </View> */}
         {/* <View style={styles.rightButtons}> */}
         <Clue gameFinished={gameFinished} remainingClue={remainingClue} onPressClue={onPressClue} />
-        {/* <ClueButton onPress={onPressStatistics} color={COLORS.YELLOW} size={25} /> */}
-        <StatisticsButton onPress={() => {}} size={30} />
+        {/* <ClueButton onPress={onPressStatistics} color={COLORS.COMMON.YELLOW} size={25} /> */}
+        {/* <StatisticsButton onPress={() => {}} size={30} /> */}
 
         {/* </View> */}
       </HeaderContainer>
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 2,
     marginTop: 5,
-    backgroundColor: COLORS.COLOR_TONE4,
+    backgroundColor: COLORS.COMMON.COLOR_TONE4,
   },
   banner: {
     zIndex: 2,

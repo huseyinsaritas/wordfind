@@ -3,18 +3,21 @@ import Toast from "react-native-root-toast";
 import { DISCLOSE_TIME_MS } from "../constants/Layout";
 import { IGameData } from "../model/GameData";
 import { useData } from "./useData";
+import { useLanguage } from "./useLanguage";
+// import { useTime } from "./useTime";
 
 export const useGame = (len: number) => {
-  const { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid } = useData(len);
+  const { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, keysDisabled } = useData(len);
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [gameWon, setGameWon] = useState<boolean>(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     setGameFinished(false);
-
     if (data) {
       const finished = checkGameFinished(data);
       if (finished) {
+        // pauseTimer();
         setGameFinished(true);
       }
     }
@@ -31,7 +34,7 @@ export const useGame = (len: number) => {
       if (may.join("") === data.answer.join("")) {
         finished = true;
         setGameWon(true);
-        Toast.show("Kazandınız!", {
+        Toast.show(t("youWin"), {
           duration: Toast.durations.LONG,
           position: 40,
           shadow: true,
@@ -64,5 +67,5 @@ export const useGame = (len: number) => {
     return finished;
   };
 
-  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon };
+  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled };
 };

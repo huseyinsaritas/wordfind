@@ -4,14 +4,15 @@ import { RowItem } from "./RowItem";
 
 type Props = {
   answer: string[];
+  border: boolean;
 };
 
-export const EmptyRow: React.FC<Props> = ({ answer }) => {
+export const EmptyRow: React.FC<Props> = ({ answer, border }) => {
   return (
     <View style={styles.answersGroupWrapper}>
       <View style={styles.answersGroupContent}>
         {answer.map((r, i) => {
-          return <RowItem key={i} />;
+          return <RowItem key={i} border={border} />;
         })}
       </View>
     </View>

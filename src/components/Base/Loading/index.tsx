@@ -5,9 +5,9 @@ import { Background } from "../Background";
 
 export const Loading: React.FC<{ message: string }> = ({ message }) => {
   return (
-    <Background bgColor={COLORS.BLUE}>
+    <Background bgColor={COLORS.COMMON.BLUE}>
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={COLORS.YELLOW} />
+        <ActivityIndicator size="large" color={COLORS.COMMON.YELLOW} />
         <Text style={styles.loading}>{message}</Text>
       </View>
     </Background>
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
-    backgroundColor: COLORS.BLUE,
+    backgroundColor: COLORS.COMMON.BLUE,
   },
   loading: {
     /* width: "100%",
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     textAlign: "center",
     fontSize: 24,
-    color: COLORS.YELLOW,
+    color: COLORS.COMMON.YELLOW,
   },
 });

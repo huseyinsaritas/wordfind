@@ -24,7 +24,7 @@ export const Footer: React.FC<Props> = (
 const styles = StyleSheet.create({
   footer: {
     alignItems: "center",
-    backgroundColor: COLORS.WHITE,
+    backgroundColor: COLORS.COMMON.WHITE,
   },
   banner: {
     zIndex: 2,

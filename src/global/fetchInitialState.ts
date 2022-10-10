@@ -3,7 +3,6 @@ import { useStorageData } from "../hooks/useStorageData";
 import { getNewDeviceId } from "../helper/getNewDeviceId";
 import * as Localization from "expo-localization";
 import { SupportedLanguages } from "../translations";
-import { COLORS } from "../constants/Colors";
 
 export const fetchInitialState = async (): Promise<GlobalStateType> => {
   const { getStorageData, saveStorageData /* , resetStorageData */ } = useStorageData();
@@ -16,7 +15,7 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
     try {
       if (key === "lan") {
         let deviceLan = Localization.locale.split("-")[0];
-        if (!SupportedLanguages.map((x) => x.code).includes(deviceLan)) deviceLan = SupportedLanguages[0].code;
+        if (!SupportedLanguages.map((x) => x.value).includes(deviceLan)) deviceLan = SupportedLanguages[0].value;
         await saveStorageData(key, deviceLan);
         return deviceLan as T;
       }
@@ -41,6 +40,16 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
       }
 
       if (key === "gameCount") {
+        await saveStorageData(key, 0);
+        return 0 as T;
+      }
+
+      if (key === "playedGameCount") {
+        await saveStorageData(key, 0);
+        return 0 as T;
+      }
+
+      if (key === "winCount") {
         await saveStorageData(key, 0);
         return 0 as T;
       }
@@ -71,6 +80,8 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
   const deviceId = await getAndCheckStorageData<string>("deviceId");
   const username = await getAndCheckStorageData<string>("username");
   const gameCount = await getAndCheckStorageData<number>("gameCount");
+  const playedGameCount = await getAndCheckStorageData<number>("playedGameCount");
+  const winCount = await getAndCheckStorageData<number>("winCount");
   const version = await getAndCheckStorageData<string>("version");
   const adsCycle = await getAndCheckStorageData<number>("adsCycle");
 
@@ -92,5 +103,7 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
     version,
     adsCycle,
     gameCount,
+    playedGameCount,
+    winCount,
   };
 };

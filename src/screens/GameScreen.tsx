@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootScreenParamList } from "../types";
+import { useLanguage } from "../hooks/useLanguage";
 import { IChar } from "../model/Char";
 import { Loading } from "../components/Base/Loading";
 import { Body } from "../components/Body";
@@ -17,15 +18,12 @@ import { getRandomClueChar } from "../util";
 import { BackHandler } from "react-native";
 import { useSounds } from "../hooks/useSounds";
 import Toast from "react-native-root-toast";
-import { useLanguage } from "../hooks/useLanguage";
-import { useGlobalState } from "../global/globalState";
 
 export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation, route }) => {
   const { length } = route.params;
-  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled } = useGame(length);
+  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled, time } = useGame(length);
   const [clue, setClue] = useState<{ showAdd: boolean; remaining: number }>({ showAdd: false, remaining: 3 });
   const [clueChars, setClueChars] = useState<string[]>([]);
-  const { state } = useGlobalState();
   const { t } = useLanguage();
   const { play } = useSounds();
 
@@ -109,11 +107,6 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
 
   const onPressSubmit = () => {
     submitData();
-    if (isValid === true) {
-      play("success");
-    } else {
-      play("wrong");
-    }
   };
 
   const onPressCancel = () => {

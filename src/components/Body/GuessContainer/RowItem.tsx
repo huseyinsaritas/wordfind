@@ -19,7 +19,7 @@ export const RowItem: React.FC<Props> = ({ val, color, id = 0, animation = false
   const { theme } = useTheme();
   const [rowColor, setRowColor] = useState<string>();
   const [borderColor, setBorderColor] = useState<string>(COLORS.COMMON.GRAY);
-  const [charColor, setCharColor] = useState<string>(theme.colors.primary);
+  const [charColor, setCharColor] = useState<string>(theme.colors.text);
   const animationDuration = DISCLOSE_TIME_MS;
   const rotateAnimation = new Animated.Value(0);
 

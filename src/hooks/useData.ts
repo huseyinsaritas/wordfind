@@ -7,6 +7,7 @@ import { useGlobalState } from "../global/globalState";
 import * as api from "../api";
 import { DISCLOSE_TIME_MS } from "../constants/Layout";
 import { useSounds } from "./useSounds";
+import { useTime } from "./useTime";
 
 export const useData = (len: number) => {
   const { state } = useGlobalState();
@@ -15,8 +16,11 @@ export const useData = (len: number) => {
   const [keysDisabled, setKeysDisabled] = useState(false);
   const [data, setData] = useState<IGameData>();
   const { play, soundsLoaded } = useSounds();
+  // const { startTimer } = useTime();
 
-  console.log("soundsLoaded", soundsLoaded);
+  console.log("data", data);
+  console.log("playedGameCount", state.playedGameCount);
+  console.log("winCount", state.winCount);
 
   useEffect(() => {
     newGame();
@@ -27,7 +31,9 @@ export const useData = (len: number) => {
     const data = await getInitialData(len, state.lan ?? "");
     setData(data);
     setGameLoading(false);
+    // startTimer();
   };
+
   const submitData = () => {
     if (data === undefined) return false;
 
@@ -41,6 +47,10 @@ export const useData = (len: number) => {
               setKeysDisabled(false);
             }, DISCLOSE_TIME_MS * data.answer.length);
 
+            if (soundsLoaded) {
+              play("success");
+            }
+
             setData((prev) => {
               if (prev === undefined) return prev;
               const clone = deepCopy(prev);
@@ -50,6 +60,9 @@ export const useData = (len: number) => {
               return clone;
             });
           } else {
+            if (soundsLoaded) {
+              play("wrong");
+            }
             setIsValid(false);
             Toast.show("Kelime listesinde yok!", {
               duration: Toast.durations.SHORT,
@@ -65,6 +78,9 @@ export const useData = (len: number) => {
           }
         });
       } else {
+        if (soundsLoaded) {
+          play("wrong");
+        }
         Toast.show("Yetersiz harf!", {
           duration: Toast.durations.SHORT,
           position: 40,

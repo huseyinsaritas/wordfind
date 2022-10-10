@@ -16,4 +16,6 @@ export type GlobalStateType = {
   deviceId: string;
   username: string;
   gameCount: number;
+  playedGameCount: number;
+  winCount: number;
 };

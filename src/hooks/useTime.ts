@@ -4,13 +4,13 @@ export const useTime = () => {
   const [timer, setTimer] = useState<number>(0);
   const intervalRef = useRef<NodeJS.Timer | undefined>(undefined);
 
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setTimer((t) => t + 1);
-    }, 1000);
+  // useEffect(() => {
+  //   intervalRef.current = setInterval(() => {
+  //     setTimer((t) => t + 1);
+  //   }, 1000);
 
-    return () => clearInterval(intervalRef.current);
-  }, []);
+  //   return () => clearInterval(intervalRef.current);
+  // }, []);
 
   // Add a listener to `timeLeft`
   // useEffect(() => {
@@ -18,6 +18,13 @@ export const useTime = () => {
   //     clearInterval(intervalRef.current);
   //   }
   // }, [time]);
+
+  const startTimer = () => {
+    intervalRef.current = setInterval(() => {
+      setTimer((t) => t + 1);
+    }, 1000);
+    return () => clearInterval(intervalRef.current);
+  };
 
   const pauseTimer = () => {
     clearInterval(intervalRef.current);
@@ -35,5 +42,5 @@ export const useTime = () => {
     resumeTimer();
   };
 
-  return { timer, pauseTimer, resumeTimer, resetTimeLeft };
+  return { timer, startTimer, pauseTimer, resumeTimer, resetTimeLeft };
 };

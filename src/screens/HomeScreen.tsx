@@ -11,11 +11,16 @@ import { useGlobalState } from "../global/globalState";
 import { useLanguage } from "../hooks/useLanguage";
 import { UpdateRequired } from "../components/UpdateRequired/UpdateRequired";
 import { CONF } from "../conf";
+import { Logo } from "../components/Base/Logo/Logo";
+import { useTheme, useThemedStyles } from "../hooks/useTheme";
+import { Theme } from "@react-navigation/native";
 
 export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Home">> = ({ navigation }) => {
   const [length, setLength] = useState<number>();
   const { state, setState } = useGlobalState();
   const { t, l } = useLanguage();
+  const { theme } = useTheme();
+  const style = useThemedStyles(styles);
 
   const updateRequired: boolean = CONF.VER !== state.version;
 
@@ -33,31 +38,32 @@ export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "H
 
   return (
     <FullBackground>
-      <View style={styles.container}>
-        <View style={styles.header}>
+      <View style={style.container}>
+        <View style={style.header}>
           <View>
-            <SettingsButton style={styles.headerItem} size={25} onPress={() => navigation.navigate("Settings")} />
+            <SettingsButton color={theme.colors.text} style={style.headerItem} size={25} onPress={() => navigation.navigate("Settings")} />
           </View>
           <View>
-            <InfoButton style={styles.headerItem} size={30} onPress={() => navigation.navigate("Info")} />
+            <InfoButton color={theme.colors.text} style={style.headerItem} size={30} onPress={() => navigation.navigate("Info")} />
           </View>
         </View>
-        <View style={styles.info}>
-          <TouchableOpacity style={[styles.button, length === 5 && styles.selected]} onPress={() => setLength(5)}>
-            <Text style={styles.buttonText}>{t("fiveLetters")}</Text>
+        <Logo />
+        <View style={style.info}>
+          <TouchableOpacity style={[style.button, length === 5 && style.selected]} onPress={() => setLength(5)}>
+            <Text style={[style.buttonText, length === 5 && style.selected]}>{t("fiveLetters")}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, length === 6 && styles.selected]} onPress={() => setLength(6)}>
-            <Text style={styles.buttonText}>{t("sixLetters")}</Text>
+          <TouchableOpacity style={[style.button, length === 6 && style.selected]} onPress={() => setLength(6)}>
+            <Text style={[style.buttonText, length === 6 && style.selected]}>{t("sixLetters")}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, length === 7 && styles.selected]} onPress={() => setLength(7)}>
-            <Text style={styles.buttonText}>{t("sevenLetters")}</Text>
+          <TouchableOpacity style={[style.button, length === 7 && style.selected]} onPress={() => setLength(7)}>
+            <Text style={[style.buttonText, length === 7 && style.selected]}>{t("sevenLetters")}</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.start}>
+        <View style={style.start}>
           {length && (
-            <TouchableOpacity style={styles.startButton} onPress={onGame}>
-              <View style={styles.startButton}>
-                <Text style={styles.startButtonText}>{t("newGame")}</Text>
+            <TouchableOpacity style={style.startButton} onPress={onGame}>
+              <View style={style.startButton}>
+                <Text style={style.startButtonText}>{t("startGame")}</Text>
               </View>
             </TouchableOpacity>
           )}
@@ -67,71 +73,88 @@ export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "H
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    // padding: 10,
-    // paddingVertical: 20,
-  },
-  headerItem: {
-    paddingHorizontal: 20,
-    paddingVertical: Platform.OS === "ios" ? 10 : 30,
-  },
-  info: {
-    position: "absolute",
-    width: "100%",
-    textAlign: "center",
-    alignItems: "center",
-    top: "40%",
-    zIndex: 1,
-  },
-  start: {
-    position: "absolute",
-    width: "100%",
-    textAlign: "center",
-    alignItems: "center",
-    top: "85%",
-    zIndex: 1,
-  },
-  button: {
-    width: 275,
-    height: 60,
-    marginTop: 30,
-    paddingHorizontal: 8,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: COLORS.COMMON.GRAY,
-    color: COLORS.COMMON.WHITE,
-    shadowColor: "#ccc",
-    shadowOffset: {
-      width: 0,
-      height: 1,
+const styles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
     },
-    borderBottomWidth: 1,
-  },
-  buttonText: {
-    textAlign: "center",
-    fontSize: 18,
-    color: COLORS.COMMON.GREEN_SUPER_LIGHT,
-    fontFamily: FONT_FAMILY.Black,
-  },
-  selected: {
-    backgroundColor: COLORS.COMMON.GRAY,
-    borderColor: COLORS.COMMON.GREEN_SUPER_LIGHT,
-  },
-  startButton: {},
-  startButtonText: {
-    fontSize: 20,
-    fontFamily: FONT_FAMILY.Black,
-    color: "white",
-  },
-});
+    header: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      // padding: 10,
+      // paddingVertical: 20,
+    },
+    headerItem: {
+      paddingHorizontal: 20,
+      paddingVertical: Platform.OS === "ios" ? 10 : 30,
+    },
+    info: {
+      position: "absolute",
+      width: "100%",
+      textAlign: "center",
+      alignItems: "center",
+      top: "40%",
+      zIndex: 1,
+    },
+    start: {
+      position: "absolute",
+      width: "100%",
+      textAlign: "center",
+      alignItems: "center",
+      top: "85%",
+      zIndex: 1,
+    },
+    button: {
+      width: 275,
+      height: 60,
+      marginTop: 30,
+      paddingHorizontal: 8,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 5,
+      overflow: "hidden",
+      borderWidth: 2,
+      borderColor: COLORS.COMMON.GRAY,
+      color: COLORS.COMMON.WHITE,
+      shadowColor: "#ccc",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      borderBottomWidth: 2,
+    },
+    buttonText: {
+      textAlign: "center",
+      fontSize: 20,
+      color: theme.colors.card,
+      fontFamily: FONT_FAMILY.Black,
+    },
+    selected: {
+      backgroundColor: COLORS.COMMON.GRAY,
+      color: COLORS.COMMON.WHITE,
+    },
+    startButton: {
+      width: 275,
+      height: 60,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      // borderWidth: 2,
+      backgroundColor: COLORS.COMMON.GREEN,
+      shadowColor: "#ccc",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      // borderBottomWidth: 2,
+      borderRadius: 5,
+    },
+    startButtonText: {
+      fontSize: 20,
+      fontFamily: FONT_FAMILY.Black,
+      color: COLORS.COMMON.WHITE,
+      overflow: "hidden",
+    },
+  });

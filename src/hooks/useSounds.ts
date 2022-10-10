@@ -39,7 +39,7 @@ export const useSounds = () => {
     const keySoundPromise = Audio.Sound.createAsync(require("../../assets/music/click.wav"));
     const removeSoundPromise = Audio.Sound.createAsync(require("../../assets/music/remove.mp3"));
     const successSoundPromise = Audio.Sound.createAsync(require("../../assets/music/enter3.wav"));
-    const wrongSoundPromise = Audio.Sound.createAsync(require("../../assets/music/wrong.mp3"));
+    const wrongSoundPromise = Audio.Sound.createAsync(require("../../assets/music/wrong2.wav"));
     const bonusSoundPromise = Audio.Sound.createAsync(require("../../assets/music/bonus.wav"));
     const noBonusSoundPromise = Audio.Sound.createAsync(require("../../assets/music/nobonus.wav"));
 

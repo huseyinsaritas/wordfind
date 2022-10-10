@@ -46,7 +46,7 @@ export const InfoScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "I
   };
 
   return (
-    <Background bgColor={COLORS.COMMON.COLOR_TONE7}>
+    <Background>
       <View>
         <Text style={style.infoHeader}>{t("howToPlay")}</Text>
         <Text style={style.infoHeaderText}>{t("howToPlayDesc1")}</Text>
@@ -59,63 +59,69 @@ export const InfoScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "I
       <View style={style.infoRow}>
         <View style={style.answersGroupContent}>
           <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.COLOR_TONE4 }, { ...animatedStyle }]}>
-            <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>B</Text>
+            <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoFirstRowFirstChar")}</Text>
           </Animated.View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>O</Text>
+            <Text style={style.tStyle}>{t("infoFirstRowSecondChar")}</Text>
           </View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>Y</Text>
+            <Text style={style.tStyle}>{t("infoFirstRowThirdChar")}</Text>
           </View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>O</Text>
+            <Text style={style.tStyle}>{t("infoFirstRowFourthChar")}</Text>
           </View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>Z</Text>
+            <Text style={style.tStyle}>{t("infoFirstRowFifthChar")}</Text>
           </View>
         </View>
-        <Text style={style.infoText}>B harfi kelimede yok.</Text>
+        <Text style={style.infoText}>
+          {t("infoFirstRowFirstChar")} {t("isNotInTheWord")}
+        </Text>
       </View>
 
       <View style={style.infoRow}>
         <View style={style.answersGroupContent}>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>E</Text>
+            <Text style={style.tStyle}>{t("infoSecondRowFirstChar")}</Text>
           </View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>K</Text>
+            <Text style={style.tStyle}>{t("infoSecondRowSecondChar")}</Text>
           </View>
           <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.YELLOW }, { ...animatedStyle }]}>
-            <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>M</Text>
+            <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoSecondRowThirdChar")}</Text>
           </Animated.View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>E</Text>
+            <Text style={style.tStyle}>{t("infoSecondRowFourthChar")}</Text>
           </View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>K</Text>
+            <Text style={style.tStyle}>{t("infoSecondRowFifthChar")}</Text>
           </View>
         </View>
-        <Text style={style.infoText}>M harfi kelimede var, fakat yanlış yerde.</Text>
+        <Text style={style.infoText}>
+          {t("infoSecondRowThirdChar")} {t("wrongSpot")}
+        </Text>
       </View>
       <View style={style.infoRow}>
         <View style={style.answersGroupContent}>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>İ</Text>
+            <Text style={style.tStyle}>{t("infoThirdRowFirstChar")}</Text>
           </View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>L</Text>
+            <Text style={style.tStyle}>{t("infoThirdRowSecondChar")}</Text>
           </View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>H</Text>
+            <Text style={style.tStyle}>{t("infoThirdRowThirdChar")}</Text>
           </View>
           <View style={style.answerItem}>
-            <Text style={style.tStyle}>A</Text>
+            <Text style={style.tStyle}>{t("infoThirdRowFourthChar")}</Text>
           </View>
           <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.GREEN }, { ...animatedStyle }]}>
-            <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>M</Text>
+            <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoThirdRowFifthChar")}</Text>
           </Animated.View>
         </View>
-        <Text style={style.infoText}>M harfi kelimede var ve doğru yerde.</Text>
+        <Text style={style.infoText}>
+          {t("infoThirdRowFifthChar")} {t("correctSpot")}
+        </Text>
       </View>
       <View style={style.infoButtonContent}>
         <Button text={t("understood")} backgroundColor={COLORS.COMMON.DARKANDGREEN} onPress={onPressGoBack} />
@@ -206,5 +212,6 @@ const styles = (theme: Theme) =>
       bottom: 20,
       left: 0,
       right: 0,
+      height: 40,
     },
   });

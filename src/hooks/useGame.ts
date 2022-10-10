@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
 import Toast from "react-native-root-toast";
 import { DISCLOSE_TIME_MS } from "../constants/Layout";
+import { useGlobalState } from "../global/globalState";
 import { IGameData } from "../model/GameData";
 import { useData } from "./useData";
 import { useLanguage } from "./useLanguage";
+import { useTime } from "./useTime";
 // import { useTime } from "./useTime";
 
 export const useGame = (len: number) => {
   const { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, keysDisabled } = useData(len);
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [gameWon, setGameWon] = useState<boolean>(false);
+  const [time, setTime] = useState<number>(0);
+  const { state, setState } = useGlobalState();
   const { t } = useLanguage();
+  // const { timer, resetTimeLeft, pauseTimer } = useTime();
+
+  // console.log(timer);
 
   useEffect(() => {
     setGameFinished(false);
@@ -18,7 +25,11 @@ export const useGame = (len: number) => {
       const finished = checkGameFinished(data);
       if (finished) {
         // pauseTimer();
+        // setTime((prev) => prev + timer);
+        // resetTimeLeft();
         setGameFinished(true);
+        const newPlayedGameCount = (state.playedGameCount ?? 0) + 1;
+        setState((prev) => ({ ...prev, playedGameCount: newPlayedGameCount }));
       }
     }
   }, [data?.mays.length]);
@@ -34,6 +45,8 @@ export const useGame = (len: number) => {
       if (may.join("") === data.answer.join("")) {
         finished = true;
         setGameWon(true);
+        const newWinCount = (state.winCount ?? 0) + 1;
+        setState((prev) => ({ ...prev, winCount: newWinCount }));
         Toast.show(t("youWin"), {
           duration: Toast.durations.LONG,
           position: 40,
@@ -67,5 +80,5 @@ export const useGame = (len: number) => {
     return finished;
   };
 
-  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled };
+  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled, time };
 };

@@ -44,11 +44,33 @@ export type Texts = {
   howToPlayDesc1: string;
   howToPlayDesc2: string;
   understood: string;
+
+  isNotInTheWord: string;
+  correctSpot: string;
+  wrongSpot: string;
+
+  infoFirstRowFirstChar: string;
+  infoFirstRowSecondChar: string;
+  infoFirstRowThirdChar: string;
+  infoFirstRowFourthChar: string;
+  infoFirstRowFifthChar: string;
+
+  infoSecondRowFirstChar: string;
+  infoSecondRowSecondChar: string;
+  infoSecondRowThirdChar: string;
+  infoSecondRowFourthChar: string;
+  infoSecondRowFifthChar: string;
+
+  infoThirdRowFirstChar: string;
+  infoThirdRowSecondChar: string;
+  infoThirdRowThirdChar: string;
+  infoThirdRowFourthChar: string;
+  infoThirdRowFifthChar: string;
 };
 
 export const SupportedLanguages = [
-  { code: "en", name: "English" },
-  { code: "tr", name: "Türkçe" },
+  { value: "en", label: "English" },
+  { value: "tr", label: "Türkçe" },
 ];
 
 export const SupportedTheme = [
@@ -64,8 +86,8 @@ export const languages: {
     appName: "WORDFIND",
     languages: "Languages",
     settings: "Settings",
-    newGame: "START GAME",
-    startGame: "NEW GAME",
+    newGame: "NEW GAME",
+    startGame: "START GAME",
     mainPage: "MAIN PAGE",
     // Profile
     gameCount: "Game Count",
@@ -104,6 +126,29 @@ export const languages: {
     howToPlayDesc1: "You need to guess the answer in as many letters as you choose in the start of game.",
     howToPlayDesc2: "After the entered word, the colors of the boxes will change according to the correctness of the answer.",
     understood: "Understood!",
+
+    correctSpot: "is in the word and in the correct spot.",
+    wrongSpot: "is in the word but in the wrong spot.",
+    isNotInTheWord: "is not in the word.",
+
+    infoFirstRowFirstChar: "H",
+    infoFirstRowSecondChar: "I",
+    infoFirstRowThirdChar: "N",
+    infoFirstRowFourthChar: "K",
+    infoFirstRowFifthChar: "Y",
+
+    infoSecondRowFirstChar: "C",
+    infoSecondRowSecondChar: "A",
+    infoSecondRowThirdChar: "M",
+    infoSecondRowFourthChar: "E",
+    infoSecondRowFifthChar: "L",
+
+    infoThirdRowFirstChar: "G",
+    infoThirdRowSecondChar: "L",
+    infoThirdRowThirdChar: "O",
+    infoThirdRowFourthChar: "A",
+    infoThirdRowFifthChar: "M",
+
     // Settings
     gameSounds: "Game Sounds",
   },
@@ -151,6 +196,29 @@ export const languages: {
     howToPlayDesc1: "Oyuna başlarken seçtiğiniz harf sayısı kadar tahmin hakkınız vardır.",
     howToPlayDesc2: "Her tahminden sonra kutucukların renkleri tahmininizin yakınlığına göre değişecektir.",
     understood: "Anladım!",
+
+    correctSpot: "harfi kelimede var ve doğru yerde.",
+    wrongSpot: "harfi kelimede var fakat yanlış yerde.",
+    isNotInTheWord: "harfi kelimede yok.",
+
+    infoFirstRowFirstChar: "B",
+    infoFirstRowSecondChar: "O",
+    infoFirstRowThirdChar: "Y",
+    infoFirstRowFourthChar: "O",
+    infoFirstRowFifthChar: "Z",
+
+    infoSecondRowFirstChar: "E",
+    infoSecondRowSecondChar: "K",
+    infoSecondRowThirdChar: "M",
+    infoSecondRowFourthChar: "E",
+    infoSecondRowFifthChar: "K",
+
+    infoThirdRowFirstChar: "İ",
+    infoThirdRowSecondChar: "L",
+    infoThirdRowThirdChar: "H",
+    infoThirdRowFourthChar: "A",
+    infoThirdRowFifthChar: "M",
+
     // Settings
     gameSounds: "Oyun Sesleri",
   },

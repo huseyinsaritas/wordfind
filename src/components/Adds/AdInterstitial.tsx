@@ -53,6 +53,7 @@ export const AdInterstitial: React.FC<{ onClosed: () => void; onFailed: () => vo
 
   // return <Loading message="" />;
 
+  return <></>;
   return (
     <Button
       text="Show Interstitial"

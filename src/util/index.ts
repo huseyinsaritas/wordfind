@@ -12,42 +12,6 @@ export const split = (word: string) => {
   return word.split("");
 };
 
-/* export const getRowColors = (answer: string[], may: string[]): IRowItemColor[] => {
-  const flagFilled: boolean[] = answer.map((_) => false);
-
-  const colors: IRowItemColor[] = Array.from(Array(may.length));
-
-  may.forEach((c, i) => {
-    if (c === answer[i]) {
-      colors[i] = "green";
-      flagFilled[i] = true;
-      return;
-    }
-  });
-
-  may.forEach((c, i) => {
-    if (colors[i]) return;
-
-    if (!answer.includes(c)) {
-      colors[i] = "darkgray";
-      return;
-    }
-
-    const currentCharIndex = answer.findIndex((x, index) => x === c && !flagFilled[index]);
-
-    if (currentCharIndex > -1) {
-      colors[i] = "yellow";
-      flagFilled[currentCharIndex] = true;
-      return;
-    } else {
-      colors[i] = "darkgray";
-      return;
-    }
-  });
-
-  return colors;
-}; */
-
 export const getKeyColors = (answer: string[], mays: string[][]): { [key: string]: IRowItemColor } => {
   const char: { [key: string]: IRowItemColor } = {};
 
@@ -81,22 +45,23 @@ export const isBorder = (clueChars: string[]): { [key: string]: boolean } => {
   return char;
 };
 
-export const getRandomClueChar = (answer: string[], mays: string[][], clueChars: string[]): string | undefined => {
-  let knownLettersNumber = 0;
-  if (mays.length > 0) {
-    for (let index = 0; index < mays.length; index++) {
-      const may = mays[index];
-      may.filter((m) => {
-        if (answer.includes(m)) knownLettersNumber++;
-      });
-    }
-  }
+export const getRandomClueChar = (answer: string[], mayRows: MayRow[], clues: string[]): string | undefined => {
+  const excludes = [...clues];
+  const founds: string[] = mayRows.reduce<string[]>((prev, curr) => {
+    curr.chars.forEach((x) => {
+      if (0 < x.state && !prev.includes(x.char) && !excludes.includes(x.char)) {
+        prev.push(x.char);
+      }
+    });
 
-  if (answer.length > clueChars.length) {
-    const uniqueAnswerItems = answer.filter((o) => clueChars.indexOf(o) === -1);
-    const char = uniqueAnswerItems[Math.floor(Math.random() * uniqueAnswerItems.length)];
-    return char;
-  }
+    return prev;
+  }, []);
+  excludes.push(...founds);
+
+  const mayClue = answer.filter((x) => !excludes.includes(x));
+  if (0 < mayClue.length) return randomItem(mayClue);
+
+  return;
 };
 
 export const howMayFindCharByOneRow = (answer: string[], may: string[]): number => {
@@ -161,45 +126,16 @@ export const getMayRows = (answer: string[], currentMay: string[]): MayRow => {
   return mayRow;
 };
 
-/* export const getMayRowsEx = (answer: string[], currentMay: string[]): MayRowChar[] => {
-  // const result: MayRow = { chars: [] };
+export const secondsToTime = (e: number) => {
+  const h = Math.floor(e / 3600)
+      .toString()
+      .padStart(2, "0"),
+    m = Math.floor((e % 3600) / 60)
+      .toString()
+      .padStart(2, "0"),
+    s = Math.floor(e % 60)
+      .toString()
+      .padStart(2, "0");
 
-  const mayRowChars = [];
-
-  for (let i = 0; i < currentMay.length; i++) {
-    const c = currentMay[i];
-    const mayRowChar: MayRowChar = { char: c, state: 0 };
-
-    if (answer[i] === c) {
-      mayRowChar.state = 2;
-    } else if (answer.includes(c)) {
-      mayRowChar.state = 1;
-    }
-    mayRowChars.push(mayRowChar);
-  }
-
-  return mayRowChars;
-}; */
-
-/* export const getColors = (mays: MayRow[]): { [key: string]: IRowItemColor } => {
-  const char: { [key: string]: IRowItemColor } = {};
-
-  mays.forEach((may) => {
-    may.chars.forEach((c: MayRowChar, i) => {
-      if (c.state === 0) {
-        return (char[i] = "darkgray");
-      }
-
-      if (c.state === 1) {
-        return (char[i] = "yellow");
-      }
-
-      if (c.state === 2) {
-        return (char[i] = "green");
-      }
-    });
-  });
-  console.log("char", char);
-
-  return char;
-}; */
+  return h + ":" + m + ":" + s;
+};

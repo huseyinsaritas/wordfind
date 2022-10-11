@@ -13,8 +13,6 @@ export const useGame = (len: number) => {
   const { state, setState } = useGlobalState();
   const { t } = useLanguage();
 
-  console.log(timer);
-
   useEffect(() => {
     setGameFinished(false);
     if (data) {
@@ -74,5 +72,5 @@ export const useGame = (len: number) => {
     return finished;
   };
 
-  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled };
+  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled, timer };
 };

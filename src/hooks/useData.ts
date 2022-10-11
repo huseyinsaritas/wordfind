@@ -16,10 +16,7 @@ export const useData = (len: number) => {
   const [keysDisabled, setKeysDisabled] = useState(false);
   const [data, setData] = useState<IGameData>();
   const { play, soundsLoaded } = useSounds();
-  const { timer, pauseTimer, startTimer } = useTime();
-  // console.log("data", data);
-  // console.log("playedGameCount", state.playedGameCount);
-  // console.log("winCount", state.winCount);
+  const { timer, pauseTimer, resetTime, startTimer } = useTime();
 
   useEffect(() => {
     newGame();
@@ -28,10 +25,10 @@ export const useData = (len: number) => {
   const newGame = async () => {
     setGameLoading(true);
     const data = await getInitialData(len, state.lan ?? "");
-    // const data = { answer: ["K", "O", "K", "A", "İ", "N"], currentMay: [], mays: [] };
     console.log("newGame.data", data);
     setData(data);
     setGameLoading(false);
+    resetTime();
     startTimer();
   };
 
@@ -58,8 +55,6 @@ export const useData = (len: number) => {
               const addObj = clone.currentMay;
               clone.currentMay = [];
               const mayObj = getMayRows(data.answer, addObj);
-              // console.log(mayObj);
-
               clone.mays.push(mayObj);
               return clone;
             });

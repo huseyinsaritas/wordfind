@@ -10,7 +10,7 @@ import { Alert } from "react-native";
 import { useGame } from "../hooks/useGame";
 import { Footer } from "../components/Footer";
 import { DISCLOSE_TIME_MS } from "../constants/Layout";
-import { GameOver } from "../components/Body/GameOver";
+import { GameFinishedModal } from "../components/Body/GameFinishedModal";
 import { Delayed } from "../components/Base/Delayed/Delayed";
 import { Background } from "../components/Base/Background";
 import { AdsModal } from "../components/AdsModal/AdsModal";
@@ -21,7 +21,7 @@ import Toast from "react-native-root-toast";
 
 export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation, route }) => {
   const { length } = route.params;
-  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled } = useGame(length);
+  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled, timer } = useGame(length);
   const [clue, setClue] = useState<{ showAds: boolean; remaining: number }>({ showAds: false, remaining: 3 });
   const [clueChars, setClueChars] = useState<string[]>([]);
   const { t } = useLanguage();
@@ -70,8 +70,7 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
   const onPressClue = () => {
     if (clue.remaining > 0) {
       if (!data) return undefined;
-      // const char = getRandomClueChar(data.answer, data.mays, clueChars);
-      const char = "a";
+      const char = getRandomClueChar(data.answer, data.mays, clueChars);
       if (clueChars.length < 3 && char) {
         const newClueChars = [...clueChars];
         newClueChars.push(char);
@@ -154,10 +153,11 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
         />
         <Footer />
       </Background>
+      <GameFinishedModal data={data} gameWon={gameWon} onPressNewGame={onPressNewGame} onPressHomePage={onPressHomePage} time={timer} />
 
       {gameFinished && (
         <Delayed waitBeforeShow={DISCLOSE_TIME_MS * data.answer.length}>
-          <GameOver data={data} gameWon={gameWon} onPressNewGame={onPressNewGame} onPressHomePage={onPressHomePage} />
+          <GameFinishedModal data={data} gameWon={gameWon} onPressNewGame={onPressNewGame} onPressHomePage={onPressHomePage} time={timer} />
         </Delayed>
       )}
     </>

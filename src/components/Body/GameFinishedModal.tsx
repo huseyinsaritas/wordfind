@@ -4,32 +4,23 @@ import { FONT_FAMILY } from "../../constants/Layout";
 import { IGameData } from "../../model/GameData";
 import Icon from "@expo/vector-icons/Ionicons";
 import { COLORS } from "../../constants/Colors";
-import { howMayFindCharByOneRow } from "../../util";
 import { Button } from "../Base/Button/Button";
 import { useLanguage } from "../../hooks/useLanguage";
+import { useGlobalState } from "../../global/globalState";
+import { secondsToTime } from "../../util";
 
 type Props = {
   data: IGameData;
   gameWon: boolean;
   onPressHomePage: () => void;
   onPressNewGame: () => void;
+  time: number;
 };
 
-export const GameOver: React.FC<Props> = ({ data, gameWon, onPressHomePage, onPressNewGame }) => {
+export const GameFinishedModal: React.FC<Props> = ({ data, gameWon, onPressHomePage, onPressNewGame, time }) => {
   const [modalVisible, setModalVisible] = useState(true);
-  const items = Array.from(Array(data.answer.length));
+  const { state } = useGlobalState();
   const { t } = useLanguage();
-
-  // const correctAnswerIndex = data.mays.findIndex((may) => may.join("") === data.answer.join(""));
-
-  const calcWith = (index: number): number => {
-    const correctLetterNumbr = howMayFindCharByOneRow(data.answer, data.mays[index]);
-    if (correctLetterNumbr === 0) {
-      return 7;
-    } else {
-      return (100 / data.answer.length) * correctLetterNumbr;
-    }
-  };
 
   const newGameClicked = () => {
     setModalVisible(!modalVisible);
@@ -58,15 +49,18 @@ export const GameOver: React.FC<Props> = ({ data, gameWon, onPressHomePage, onPr
           <View>
             {!gameWon && <Text style={styles.modalAnswer}>Cevap: {data.answer}</Text>}
             <View style={styles.modalContent}>
-              {items.map((_, i) => (
-                <View key={i} style={styles.graphContainer}>
-                  <View style={styles.graph}>
-                    <View style={[styles.graphBar, styles.alignRight, styles.highlight, { width: `${calcWith(i)}%` }]}>
-                      <Text style={styles.numGuesses}>{howMayFindCharByOneRow(data.answer, data.mays[i])}</Text>
-                    </View>
-                  </View>
-                </View>
-              ))}
+              <View>
+                <Text style={styles.modalText}>{t("played")}</Text>
+                <Text style={styles.modalText}>{state.playedGameCount}</Text>
+              </View>
+              <View>
+                <Text style={styles.modalText}>{t("time")}</Text>
+                <Text style={styles.modalText}>{secondsToTime(time)}</Text>
+              </View>
+              <View>
+                <Text style={styles.modalText}>{t("won")}</Text>
+                <Text style={styles.modalText}>{state.winCount}</Text>
+              </View>
             </View>
             <View style={styles.modalFooter}>
               <Button text={t("newGame")} onPress={() => newGameClicked()} backgroundColor={COLORS.COMMON.DARKANDGREEN} />
@@ -91,7 +85,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 25,
     paddingHorizontal: 20,
-    // alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -117,17 +110,18 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 15,
   },
   modalContent: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 30,
     width: "100%",
-    paddingHorizontal: 20,
-    // paddingLeft: 10,
-    // paddingRight: 40,
   },
   modalText: {
     paddingBottom: 15,
     textAlign: "center",
     fontFamily: FONT_FAMILY.Black,
-    minWidth: 150,
+    marginHorizontal: 20,
     color: COLORS.COMMON.COLOR_TONE1,
   },
   modalAnswer: {
@@ -136,9 +130,6 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY.Black,
     fontSize: 16,
     color: COLORS.COMMON.COLOR_TONE1,
-    // borderWidth: 1,
-    // borderColor: COLORS.COMMON.GREEN,
-    // borderRadius: 10,
   },
   graphContainer: {
     width: "100%",

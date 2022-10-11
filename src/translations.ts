@@ -66,6 +66,11 @@ export type Texts = {
   infoThirdRowThirdChar: string;
   infoThirdRowFourthChar: string;
   infoThirdRowFifthChar: string;
+
+  // Game Finished
+  won: string;
+  played: string;
+  time: string;
 };
 
 export const SupportedLanguages = [
@@ -149,6 +154,11 @@ export const languages: {
     infoThirdRowFourthChar: "A",
     infoThirdRowFifthChar: "M",
 
+    // Game Finished
+    won: "Won",
+    played: "Played",
+    time: "Time",
+
     // Settings
     gameSounds: "Game Sounds",
   },
@@ -218,6 +228,11 @@ export const languages: {
     infoThirdRowThirdChar: "H",
     infoThirdRowFourthChar: "A",
     infoThirdRowFifthChar: "M",
+
+    // Game Finished
+    won: "Kazanılan",
+    played: "Oynanan",
+    time: "Süre",
 
     // Settings
     gameSounds: "Oyun Sesleri",

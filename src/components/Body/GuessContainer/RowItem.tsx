@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
   answerItem: {
     borderWidth: 2,
     borderRadius: 6,
-    width: Dimensions.get("window").height <= 820 ? 40 : 45,
-    height: Dimensions.get("window").height <= 820 ? 40 : 45,
+    width: Dimensions.get("window").height / 20,
+    height: Dimensions.get("window").height / 20,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 3,
-    marginVertical: Dimensions.get("window").height <= 820 ? 3 : 5,
+    marginVertical: Dimensions.get("window").height / 200,
     // borderColor: COLORS.COMMON.COLOR_TONE2,
   },
 

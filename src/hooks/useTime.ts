@@ -23,7 +23,7 @@ export const useTime = () => {
     intervalRef.current = setInterval(() => {
       setTimer((t) => t + 1);
     }, 1000);
-    return () => clearInterval(intervalRef.current);
+    // return () => clearInterval(intervalRef.current);
   };
 
   const pauseTimer = () => {
@@ -36,11 +36,11 @@ export const useTime = () => {
     }, 1000);
   };
 
-  const resetTimeLeft = () => {
+  const resetTime = () => {
     pauseTimer();
     setTimer(0);
     resumeTimer();
   };
 
-  return { timer, startTimer, pauseTimer, resumeTimer, resetTimeLeft };
+  return { timer, startTimer, pauseTimer, resumeTimer, resetTime };
 };

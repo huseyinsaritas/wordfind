@@ -17,7 +17,7 @@ export default function App() {
 
   if (!isLoadingComplete) return null;
   const height = Dimensions.get("window").height;
-  console.log("height", height);
+  // console.log("height", height);
 
   return (
     <RootSiblingParent>

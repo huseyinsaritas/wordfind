@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import Icon from "@expo/vector-icons/Feather";
 import { COLORS } from "../../../constants/Colors";
+import { useGlobalState } from "../../../global/globalState";
 
 type Props = {
   onPress?: () => void;
@@ -9,8 +10,14 @@ type Props = {
 };
 
 const BackKey: React.FC<Props> = ({ disabled, onPress }) => {
+  const { state } = useGlobalState();
   return (
-    <TouchableOpacity disabled={disabled} style={styles.backKey} onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity
+      disabled={disabled}
+      style={[styles.backKey, { minWidth: state.lan === "en" ? Dimensions.get("window").width / 6.75 : Dimensions.get("window").width / 7.75 }]}
+      onPress={onPress}
+      activeOpacity={0.8}
+    >
       <Icon name="delete" size={32} color="#fff" />
     </TouchableOpacity>
   );
@@ -18,7 +25,7 @@ const BackKey: React.FC<Props> = ({ disabled, onPress }) => {
 
 const styles = StyleSheet.create({
   backKey: {
-    minWidth: Dimensions.get("window").width >= 390 ? 55 : 48,
+    minWidth: Dimensions.get("window").width / 8,
     height: 55,
     marginVertical: 1,
     // borderWidth: 1,

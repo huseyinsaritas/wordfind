@@ -1,4 +1,5 @@
 import { COLORS } from "../constants/Colors";
+import { MayRow, MayRowChar } from "../model/GameData";
 import { IRowItemColor } from "../model/RowItemColor";
 
 export const randomItem = <T>(arr: T[]): T => {
@@ -11,15 +12,15 @@ export const split = (word: string) => {
   return word.split("");
 };
 
-export const getRowColors = (answer: string[], may: string[]): IRowItemColor[] => {
-  const answerItemFilled: boolean[] = answer.map((_) => false);
+/* export const getRowColors = (answer: string[], may: string[]): IRowItemColor[] => {
+  const flagFilled: boolean[] = answer.map((_) => false);
 
   const colors: IRowItemColor[] = Array.from(Array(may.length));
 
   may.forEach((c, i) => {
     if (c === answer[i]) {
       colors[i] = "green";
-      answerItemFilled[i] = true;
+      flagFilled[i] = true;
       return;
     }
   });
@@ -32,11 +33,11 @@ export const getRowColors = (answer: string[], may: string[]): IRowItemColor[] =
       return;
     }
 
-    const currentCharIndex = answer.findIndex((x, index) => x === c && !answerItemFilled[index]);
+    const currentCharIndex = answer.findIndex((x, index) => x === c && !flagFilled[index]);
 
     if (currentCharIndex > -1) {
       colors[i] = "yellow";
-      answerItemFilled[currentCharIndex] = true;
+      flagFilled[currentCharIndex] = true;
       return;
     } else {
       colors[i] = "darkgray";
@@ -45,7 +46,7 @@ export const getRowColors = (answer: string[], may: string[]): IRowItemColor[] =
   });
 
   return colors;
-};
+}; */
 
 export const getKeyColors = (answer: string[], mays: string[][]): { [key: string]: IRowItemColor } => {
   const char: { [key: string]: IRowItemColor } = {};
@@ -122,3 +123,83 @@ export const getColor = (color?: string) => {
 export const deepCopy = <T>(value: T): T => {
   return JSON.parse(JSON.stringify(value));
 };
+
+export const getMayRows = (answer: string[], currentMay: string[]): MayRow => {
+  const mayFlag: boolean[] = currentMay.map((_) => false);
+  const answerFlag: boolean[] = answer.map((_) => false);
+
+  // initial not found gray
+  const mayRow: MayRow = { chars: currentMay.map((x) => ({ char: x, state: 0 })) };
+
+  // Green
+  // perfect matches green and flagged true by flagFilled
+  mayRow.chars.forEach((mrc: MayRowChar, i) => {
+    if (mrc.char === answer[i]) {
+      mrc.state = 2;
+      mayFlag[i] = true;
+      answerFlag[i] = true;
+    }
+  });
+
+  // Yellow
+  mayRow.chars.forEach((mrc: MayRowChar, i) => {
+    // green gec
+    if (mayFlag[i] === true) return;
+    // if (mrc.state === 2) return; // alt
+
+    // find index of includes char AND not green
+    const currentCharIndex = answer.findIndex((x, j) => x === mrc.char && answerFlag[j] === false);
+
+    // yellow now
+    if (-1 < currentCharIndex) {
+      mrc.state = 1;
+      mayFlag[i] = true;
+      answerFlag[currentCharIndex] = true;
+    }
+  });
+
+  return mayRow;
+};
+
+/* export const getMayRowsEx = (answer: string[], currentMay: string[]): MayRowChar[] => {
+  // const result: MayRow = { chars: [] };
+
+  const mayRowChars = [];
+
+  for (let i = 0; i < currentMay.length; i++) {
+    const c = currentMay[i];
+    const mayRowChar: MayRowChar = { char: c, state: 0 };
+
+    if (answer[i] === c) {
+      mayRowChar.state = 2;
+    } else if (answer.includes(c)) {
+      mayRowChar.state = 1;
+    }
+    mayRowChars.push(mayRowChar);
+  }
+
+  return mayRowChars;
+}; */
+
+/* export const getColors = (mays: MayRow[]): { [key: string]: IRowItemColor } => {
+  const char: { [key: string]: IRowItemColor } = {};
+
+  mays.forEach((may) => {
+    may.chars.forEach((c: MayRowChar, i) => {
+      if (c.state === 0) {
+        return (char[i] = "darkgray");
+      }
+
+      if (c.state === 1) {
+        return (char[i] = "yellow");
+      }
+
+      if (c.state === 2) {
+        return (char[i] = "green");
+      }
+    });
+  });
+  console.log("char", char);
+
+  return char;
+}; */

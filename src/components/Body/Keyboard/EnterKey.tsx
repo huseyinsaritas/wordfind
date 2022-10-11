@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableOpacity, StyleSheet, View, Text, Dimensions } from "react-native";
 import { COLORS } from "../../../constants/Colors";
 import { FONT_FAMILY } from "../../../constants/Layout";
+import { useGlobalState } from "../../../global/globalState";
 
 type Props = {
   onPress?: () => void;
@@ -9,8 +10,13 @@ type Props = {
 };
 
 const EnterKey: React.FC<Props> = ({ disabled, onPress }) => {
+  const { state } = useGlobalState();
   return (
-    <TouchableOpacity disabled={disabled} style={styles.enterKey} onPress={onPress}>
+    <TouchableOpacity
+      disabled={disabled}
+      style={[styles.enterKey, { minWidth: state.lan === "en" ? Dimensions.get("window").width / 6.75 : Dimensions.get("window").width / 7.75 }]}
+      onPress={onPress}
+    >
       <View style={styles.buttonKeyCenter}>
         <Text style={styles.font}>ENTER</Text>
       </View>
@@ -20,7 +26,7 @@ const EnterKey: React.FC<Props> = ({ disabled, onPress }) => {
 
 const styles = StyleSheet.create({
   enterKey: {
-    minWidth: Dimensions.get("window").width >= 390 ? 55 : 48,
+    // minWidth: Dimensions.get("window").width / 8,
     height: 55,
     marginVertical: 1,
     // borderWidth: 1,

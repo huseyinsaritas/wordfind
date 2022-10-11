@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Toast from "react-native-root-toast";
 import { getInitialData } from "../data/getInitialData";
 import { IGameData } from "../model/GameData";
-import { deepCopy } from "../util";
+import { deepCopy, getMayRows } from "../util";
 import { useGlobalState } from "../global/globalState";
 import * as api from "../api";
 import { DISCLOSE_TIME_MS } from "../constants/Layout";
@@ -16,11 +16,10 @@ export const useData = (len: number) => {
   const [keysDisabled, setKeysDisabled] = useState(false);
   const [data, setData] = useState<IGameData>();
   const { play, soundsLoaded } = useSounds();
-  // const { startTimer } = useTime();
-
-  console.log("data", data);
-  console.log("playedGameCount", state.playedGameCount);
-  console.log("winCount", state.winCount);
+  const { timer, pauseTimer, startTimer } = useTime();
+  // console.log("data", data);
+  // console.log("playedGameCount", state.playedGameCount);
+  // console.log("winCount", state.winCount);
 
   useEffect(() => {
     newGame();
@@ -29,9 +28,11 @@ export const useData = (len: number) => {
   const newGame = async () => {
     setGameLoading(true);
     const data = await getInitialData(len, state.lan ?? "");
+    // const data = { answer: ["K", "O", "K", "A", "İ", "N"], currentMay: [], mays: [] };
+    console.log("newGame.data", data);
     setData(data);
     setGameLoading(false);
-    // startTimer();
+    startTimer();
   };
 
   const submitData = () => {
@@ -56,7 +57,10 @@ export const useData = (len: number) => {
               const clone = deepCopy(prev);
               const addObj = clone.currentMay;
               clone.currentMay = [];
-              clone.mays.push(addObj);
+              const mayObj = getMayRows(data.answer, addObj);
+              // console.log(mayObj);
+
+              clone.mays.push(mayObj);
               return clone;
             });
           } else {
@@ -129,5 +133,5 @@ export const useData = (len: number) => {
     }
   };
 
-  return { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, keysDisabled };
+  return { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, keysDisabled, timer, pauseTimer };
 };

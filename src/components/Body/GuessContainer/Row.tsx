@@ -11,7 +11,7 @@ export const Row: React.FC<Props> = ({ row }) => {
     <View style={styles.answersGroupWrapper}>
       <View style={styles.answersGroupContent}>
         {row?.map((r, i) => {
-          return <RowItem val={r} key={i} />;
+          return <RowItem val={r} key={i} border={false} />;
         })}
       </View>
     </View>

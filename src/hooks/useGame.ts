@@ -5,28 +5,22 @@ import { useGlobalState } from "../global/globalState";
 import { IGameData } from "../model/GameData";
 import { useData } from "./useData";
 import { useLanguage } from "./useLanguage";
-import { useTime } from "./useTime";
-// import { useTime } from "./useTime";
 
 export const useGame = (len: number) => {
-  const { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, keysDisabled } = useData(len);
+  const { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, keysDisabled, timer, pauseTimer } = useData(len);
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [gameWon, setGameWon] = useState<boolean>(false);
-  const [time, setTime] = useState<number>(0);
   const { state, setState } = useGlobalState();
   const { t } = useLanguage();
-  // const { timer, resetTimeLeft, pauseTimer } = useTime();
 
-  // console.log(timer);
+  console.log(timer);
 
   useEffect(() => {
     setGameFinished(false);
     if (data) {
       const finished = checkGameFinished(data);
       if (finished) {
-        // pauseTimer();
-        // setTime((prev) => prev + timer);
-        // resetTimeLeft();
+        pauseTimer();
         setGameFinished(true);
         const newPlayedGameCount = (state.playedGameCount ?? 0) + 1;
         setState((prev) => ({ ...prev, playedGameCount: newPlayedGameCount }));
@@ -39,7 +33,7 @@ export const useGame = (len: number) => {
     if (data.mays.length === 0) return false;
     let finished = false;
 
-    const may = data.mays[data.mays.length - 1].map((m) => m);
+    const may = data.mays[data.mays.length - 1].chars.map((m) => m.char);
 
     if (may.length > 0) {
       if (may.join("") === data.answer.join("")) {
@@ -80,5 +74,5 @@ export const useGame = (len: number) => {
     return finished;
   };
 
-  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled, time };
+  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled };
 };

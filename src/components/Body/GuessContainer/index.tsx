@@ -17,7 +17,7 @@ export const GuessContainer: React.FC<Props> = ({ data, isValid }) => {
 
   const completedRows = useMemo(() => {
     return data.mays.map((r, i) => {
-      return <CompletedRow key={i} may={r} answer={data.answer} border={false} />;
+      return <CompletedRow key={i} may={r} /* answer={data.answer}  */ border={false} />;
     });
   }, [data.mays, data.answer]);
 
@@ -38,14 +38,8 @@ const styles = StyleSheet.create({
   body: {
     display: "flex",
     flexDirection: "column",
-    // marginTop: 20,
-    // paddingHorizontal: 5,
-    // position: "absolute",
-    // left: 0,
-    // right: 0,
-    // bottom: 220,
-    // height: Dimensions.get("window").height - 425,
+    // height: Dimensions.get("window").height / 2.35,
+    height: Dimensions.get("window").height - 460,
     justifyContent: "center",
-    // marginBottom: 10,
   },
 });

@@ -21,8 +21,8 @@ import Toast from "react-native-root-toast";
 
 export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation, route }) => {
   const { length } = route.params;
-  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled, time } = useGame(length);
-  const [clue, setClue] = useState<{ showAdd: boolean; remaining: number }>({ showAdd: false, remaining: 3 });
+  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled } = useGame(length);
+  const [clue, setClue] = useState<{ showAds: boolean; remaining: number }>({ showAds: false, remaining: 3 });
   const [clueChars, setClueChars] = useState<string[]>([]);
   const { t } = useLanguage();
   const { play } = useSounds();
@@ -70,9 +70,9 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
   const onPressClue = () => {
     if (clue.remaining > 0) {
       if (!data) return undefined;
-      const char = getRandomClueChar(data.answer, data.mays, clueChars);
-
-      if (clueChars.length < data.answer.length - 2 && char) {
+      // const char = getRandomClueChar(data.answer, data.mays, clueChars);
+      const char = "a";
+      if (clueChars.length < 3 && char) {
         const newClueChars = [...clueChars];
         newClueChars.push(char);
         setClueChars(newClueChars);
@@ -91,7 +91,7 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
         });
       }
     } else {
-      setClue({ ...clue, showAdd: true });
+      setClue({ ...clue, showAds: true });
       play("no-bonus");
     }
   };
@@ -124,18 +124,18 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
   return (
     <>
       <AdsModal
-        show={clue.showAdd}
+        show={clue.showAds}
         onEarned={() => {
-          setClue({ remaining: 3, showAdd: false });
+          setClue({ remaining: 3, showAds: false });
         }}
         onClosed={() => {
-          setClue({ ...clue, showAdd: false });
+          setClue({ ...clue, showAds: false });
         }}
         onFailed={() => {
-          setClue({ ...clue, showAdd: false });
+          setClue({ ...clue });
         }}
         onModalClose={() => {
-          setClue({ ...clue, showAdd: false });
+          setClue({ ...clue, showAds: false });
         }}
       />
 

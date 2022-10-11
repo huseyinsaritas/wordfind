@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Animated, Easing } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Animated, Easing, Dimensions } from "react-native";
 import { COLORS } from "../../../constants/Colors";
 import { DISCLOSE_TIME_MS, FONT_FAMILY } from "../../../constants/Layout";
 import { getColor } from "../../../util";
@@ -67,7 +67,7 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
     borderLeftColor: isBorder ? theme.colors.border : currentColor,
     borderRightColor: isBorder ? theme.colors.border : currentColor,
     opacity: isBorder ? opacity : 1,
-    minWidth: state.lan === "en" ? 35 : 30,
+    minWidth: state.lan === "en" ? Dimensions.get("window").width / 11 : Dimensions.get("window").width / 12,
   };
 
   const viewStyle = [styles.key, { ...animatedStyle }];
@@ -83,10 +83,10 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
 
 const styles = StyleSheet.create({
   key: {
-    // minWidth: 35,
+    // width: Dimensions.get("window").width / 12,
     height: 55,
     padding: 3,
-    marginHorizontal: 2,
+    marginHorizontal: Dimensions.get("window").width / 300,
     marginVertical: 3,
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,

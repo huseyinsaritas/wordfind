@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Switch, Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Background } from "../components/Base/Background";
 import { RootScreenParamList } from "../types";
@@ -35,7 +35,7 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
 
   return (
     <Background>
-      <GoBack onPress={onPressGoBack} size={30} color={theme.colors.text} />
+      <GoBack onPress={onPressGoBack} size={30} color={theme?.colors.text} />
       <View style={style.content}>
         <View style={style.form}>
           <Text style={style.header}>{t("gameSounds")}</Text>

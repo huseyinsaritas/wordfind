@@ -5,10 +5,10 @@ import { alphabetData } from "../../../constants/keys";
 import BackKey from "./BackKey";
 import EnterKey from "./EnterKey";
 import { Key } from "./Key";
-import { getKeyColors, isBorder } from "../../../util";
+import { /* getColors, getKeyColors, */ isBorder } from "../../../util";
 import { DISCLOSE_TIME_MS, FONT_FAMILY } from "../../../constants/Layout";
 import { useGlobalState } from "../../../global/globalState";
-import { IGameData } from "../../../model/GameData";
+import { IGameData, MayRow, MayRowChar } from "../../../model/GameData";
 
 type Props = {
   onPress: (char: IChar) => void;
@@ -25,8 +25,33 @@ export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCance
 
   const alphabet = state.lan === "en" ? alphabetData.EN : alphabetData.TR;
   const lines = [0, 1, 2].map((i) => alphabet.filter((k) => k.l === i));
-  const colors = getKeyColors(data.answer, data.mays);
+  /* const colors = getColors(data.mays); */
+  // const colors = getKeyColors(data.answer, data.mays);
   const border = isBorder(clueChars);
+
+  //helper
+  const uniqueMayRowChar: MayRowChar[] = [];
+  data.mays.forEach((mr: MayRow, i) => {
+    mr.chars.forEach((x: MayRowChar, j) => {
+      if (x.state === 2) {
+        if (!uniqueMayRowChar.some((y) => y.char === x.char)) uniqueMayRowChar.push(x);
+      }
+    });
+  });
+  data.mays.forEach((mr: MayRow, i) => {
+    mr.chars.forEach((x: MayRowChar, j) => {
+      if (x.state === 1) {
+        if (!uniqueMayRowChar.some((y) => y.char === x.char)) uniqueMayRowChar.push(x);
+      }
+    });
+  });
+  data.mays.forEach((mr: MayRow, i) => {
+    mr.chars.forEach((x: MayRowChar, j) => {
+      if (x.state === 0) {
+        if (!uniqueMayRowChar.some((y) => y.char === x.char)) uniqueMayRowChar.push(x);
+      }
+    });
+  });
 
   return (
     <View style={styles.keyboard}>
@@ -35,6 +60,8 @@ export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCance
           return (
             <View key={index} style={styles.line}>
               {line.map((key, i) => {
+                const s = uniqueMayRowChar.find((x) => x.char === key.c)?.state;
+                const color = s === 2 ? "green" : s === 1 ? "yellow" : s === 0 ? "darkgray" : "gray";
                 return (
                   <Key
                     key={i + 1}
@@ -42,7 +69,7 @@ export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCance
                     onPress={() => {
                       onPress(key);
                     }}
-                    color={colors[key.c]}
+                    color={color}
                     isBorder={border[key.c]}
                     disabled={keysDisabled || gameFinished}
                     answer={data.answer}

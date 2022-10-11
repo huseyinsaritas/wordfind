@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useColorScheme } from "react-native";
 import { NavigationContainer, Theme as NavigationTheme } from "@react-navigation/native";
 import { COLORS } from "../constants/Colors";
@@ -42,16 +42,28 @@ export interface ThemeContextProviderProps {
 export const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
   const { getStorageData, saveStorageData } = useStorageData();
 
-  // const val = (await getStorageData("theme")) as ThemeType;
-  // if (val !== undefined) return val;
   const colorScheme = useColorScheme();
-  // await saveStorageData("theme", colorScheme);
 
   const [themeType, setThemeType] = useState<ThemeType>(colorScheme || "light");
 
+  useEffect(() => {
+    const initState = async () => {
+      const theme = (await getStorageData("theme")) as ThemeType;
+      if (theme !== undefined) {
+        setThemeType(theme);
+      } else {
+        await saveStorageData("theme", colorScheme);
+        setThemeType(theme);
+      }
+    };
+    initState();
+  }, []);
+
   const toggleThemeType = useCallback(() => {
-    // saveStorageData("theme", (prev: ThemeType) => (prev === "dark" ? "light" : "dark"));
-    setThemeType((prev) => (prev === "dark" ? "light" : "dark"));
+    setThemeType((prev) => {
+      saveStorageData("theme", prev === "dark" ? "light" : "dark");
+      return prev === "dark" ? "light" : "dark";
+    });
   }, []);
 
   const isDarkTheme = useMemo(() => themeType === "dark", [themeType]);

@@ -153,7 +153,6 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
         />
         <Footer />
       </Background>
-      <GameFinishedModal data={data} gameWon={gameWon} onPressNewGame={onPressNewGame} onPressHomePage={onPressHomePage} time={timer} />
 
       {gameFinished && (
         <Delayed waitBeforeShow={DISCLOSE_TIME_MS * data.answer.length}>

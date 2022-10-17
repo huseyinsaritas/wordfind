@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 22,
     fontFamily: FONT_FAMILY.Black,
-    color: COLORS.COMMON.RED,
+    color: COLORS.COMMON.ORANGE,
     textAlign: "center",
     marginVertical: 12,
   },
@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 6,
     borderWidth: 2,
-    borderColor: COLORS.COMMON.RED,
+    borderColor: COLORS.COMMON.ORANGE,
   },
   buttonText: {
     fontSize: 22,
     fontFamily: FONT_FAMILY.Black,
-    color: COLORS.COMMON.RED,
+    color: COLORS.COMMON.ORANGE,
     textAlign: "center",
   },
 });

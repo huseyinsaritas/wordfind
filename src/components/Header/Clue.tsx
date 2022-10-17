@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 2,
     paddingHorizontal: 10,
-    // height: 35,
   },
   clueButton: {
     paddingRight: 5,

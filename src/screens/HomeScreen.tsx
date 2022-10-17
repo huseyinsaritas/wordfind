@@ -14,19 +14,22 @@ import { CONF } from "../conf";
 import { Logo } from "../components/Base/Logo/Logo";
 import { useTheme, useThemedStyles } from "../hooks/useTheme";
 import { Theme } from "@react-navigation/native";
+import { useSounds } from "../hooks/useSounds";
 
 export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Home">> = ({ navigation }) => {
   const [length, setLength] = useState<number>();
   const { state, setState } = useGlobalState();
   const { t, l } = useLanguage();
+  const { play } = useSounds();
   const { theme } = useTheme();
   const style = useThemedStyles(styles);
 
-  const updateRequired: boolean = CONF.VER !== state.version;
+  const updateRequired: boolean = CONF.VER !== state.gameConf?.version;
 
   const onGame = () => {
     if (length) {
       const newGameCount = (state.gameCount ?? 0) + 1;
+      play("click");
       setState((prev) => ({ ...prev, gameCount: newGameCount }));
       navigation.replace("GamePre", {
         length,
@@ -34,29 +37,63 @@ export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "H
     }
   };
 
-  if (updateRequired) return <UpdateRequired version={state.version} />;
+  if (updateRequired) return <UpdateRequired version={state.gameConf?.version} />;
 
   return (
     <FullBackground>
       <View style={style.container}>
         <View style={style.header}>
           <View>
-            <SettingsButton color={theme.colors.text} style={style.headerItem} size={25} onPress={() => navigation.navigate("Settings")} />
+            <SettingsButton
+              color={theme.colors.text}
+              style={style.headerItem}
+              size={25}
+              onPress={() => {
+                play("click");
+                navigation.navigate("Settings");
+              }}
+            />
           </View>
           <View>
-            <InfoButton color={theme.colors.text} style={style.headerItem} size={30} onPress={() => navigation.navigate("Info")} />
+            <InfoButton
+              color={theme.colors.text}
+              style={style.headerItem}
+              size={30}
+              onPress={() => {
+                play("click");
+                navigation.navigate("Info");
+              }}
+            />
           </View>
         </View>
         <Logo />
         <View style={style.info}>
-          <TouchableOpacity style={[style.button, length === 5 && style.selected]} onPress={() => setLength(5)}>
-            <Text style={[style.buttonText, length === 5 && style.selected]}>{t("fiveLetters")}</Text>
+          <TouchableOpacity
+            style={[style.button, length === 5 && style.selectedButton]}
+            onPress={() => {
+              play("click");
+              setLength(5);
+            }}
+          >
+            <Text style={[style.buttonText, length === 5 && style.selectedButtonText]}>{t("fiveLetters")}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[style.button, length === 6 && style.selected]} onPress={() => setLength(6)}>
-            <Text style={[style.buttonText, length === 6 && style.selected]}>{t("sixLetters")}</Text>
+          <TouchableOpacity
+            style={[style.button, length === 6 && style.selectedButton]}
+            onPress={() => {
+              play("click");
+              setLength(6);
+            }}
+          >
+            <Text style={[style.buttonText, length === 6 && style.selectedButtonText]}>{t("sixLetters")}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[style.button, length === 7 && style.selected]} onPress={() => setLength(7)}>
-            <Text style={[style.buttonText, length === 7 && style.selected]}>{t("sevenLetters")}</Text>
+          <TouchableOpacity
+            style={[style.button, length === 7 && style.selectedButton]}
+            onPress={() => {
+              play("click");
+              setLength(7);
+            }}
+          >
+            <Text style={[style.buttonText, length === 7 && style.selectedButtonText]}>{t("sevenLetters")}</Text>
           </TouchableOpacity>
         </View>
         <View style={style.start}>
@@ -82,8 +119,6 @@ const styles = (theme: Theme) =>
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
-      // padding: 10,
-      // paddingVertical: 20,
     },
     headerItem: {
       paddingHorizontal: 20,
@@ -131,8 +166,10 @@ const styles = (theme: Theme) =>
       color: theme.colors.card,
       fontFamily: FONT_FAMILY.Black,
     },
-    selected: {
+    selectedButton: {
       backgroundColor: COLORS.COMMON.GRAY,
+    },
+    selectedButtonText: {
       color: COLORS.COMMON.WHITE,
     },
     startButton: {
@@ -141,14 +178,12 @@ const styles = (theme: Theme) =>
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      // borderWidth: 2,
       backgroundColor: COLORS.COMMON.GREEN,
       shadowColor: "#ccc",
       shadowOffset: {
         width: 0,
         height: 2,
       },
-      // borderBottomWidth: 2,
       borderRadius: 5,
     },
     startButtonText: {

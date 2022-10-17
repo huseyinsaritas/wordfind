@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Animated, Easing, Dimensions } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Pressable, Animated, Easing, Dimensions } from "react-native";
 import { COLORS } from "../../../constants/Colors";
 import { DISCLOSE_TIME_MS, FONT_FAMILY } from "../../../constants/Layout";
 import { getColor } from "../../../util";
-import Icon from "@expo/vector-icons/Feather";
 import { useGlobalState } from "../../../global/globalState";
 import { useTheme } from "../../../hooks/useTheme";
 
@@ -23,7 +22,6 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
   const { theme } = useTheme();
   if (val === "") return <View style={styles.key} />;
 
-  // const keyBorderColor = getColor(borderColor);
   const opacityAnimation = new Animated.Value(0);
 
   useEffect(() => {
@@ -62,10 +60,7 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
   const animatedStyle = {
     backgroundColor: keyBgColor,
     borderWidth: isBorder ? 2 : 0,
-    borderTopColor: isBorder ? theme.colors.border : currentColor,
-    borderBottomColor: isBorder ? theme.colors.border : currentColor,
-    borderLeftColor: isBorder ? theme.colors.border : currentColor,
-    borderRightColor: isBorder ? theme.colors.border : currentColor,
+    borderColor: isBorder ? theme.colors.border : currentColor,
     opacity: isBorder ? opacity : 1,
     minWidth: state.lan === "en" ? Dimensions.get("window").width / 11 : Dimensions.get("window").width / 12,
   };
@@ -73,32 +68,40 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
   const viewStyle = [styles.key, { ...animatedStyle }];
 
   return (
-    <TouchableOpacity delayPressIn={0} disabled={disabled} onPress={onPress}>
+    <Pressable
+      // delayHoverIn={0.1}
+      // delayHoverOut={0.1}
+      // android_ripple={{ color: COLORS.COMMON.COLOR_TONE2, foreground: false, borderless: false }}
+      // style={({ pressed }) => [
+      //   {
+      //     backgroundColor: pressed ? COLORS.COMMON.COLOR_TONE2 : theme.colors.background,
+      //   },
+      // ]}
+      disabled={disabled}
+      onPress={onPress}
+    >
       <Animated.View style={viewStyle}>
         <Text style={styles.font}>{val}</Text>
       </Animated.View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   key: {
-    // width: Dimensions.get("window").width / 12,
     height: 55,
     padding: 3,
-    marginHorizontal: Dimensions.get("window").width / 300,
+    marginHorizontal: Dimensions.get("window").width > 500 ? Dimensions.get("window").width / 250 : Dimensions.get("window").width / 320,
     marginVertical: 3,
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
-    // borderWidth: 1,
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
     backgroundColor: COLORS.COMMON.COLOR_TONE2,
     color: COLORS.COMMON.COLOR_TONE1,
-    // borderColor: COLORS.COMMON.COLOR_TONE4,
   },
   font: {
     fontSize: 25,

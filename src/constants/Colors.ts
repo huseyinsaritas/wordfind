@@ -54,7 +54,7 @@ export const COLORS = {
     background: colors.WHITE,
     card: colors.GRAY,
     text: colors.BLACK,
-    border: colors.BLACK,
+    border: colors.COLOR_TONE3,
     notification: colors.BLACK,
   },
   DARK: {
@@ -63,6 +63,6 @@ export const COLORS = {
     card: colors.WHITE,
     text: colors.WHITE,
     border: colors.COLOR_TONE1,
-    notification: colors.BLACK,
+    notification: colors.WHITE,
   },
 };

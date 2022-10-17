@@ -2,8 +2,6 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { IChar } from "../../model/Char";
 import { IGameData } from "../../model/GameData";
-import { AdInterstitial } from "../Adds/AdInterstitial";
-import { AdRewardedInterstitial } from "../Adds/AdRewardedInterstitial";
 import { GuessContainer } from "./GuessContainer";
 import { Keyboard } from "./Keyboard";
 
@@ -13,16 +11,16 @@ type Props = {
   onPressSubmit: () => void;
   onPressCancel: () => void;
   gameFinished?: boolean;
-  isValid: boolean;
+  shake: boolean;
   clueChars: string[];
   gameWon: boolean;
   keysDisabled: boolean;
 };
 
-export const Body: React.FC<Props> = ({ data, onPressKeyboard, onPressSubmit, onPressCancel, gameFinished, isValid, clueChars, gameWon, keysDisabled }) => {
+export const Body: React.FC<Props> = ({ data, onPressKeyboard, onPressSubmit, onPressCancel, gameFinished, shake, clueChars, gameWon, keysDisabled }) => {
   return (
     <View style={styles.body}>
-      <GuessContainer data={data} isValid={isValid} />
+      <GuessContainer data={data} shake={shake} />
       <View style={styles.keyboardContent}>
         <Keyboard
           onPress={onPressKeyboard}

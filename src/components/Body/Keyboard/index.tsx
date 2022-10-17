@@ -5,8 +5,8 @@ import { alphabetData } from "../../../constants/keys";
 import BackKey from "./BackKey";
 import EnterKey from "./EnterKey";
 import { Key } from "./Key";
-import { /* getColors, getKeyColors, */ isBorder } from "../../../util";
-import { DISCLOSE_TIME_MS, FONT_FAMILY } from "../../../constants/Layout";
+import { isBorder } from "../../../util";
+import { FONT_FAMILY } from "../../../constants/Layout";
 import { useGlobalState } from "../../../global/globalState";
 import { IGameData, MayRow, MayRowChar } from "../../../model/GameData";
 
@@ -25,8 +25,6 @@ export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCance
 
   const alphabet = state.lan === "en" ? alphabetData.EN : alphabetData.TR;
   const lines = [0, 1, 2].map((i) => alphabet.filter((k) => k.l === i));
-  /* const colors = getColors(data.mays); */
-  // const colors = getKeyColors(data.answer, data.mays);
   const border = isBorder(clueChars);
 
   //helper

@@ -2,25 +2,14 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useTheme } from "../../../hooks/useTheme";
 import { MayRow } from "../../../model/GameData";
-import { IRowItemColor } from "../../../model/RowItemColor";
-// import { getRowColors } from "../../../util";
 import { RowItem } from "./RowItem";
 
 type Props = {
-  /* answer: string[]; */
   may: MayRow;
   border: boolean;
 };
 
-export const CompletedRow: React.FC<Props> = ({ /* answer, */ may, border }) => {
-  // const mayChar = may.chars.map((c) => c.char);
-  // const colors = getRowColors(answer, mayChar);
-
-  // const colors: IRowItemColor[] = [];
-  // may.chars.forEach((x) => {
-  //   colors.push(x.state === 2 ? "green" : x.state === 1 ? "yellow" : "gray");
-  // });
-
+export const CompletedRow: React.FC<Props> = ({ may, border }) => {
   const { themeType } = useTheme();
 
   return (

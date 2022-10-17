@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext, Dispatch, SetStateAction, useEffect } from "react";
-import { COLORS } from "../constants/Colors";
 import { useStorageData } from "../hooks/useStorageData";
 import { fetchInitialState } from "./fetchInitialState";
 import { GlobalStateStorageKeys, GlobalStateType } from "./type";

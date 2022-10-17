@@ -17,22 +17,31 @@ import { AdsModal } from "../components/AdsModal/AdsModal";
 import { getRandomClueChar } from "../util";
 import { BackHandler } from "react-native";
 import { useSounds } from "../hooks/useSounds";
-import Toast from "react-native-root-toast";
+import { useTheme } from "../hooks/useTheme";
 
 export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation, route }) => {
   const { length } = route.params;
-  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled, timer } = useGame(length);
+  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, shake, gameWon, keysDisabled, timer } = useGame(length);
   const [clue, setClue] = useState<{ showAds: boolean; remaining: number }>({ showAds: false, remaining: 3 });
   const [clueChars, setClueChars] = useState<string[]>([]);
   const { t } = useLanguage();
   const { play } = useSounds();
+  const { theme } = useTheme();
 
   const onPressGoBack = () => {
+    play("click");
     if (gameFinished) navigation.replace("Home");
     else
       Alert.alert(t("areYouSure"), t("leaveMessage"), [
-        { text: t("continue"), style: "cancel", onPress: () => {} },
-        { text: t("exitGame"), style: "destructive", onPress: () => navigation.replace("Home") },
+        { text: t("continue"), style: "cancel", onPress: () => play("click") },
+        {
+          text: t("exitGame"),
+          style: "destructive",
+          onPress: () => {
+            play("click");
+            navigation.replace("Home");
+          },
+        },
       ]);
 
     return true;
@@ -71,22 +80,25 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
     if (clue.remaining > 0) {
       if (!data) return undefined;
       const char = getRandomClueChar(data.answer, data.mays, clueChars);
-      if (clueChars.length < 3 && char) {
+      if (clueChars.length < data.answer.length - 2 && char) {
         const newClueChars = [...clueChars];
         newClueChars.push(char);
         setClueChars(newClueChars);
         setClue({ ...clue, remaining: clue.remaining - 1 });
         play("bonus");
       } else {
-        Toast.show(t("noTips"), {
-          duration: Toast.durations.SHORT,
-          position: 40,
-          shadow: true,
-          animation: true,
-          hideOnPress: true,
-          backgroundColor: "#fff",
-          textColor: "#000",
-          opacity: 1,
+        window.toastr?.show(t("noTips"), {
+          type: "normal",
+          animationType: "zoom-in",
+          placement: "top",
+          animationDuration: 200,
+          duration: 1500,
+          style: {
+            backgroundColor: theme.colors.notification,
+          },
+          textStyle: {
+            color: theme.colors.primary,
+          },
         });
       }
     } else {
@@ -146,7 +158,7 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
           onPressSubmit={onPressSubmit}
           onPressCancel={onPressCancel}
           gameFinished={gameFinished}
-          isValid={isValid}
+          shake={shake}
           gameWon={gameWon}
           clueChars={clueChars}
           keysDisabled={keysDisabled}

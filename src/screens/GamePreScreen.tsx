@@ -6,13 +6,12 @@ import { IGameData } from "../model/GameData";
 import { getInitialData } from "../data/getInitialData";
 import { useGlobalState } from "../global/globalState";
 import { AdInterstitial } from "../components/Adds/AdInterstitial";
-import { useTime } from "../hooks/useTime";
 
 export const GamePreScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "GamePre">> = ({ navigation, route }) => {
   const { length } = route.params;
   const { state } = useGlobalState();
   const [gameData, setGameData] = useState<IGameData>();
-  const [showAd, setShowAd] = useState<boolean>((state.gameCount ?? 1) % (state.adsCycle ?? 3) === 0);
+  const [showAd, setShowAd] = useState<boolean>((state.gameCount ?? 1) % (state.gameConf?.adsCycle ?? 3) === 0);
 
   useEffect(() => {
     getInitialData(length, state.lan).then((gd) => {

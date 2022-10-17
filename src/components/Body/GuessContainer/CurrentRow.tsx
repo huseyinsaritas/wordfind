@@ -5,18 +5,18 @@ import { RowItem } from "./RowItem";
 type Props = {
   may: string[];
   answer: string[];
-  isValid: boolean;
+  shake: boolean;
   border: boolean;
 };
 
-export const CurrentRow: React.FC<Props> = ({ may, answer, isValid, border }) => {
+export const CurrentRow: React.FC<Props> = ({ may, answer, shake, border }) => {
   const emptyItems = Array.from(Array(answer.length - may.length));
   const shakeAnimation = new Animated.Value(0);
 
   const startShake = () => {
     Animated.timing(shakeAnimation, {
       toValue: 3,
-      duration: 400,
+      duration: 300,
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => {
@@ -25,14 +25,14 @@ export const CurrentRow: React.FC<Props> = ({ may, answer, isValid, border }) =>
   };
 
   useEffect(() => {
-    if (isValid === false) {
+    if (shake === true) {
       startShake();
     }
-  }, [isValid]);
+  }, [shake]);
 
   const interpolateRotating = shakeAnimation.interpolate({
     inputRange: [0, 0.5, 1, 1.5, 2, 2.5, 3],
-    outputRange: [0, -15, 0, -15, 0, -15, 0],
+    outputRange: [0, -5, 5, -5, 5, -5, 0],
   });
 
   const animatedStyle = {

@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     minWidth: Dimensions.get("window").width / 8,
     height: 55,
     marginVertical: 1,
-    // borderWidth: 1,
     borderRadius: 4,
     justifyContent: "center",
     alignContent: "center",

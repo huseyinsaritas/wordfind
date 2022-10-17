@@ -1,11 +1,11 @@
 import React from "react";
-import { ActivityIndicator, LayoutChangeEvent, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { COLORS } from "../../../constants/Colors";
 import { Background } from "../Background";
 
 export const Loading: React.FC<{ message: string }> = ({ message }) => {
   return (
-    <Background bgColor={COLORS.COMMON.BLUE}>
+    <Background>
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={COLORS.COMMON.YELLOW} />
         <Text style={styles.loading}>{message}</Text>
@@ -22,11 +22,9 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
-    backgroundColor: COLORS.COMMON.BLUE,
+    backgroundColor: COLORS.COMMON.PALE_WHITE,
   },
   loading: {
-    /* width: "100%",
-    , */
     marginTop: 16,
     textAlign: "center",
     fontSize: 24,

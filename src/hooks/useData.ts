@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Toast from "react-native-root-toast";
 import { getInitialData } from "../data/getInitialData";
 import { IGameData } from "../model/GameData";
 import { deepCopy, getMayRows } from "../util";
@@ -8,19 +7,24 @@ import * as api from "../api";
 import { DISCLOSE_TIME_MS } from "../constants/Layout";
 import { useSounds } from "./useSounds";
 import { useTime } from "./useTime";
+import { useLanguage } from "./useLanguage";
+import { useShake } from "./useShake";
 
 export const useData = (len: number) => {
   const { state } = useGlobalState();
   const [gameLoading, setGameLoading] = useState(true);
-  const [isValid, setIsValid] = useState<boolean>(true);
   const [keysDisabled, setKeysDisabled] = useState(false);
   const [data, setData] = useState<IGameData>();
   const { play, soundsLoaded } = useSounds();
   const { timer, pauseTimer, resetTime, startTimer } = useTime();
+  const { t } = useLanguage();
+  const { shake, setShaked } = useShake();
 
   useEffect(() => {
     newGame();
+    play("game");
   }, []);
+  // console.log(data);
 
   const newGame = async () => {
     setGameLoading(true);
@@ -39,7 +43,6 @@ export const useData = (len: number) => {
       if (data?.answer.length === data?.currentMay.length) {
         api.isValidWord(data?.currentMay.join(""), state.lan ?? "").then((valid: boolean) => {
           if (valid === true) {
-            setIsValid(true);
             setKeysDisabled(true);
             setTimeout(() => {
               setKeysDisabled(false);
@@ -62,17 +65,22 @@ export const useData = (len: number) => {
             if (soundsLoaded) {
               play("wrong");
             }
-            setIsValid(false);
-            Toast.show("Kelime listesinde yok!", {
-              duration: Toast.durations.SHORT,
-              position: 40,
-              shadow: true,
-              animation: true,
-              hideOnPress: true,
-              backgroundColor: "#fff",
-              textColor: "#000",
-              opacity: 1,
-            });
+            setShaked(t("notInWordList"));
+            // window.toastr?.show(t("notInWordList"), {
+            //   type: "normal",
+            //   animationType: "zoom-in",
+            //   placement: "top",
+            //   animationDuration: 200,
+            //   duration: 1500,
+            //   normalColor: theme.colors.notification,
+            //   style: {
+            //     backgroundColor: theme.colors.notification,
+            //   },
+            //   textStyle: {
+            //     color: theme.colors.primary,
+            //   },
+            // });
+
             return false;
           }
         });
@@ -80,16 +88,20 @@ export const useData = (len: number) => {
         if (soundsLoaded) {
           play("wrong");
         }
-        Toast.show("Yetersiz harf!", {
-          duration: Toast.durations.SHORT,
-          position: 40,
-          shadow: true,
-          animation: true,
-          hideOnPress: true,
-          backgroundColor: "#fff",
-          textColor: "#000",
-          opacity: 1,
-        });
+        setShaked(t("notEnoughLetters"));
+        // window.toastr?.show(t("notEnoughLetters"), {
+        //   type: "normal",
+        //   animationType: "zoom-out",
+        //   placement: "top",
+        //   animationDuration: 200,
+        //   duration: 1500,
+        //   style: {
+        //     backgroundColor: theme.colors.notification,
+        //   },
+        //   textStyle: {
+        //     color: theme.colors.primary,
+        //   },
+        // });
       }
     }
 
@@ -98,7 +110,7 @@ export const useData = (len: number) => {
 
   const addCurrentMay = (char: string): boolean => {
     if (data === undefined) return false;
-    setIsValid(true);
+
     if (data?.answer.length > data?.currentMay.length) {
       setData((prev) => {
         if (prev === undefined) return prev;
@@ -115,7 +127,7 @@ export const useData = (len: number) => {
 
   const removeCurrentMay = () => {
     if (data === undefined) return false;
-    setIsValid(true);
+
     if (0 < data.currentMay.length) {
       setData((prev) => {
         if (prev === undefined) return prev;
@@ -128,5 +140,5 @@ export const useData = (len: number) => {
     }
   };
 
-  return { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, keysDisabled, timer, pauseTimer };
+  return { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, shake, keysDisabled, timer, pauseTimer };
 };

@@ -26,10 +26,9 @@ const EnterKey: React.FC<Props> = ({ disabled, onPress }) => {
 
 const styles = StyleSheet.create({
   enterKey: {
-    // minWidth: Dimensions.get("window").width / 8,
+    minWidth: Dimensions.get("window").width / 8,
     height: 55,
     marginVertical: 1,
-    // borderWidth: 1,
     borderRadius: 4,
     justifyContent: "center",
     alignContent: "center",

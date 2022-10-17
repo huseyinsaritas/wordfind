@@ -3,6 +3,7 @@ import { useStorageData } from "../hooks/useStorageData";
 import { getNewDeviceId } from "../helper/getNewDeviceId";
 import * as Localization from "expo-localization";
 import { SupportedLanguages } from "../translations";
+import { getGameConf } from "../api";
 
 export const fetchInitialState = async (): Promise<GlobalStateType> => {
   const { getStorageData, saveStorageData /* , resetStorageData */ } = useStorageData();
@@ -54,16 +55,16 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
         return 0 as T;
       }
 
-      if (key === "version") {
-        const version = "1.0.0";
-        await saveStorageData(key, version);
-        return version as T;
-      }
+      // if (key === "version") {
+      //   const version = "1.0.0";
+      //   await saveStorageData(key, version);
+      //   return version as T;
+      // }
 
-      if (key === "adsCycle") {
-        await saveStorageData(key, 3);
-        return 3 as T;
-      }
+      // if (key === "adsCycle") {
+      //   await saveStorageData(key, 3);
+      //   return 3 as T;
+      // }
     } catch (error) {
       // console.error("getAndCheckStorageData.Error", error);
     }
@@ -72,7 +73,7 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
   };
 
   // await resetStorageData();
-  // const gameConf = await getGameConf();
+  const gameConf = await getGameConf();
   // console.log("gameConf", gameConf);
 
   const lan = await getAndCheckStorageData<string>("lan");
@@ -82,8 +83,8 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
   const gameCount = await getAndCheckStorageData<number>("gameCount");
   const playedGameCount = await getAndCheckStorageData<number>("playedGameCount");
   const winCount = await getAndCheckStorageData<number>("winCount");
-  const version = await getAndCheckStorageData<string>("version");
-  const adsCycle = await getAndCheckStorageData<number>("adsCycle");
+  // const version = await getAndCheckStorageData<string>("version");
+  // const adsCycle = await getAndCheckStorageData<number>("adsCycle");
 
   // console.log("lan", lan);
   // console.log("sound", sound);
@@ -95,13 +96,11 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
 
   return {
     loading: false,
-    // gameConf,
+    gameConf,
     lan,
     sound,
     deviceId,
     username,
-    version,
-    adsCycle,
     gameCount,
     playedGameCount,
     winCount,

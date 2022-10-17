@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { COLORS } from "../../constants/Colors";
-import { AdBanner } from "../Adds/AdBanner";
 
 type Props = {
   // gameFinished: boolean;

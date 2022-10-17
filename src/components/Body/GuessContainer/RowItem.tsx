@@ -68,19 +68,17 @@ const styles = StyleSheet.create({
   answerItem: {
     borderWidth: 2,
     borderRadius: 6,
-    width: Dimensions.get("window").height / 20,
-    height: Dimensions.get("window").height / 20,
+    width: Dimensions.get("window").width < 500 ? Dimensions.get("window").height / 20 : Dimensions.get("window").width / 20,
+    height: Dimensions.get("window").width < 500 ? Dimensions.get("window").height / 20 : Dimensions.get("window").width / 20,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 3,
     marginVertical: Dimensions.get("window").height / 200,
-    // borderColor: COLORS.COMMON.COLOR_TONE2,
   },
 
   tStyle: {
     fontSize: 25,
     fontFamily: FONT_FAMILY.Black,
-    // color: COLORS.COMMON.BLACK,
   },
 });

@@ -15,16 +15,18 @@ import { Theme } from "@react-navigation/native";
 import { useTheme, useThemedStyles } from "../hooks/useTheme";
 import { BannerAdSize } from "react-native-google-mobile-ads";
 import DropDownPicker from "react-native-dropdown-picker";
+import { useSounds } from "../hooks/useSounds";
 
 export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Settings">> = ({ navigation }) => {
   const [languageOpen, setLanguageOpen] = useState(false);
-
   const { state, setState } = useGlobalState();
   const { t } = useLanguage();
+  const { play } = useSounds();
   const style = useThemedStyles(styles);
-  const { toggleThemeType, isDarkTheme, theme } = useTheme();
+  const { toggleThemeType, isDarkTheme, theme, themeType } = useTheme();
 
   const onPressGoBack = () => {
+    play("click");
     navigation.goBack();
   };
 
@@ -44,11 +46,13 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
             trackColor={{ false: COLORS.COMMON.BLACK, true: COLORS.COMMON.PALE_WHITE }}
             thumbColor={state.sound ? COLORS.COMMON.BLUE : COLORS.COMMON.COLOR_TONE2}
             // ios_backgroundColor={COLORS.COMMON.BLACK}
-            onValueChange={toggleSwitch}
+            onValueChange={() => {
+              play("click");
+              toggleSwitch();
+            }}
             value={state.sound === 1}
           />
         </View>
-
         <View style={style.form}>
           <Text style={style.header}>{t("darkTheme")}</Text>
           <Switch
@@ -57,13 +61,13 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
             thumbColor={isDarkTheme ? COLORS.COMMON.BLUE : COLORS.COMMON.COLOR_TONE2}
             // ios_backgroundColor={COLORS.COMMON.BLACK}
             onValueChange={() => {
+              play("click");
               setLanguageOpen(false);
               toggleThemeType();
             }}
             value={isDarkTheme}
           />
         </View>
-
         {/* <View style={style.form}>
           <Text style={style.header}>{t("languages")}</Text>
           <View>
@@ -81,17 +85,20 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
             ))}
           </View>
         </View> */}
-
         <View style={style.dropdownContent}>
           <DropDownPicker
             style={style.dropdown}
             open={languageOpen}
-            value={state.lan || ""} //genderValue
+            value={""}
+            hideSelectedItemIcon={false}
+            // value={t("languages")} //genderValue
             items={SupportedLanguages}
             setOpen={setLanguageOpen}
             onSelectItem={(item) => {
+              play("click");
               setState((prev) => ({ ...prev, lan: item.value }));
             }}
+            placeholder={t("languages")}
             setValue={() => {}}
             placeholderStyle={style.placeholderStyles}
             showTickIcon
@@ -101,6 +108,8 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
             listItemLabelStyle={style.dropdownLabel}
             disableBorderRadius={false}
             dropDownContainerStyle={style.dropdownContainer}
+            selectedItemContainerStyle={style.dropdownContainer}
+            selectedItemLabelStyle={style.dropdownLabel}
             ArrowDownIconComponent={() => {
               return <Icon name="keyboard-arrow-down" size={30} color={theme.colors.text} />;
             }}
@@ -110,11 +119,11 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
             TickIconComponent={() => {
               return <Icon name="check" size={25} color={theme.colors.text} />;
             }}
+            theme={themeType === "dark" ? "DARK" : "LIGHT"}
           />
         </View>
-
         <View style={style.banner}>
-          <AdBanner size={BannerAdSize.FULL_BANNER} />
+          <AdBanner size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
         </View>
       </View>
     </Background>
@@ -124,17 +133,13 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
 const styles = (theme: Theme) =>
   StyleSheet.create({
     content: {
-      // flex: 1,
       paddingVertical: 16,
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
       height: "100%",
-      /* borderWidth: 1,
-    borderColor: "white", */
     },
     contentProps: {
-      // flex: 1,
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
@@ -148,14 +153,17 @@ const styles = (theme: Theme) =>
     dropdownContent: {
       paddingHorizontal: 8,
       paddingVertical: 20,
+      borderColor: theme.colors.background,
     },
     dropdownContainer: {
       borderWidth: 0,
+      borderColor: theme.colors.background,
+      backgroundColor: theme.colors.background,
     },
     dropdown: {
       backgroundColor: theme.colors.background,
-      // backgroundColor: COLORS.COMMON.BLACK,
       borderWidth: 0,
+      borderColor: theme.colors.background,
     },
     dropdownText: {
       fontWeight: "400",
@@ -163,19 +171,19 @@ const styles = (theme: Theme) =>
       color: theme.colors.text,
       fontFamily: FONT_FAMILY.Black,
     },
-
     dropdownList: {
-      // backgroundColor: COLORS.COMMON.PALE_WHITE,
       backgroundColor: theme.colors.background,
-      // borderBottomWidth: 1,
-      // borderBottomColor: COLORS.COMMON.COLOR_TONE1,
+      borderColor: theme.colors.background,
+      borderWidth: 0,
     },
     dropdownLabel: {
       color: theme.colors.text,
       borderWidth: 0,
+      borderColor: theme.colors.background,
     },
     dropdownParent: {
       borderWidth: 0,
+      borderColor: theme.colors.background,
     },
     form: {
       paddingHorizontal: 16,
@@ -187,7 +195,6 @@ const styles = (theme: Theme) =>
       alignItems: "center",
     },
     header: {
-      /* textAlign: "center", */
       fontSize: 18,
       color: theme.colors.text,
       fontFamily: FONT_FAMILY.Black,
@@ -196,23 +203,19 @@ const styles = (theme: Theme) =>
       textAlign: "center",
       fontSize: 18,
       borderRadius: 4,
-      // color: theme.colors.text,
       fontFamily: FONT_FAMILY.Black,
     },
     language: {
-      // backgroundColor: COLORS.COMMON.BLUE,
       marginVertical: 10,
       height: 30,
       width: "100%",
       display: "flex",
       flexDirection: "column",
     },
-
     lbutton: {
       paddingVertical: 12,
       margin: 10,
       borderRadius: 4,
-      // backgroundColor: COLORS.COMMON.BLUE,
       color: COLORS.COMMON.WHITE,
     },
     banner: {

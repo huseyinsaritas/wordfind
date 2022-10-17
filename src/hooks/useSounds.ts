@@ -15,6 +15,7 @@ export const useSounds = () => {
   const gameWonRef = useRef<Audio.Sound | undefined>();
   const bonusRef = useRef<Audio.Sound | undefined>();
   const noBonusRef = useRef<Audio.Sound | undefined>();
+  const clickRef = useRef<Audio.Sound | undefined>();
 
   useEffect(() => {
     Audio.requestPermissionsAsync().then(() => {
@@ -33,15 +34,16 @@ export const useSounds = () => {
   }, []);
 
   useEffect(() => {
-    const gameOverSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game-over2.wav"));
-    const gameWonSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game-won.wav"));
     const gameSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game.wav"));
-    const keySoundPromise = Audio.Sound.createAsync(require("../../assets/music/click.wav"));
+    const keySoundPromise = Audio.Sound.createAsync(require("../../assets/music/key.wav"));
     const removeSoundPromise = Audio.Sound.createAsync(require("../../assets/music/remove.mp3"));
     const successSoundPromise = Audio.Sound.createAsync(require("../../assets/music/enter3.wav"));
     const wrongSoundPromise = Audio.Sound.createAsync(require("../../assets/music/wrong2.wav"));
+    const gameOverSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game-over2.wav"));
+    const gameWonSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game-won.wav"));
     const bonusSoundPromise = Audio.Sound.createAsync(require("../../assets/music/bonus.wav"));
     const noBonusSoundPromise = Audio.Sound.createAsync(require("../../assets/music/nobonus.wav"));
+    const clickSoundPromise = Audio.Sound.createAsync(require("../../assets/music/click.wav"));
 
     Promise.all([
       gameSoundPromise,
@@ -53,6 +55,7 @@ export const useSounds = () => {
       gameWonSoundPromise,
       bonusSoundPromise,
       noBonusSoundPromise,
+      clickSoundPromise,
     ])
       .then((results) => {
         gameRef.current = results[0].sound;
@@ -64,10 +67,10 @@ export const useSounds = () => {
         gameWonRef.current = results[6].sound;
         bonusRef.current = results[7].sound;
         noBonusRef.current = results[8].sound;
+        clickRef.current = results[9].sound;
         setLoaded(true);
         // console.log("all sounds loaded");
-
-        if (state.sound === 1) results[0].sound.replayAsync();
+        // if (state.sound === 1) results[0].sound.replayAsync();
       })
       .catch((err) => {
         // console.error(err);
@@ -83,10 +86,11 @@ export const useSounds = () => {
       gameWonRef.current?.unloadAsync();
       bonusRef.current?.unloadAsync();
       noBonusRef.current?.unloadAsync();
+      clickRef.current?.unloadAsync();
     };
   }, []);
 
-  const play = async (sound: "game" | "key" | "remove" | "success" | "wrong" | "game-over" | "game-won" | "bonus" | "no-bonus") => {
+  const play = async (sound: "game" | "key" | "remove" | "success" | "wrong" | "game-over" | "game-won" | "bonus" | "no-bonus" | "click") => {
     if (loaded && state.sound === 1) {
       switch (sound) {
         case "game":
@@ -131,6 +135,11 @@ export const useSounds = () => {
           break;
         case "no-bonus":
           noBonusRef.current?.replayAsync().catch((err) => {
+            // console.error("play." + sound + ".Error", err.message);
+          });
+          break;
+        case "click":
+          clickRef.current?.replayAsync().catch((err) => {
             // console.error("play." + sound + ".Error", err.message);
           });
           break;

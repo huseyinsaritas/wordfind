@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useColorScheme } from "react-native";
+import { Appearance } from "react-native";
 import { NavigationContainer, Theme as NavigationTheme } from "@react-navigation/native";
 import { COLORS } from "../constants/Colors";
 import LinkingConfiguration from "../navigation/LinkingConfiguration";
@@ -17,7 +17,7 @@ const darkTheme: Theme = {
   colors: COLORS.DARK,
 };
 
-export type ThemeType = "dark" | "light";
+export type ThemeType = "dark" | "light" | "no-preference";
 
 export interface ThemeContextValue {
   theme: Theme;
@@ -42,7 +42,8 @@ export interface ThemeContextProviderProps {
 export const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
   const { getStorageData, saveStorageData } = useStorageData();
 
-  const colorScheme = useColorScheme();
+  // const colorScheme = useColorScheme();
+  const colorScheme = Appearance.getColorScheme();
 
   const [themeType, setThemeType] = useState<ThemeType>(colorScheme || "light");
 

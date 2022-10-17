@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import Toast from "react-native-root-toast";
 import { DISCLOSE_TIME_MS } from "../constants/Layout";
 import { useGlobalState } from "../global/globalState";
 import { IGameData } from "../model/GameData";
 import { useData } from "./useData";
 import { useLanguage } from "./useLanguage";
+import { useTheme } from "./useTheme";
 
 export const useGame = (len: number) => {
-  const { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, keysDisabled, timer, pauseTimer } = useData(len);
+  const { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, shake, keysDisabled, timer, pauseTimer } = useData(len);
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [gameWon, setGameWon] = useState<boolean>(false);
   const { state, setState } = useGlobalState();
   const { t } = useLanguage();
+  const { theme } = useTheme();
 
   useEffect(() => {
     setGameFinished(false);
@@ -39,31 +40,35 @@ export const useGame = (len: number) => {
         setGameWon(true);
         const newWinCount = (state.winCount ?? 0) + 1;
         setState((prev) => ({ ...prev, winCount: newWinCount }));
-        Toast.show(t("youWin"), {
-          duration: Toast.durations.LONG,
-          position: 40,
-          shadow: true,
-          animation: true,
-          hideOnPress: true,
-          backgroundColor: "#fff",
-          textColor: "#000",
-          opacity: 1,
-          delay: DISCLOSE_TIME_MS * data.answer.length - 1000,
+        window.toastr?.show(t("youWin"), {
+          type: "normal",
+          animationType: "zoom-in",
+          placement: "top",
+          animationDuration: 200,
+          duration: DISCLOSE_TIME_MS * data.answer.length,
+          style: {
+            backgroundColor: theme.colors.notification,
+          },
+          textStyle: {
+            color: theme.colors.primary,
+          },
         });
       } else {
         if (data.mays.length === data.answer.length) {
           finished = true;
           setGameWon(false);
-          Toast.show("Kaybettiniz!", {
-            duration: Toast.durations.LONG,
-            position: 40,
-            shadow: true,
-            animation: true,
-            hideOnPress: true,
-            backgroundColor: "#fff",
-            textColor: "#000",
-            opacity: 1,
-            delay: DISCLOSE_TIME_MS * data.answer.length - 1000,
+          window.toastr?.show(t("youLost"), {
+            type: "normal",
+            animationType: "zoom-in",
+            placement: "top",
+            animationDuration: 200,
+            duration: DISCLOSE_TIME_MS * data.answer.length,
+            style: {
+              backgroundColor: theme.colors.notification,
+            },
+            textStyle: {
+              color: theme.colors.primary,
+            },
           });
         }
       }
@@ -72,5 +77,5 @@ export const useGame = (len: number) => {
     return finished;
   };
 
-  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, isValid, gameWon, keysDisabled, timer };
+  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, shake, gameWon, keysDisabled, timer };
 };

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalView: {
-    width: Dimensions.get("window").width - 50,
+    width: Dimensions.get("window").width > 350 ? 350 : 300,
     backgroundColor: COLORS.COMMON.COLOR_TONE6,
     borderRadius: 20,
     paddingVertical: 25,

@@ -1,49 +1,51 @@
 import { useState, useEffect, useRef } from "react";
-import { Audio } from "expo-av";
+import Sound from "react-native-sound";
 import { useGlobalState } from "../global/globalState";
 
 export const useSounds = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const { state } = useGlobalState();
 
-  const gameRef = useRef<Audio.Sound | undefined>();
-  const keyRef = useRef<Audio.Sound | undefined>();
-  const removeRef = useRef<Audio.Sound | undefined>();
-  const successRef = useRef<Audio.Sound | undefined>();
-  const wrongRef = useRef<Audio.Sound | undefined>();
-  const gameOverRef = useRef<Audio.Sound | undefined>();
-  const gameWonRef = useRef<Audio.Sound | undefined>();
-  const bonusRef = useRef<Audio.Sound | undefined>();
-  const noBonusRef = useRef<Audio.Sound | undefined>();
-  const clickRef = useRef<Audio.Sound | undefined>();
+  const gameRef = useRef<Sound | undefined>();
+  const keyRef = useRef<Sound | undefined>();
+  const removeRef = useRef<Sound | undefined>();
+  const successRef = useRef<Sound | undefined>();
+  const wrongRef = useRef<Sound | undefined>();
+  const gameOverRef = useRef<Sound | undefined>();
+  const gameWonRef = useRef<Sound | undefined>();
+  const bonusRef = useRef<Sound | undefined>();
+  const noBonusRef = useRef<Sound | undefined>();
+  const clickRef = useRef<Sound | undefined>();
+
+  // useEffect(() => {
+  //   Sound.setCategory("Playback", true);
+  //   return () => {
+  //     if (gameRef) gameRef.current?.release();
+  //     if (keyRef) keyRef.current?.release();
+  //     if (removeRef) removeRef.current?.release();
+  //     if (successRef) successRef.current?.release();
+  //     if (wrongRef) wrongRef.current?.release();
+  //     if (gameOverRef) gameOverRef.current?.release();
+  //     if (gameWonRef) gameWonRef.current?.release();
+  //     if (bonusRef) bonusRef.current?.release();
+  //     if (noBonusRef) noBonusRef.current?.release();
+  //     if (clickRef) clickRef.current?.release();
+  //   };
+  // }, []);
 
   useEffect(() => {
-    Audio.requestPermissionsAsync().then(() => {
-      Audio.setAudioModeAsync({
-        // allowsRecordingIOS: false, // default
-        // interruptionModeIOS: undefined, // default
-        // interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-        // playsInSilentModeIOS: true, // changed
-        // staysActiveInBackground: false, // default
-        // interruptionModeAndroid: undefined, // default
-        // interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        // shouldDuckAndroid: true, // default
-        // playThroughEarpieceAndroid: false, // default
-      });
-    });
-  }, []);
+    Sound.setCategory("Playback", true);
 
-  useEffect(() => {
-    const gameSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game.wav"));
-    const keySoundPromise = Audio.Sound.createAsync(require("../../assets/music/key.wav"));
-    const removeSoundPromise = Audio.Sound.createAsync(require("../../assets/music/remove.mp3"));
-    const successSoundPromise = Audio.Sound.createAsync(require("../../assets/music/enter3.wav"));
-    const wrongSoundPromise = Audio.Sound.createAsync(require("../../assets/music/wrong2.wav"));
-    const gameOverSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game-over2.wav"));
-    const gameWonSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game-won.wav"));
-    const bonusSoundPromise = Audio.Sound.createAsync(require("../../assets/music/bonus.wav"));
-    const noBonusSoundPromise = Audio.Sound.createAsync(require("../../assets/music/nobonus.wav"));
-    const clickSoundPromise = Audio.Sound.createAsync(require("../../assets/music/click.wav"));
+    const gameSoundPromise = new Sound(require("../../assets/music/game.wav"));
+    const keySoundPromise = new Sound(require("../../assets/music/key.wav"));
+    const removeSoundPromise = new Sound(require("../../assets/music/remove.mp3"));
+    const successSoundPromise = new Sound(require("../../assets/music/enter.wav"));
+    const wrongSoundPromise = new Sound(require("../../assets/music/wrong.wav"));
+    const gameOverSoundPromise = new Sound(require("../../assets/music/game-over2.wav"));
+    const gameWonSoundPromise = new Sound(require("../../assets/music/game-won.wav"));
+    const bonusSoundPromise = new Sound(require("../../assets/music/bonus.wav"));
+    const noBonusSoundPromise = new Sound(require("../../assets/music/nobonus.wav"));
+    const clickSoundPromise = new Sound(require("../../assets/music/click.wav"));
 
     Promise.all([
       gameSoundPromise,
@@ -58,18 +60,19 @@ export const useSounds = () => {
       clickSoundPromise,
     ])
       .then((results) => {
-        gameRef.current = results[0].sound;
-        keyRef.current = results[1].sound;
-        removeRef.current = results[2].sound;
-        successRef.current = results[3].sound;
-        wrongRef.current = results[4].sound;
-        gameOverRef.current = results[5].sound;
-        gameWonRef.current = results[6].sound;
-        bonusRef.current = results[7].sound;
-        noBonusRef.current = results[8].sound;
-        clickRef.current = results[9].sound;
+        gameRef.current = results[0];
+        keyRef.current = results[1];
+        removeRef.current = results[2];
+        successRef.current = results[3];
+        wrongRef.current = results[4];
+        gameOverRef.current = results[5];
+        gameWonRef.current = results[6];
+        bonusRef.current = results[7];
+        noBonusRef.current = results[8];
+        clickRef.current = results[9];
         setLoaded(true);
-        // console.log("all sounds loaded");
+        console.log("all sounds loaded");
+
         // if (state.sound === 1) results[0].sound.replayAsync();
       })
       .catch((err) => {
@@ -77,16 +80,16 @@ export const useSounds = () => {
       });
 
     return () => {
-      gameRef.current?.unloadAsync();
-      keyRef.current?.unloadAsync();
-      removeRef.current?.unloadAsync();
-      successRef.current?.unloadAsync();
-      wrongRef.current?.unloadAsync();
-      gameOverRef.current?.unloadAsync();
-      gameWonRef.current?.unloadAsync();
-      bonusRef.current?.unloadAsync();
-      noBonusRef.current?.unloadAsync();
-      clickRef.current?.unloadAsync();
+      gameRef.current?.release();
+      keyRef.current?.release();
+      removeRef.current?.release();
+      successRef.current?.release();
+      wrongRef.current?.release();
+      gameOverRef.current?.release();
+      gameWonRef.current?.release();
+      bonusRef.current?.release();
+      noBonusRef.current?.release();
+      clickRef.current?.release();
     };
   }, []);
 
@@ -94,53 +97,73 @@ export const useSounds = () => {
     if (loaded && state.sound === 1) {
       switch (sound) {
         case "game":
-          gameRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          gameRef.current?.play((success) => {
+            if (!success) {
+              console.error("play game error");
+            }
           });
           break;
         case "key":
-          keyRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          keyRef.current?.play((success) => {
+            if (!success) {
+              console.error("play key error");
+            }
           });
           break;
         case "remove":
-          removeRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          removeRef.current?.play((success) => {
+            if (!success) {
+              console.error("play remove error");
+            }
           });
           break;
         case "success":
-          successRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          successRef.current?.play((success) => {
+            if (!success) {
+              console.error("play success error");
+            }
           });
           break;
         case "wrong":
-          wrongRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          wrongRef.current?.play((success) => {
+            if (!success) {
+              console.error("play wrong error");
+            }
           });
           break;
         case "game-over":
-          gameOverRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          gameOverRef.current?.play((success) => {
+            if (!success) {
+              console.error("play game-over error");
+            }
           });
           break;
         case "game-won":
-          gameWonRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          gameWonRef.current?.play((success) => {
+            if (!success) {
+              console.error("play game-won error");
+            }
           });
           break;
         case "bonus":
-          bonusRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          bonusRef.current?.play((success) => {
+            if (!success) {
+              console.error("play bonus error");
+            }
           });
           break;
         case "no-bonus":
-          noBonusRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          noBonusRef.current?.play((success) => {
+            if (!success) {
+              console.error("play no-bonus error");
+            }
           });
           break;
         case "click":
-          clickRef.current?.replayAsync().catch((err) => {
-            // console.error("play." + sound + ".Error", err.message);
+          clickRef.current?.play((success) => {
+            if (!success) {
+              console.error("play click error");
+            }
           });
           break;
         default:

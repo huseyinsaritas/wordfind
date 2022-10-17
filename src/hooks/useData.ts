@@ -22,7 +22,7 @@ export const useData = (len: number) => {
 
   useEffect(() => {
     newGame();
-    play("game");
+    if (soundsLoaded) play("game");
   }, []);
   // console.log(data);
 
@@ -48,9 +48,7 @@ export const useData = (len: number) => {
               setKeysDisabled(false);
             }, DISCLOSE_TIME_MS * data.answer.length);
 
-            if (soundsLoaded) {
-              play("success");
-            }
+            if (soundsLoaded) play("success");
 
             setData((prev) => {
               if (prev === undefined) return prev;
@@ -62,9 +60,8 @@ export const useData = (len: number) => {
               return clone;
             });
           } else {
-            if (soundsLoaded) {
-              play("wrong");
-            }
+            if (soundsLoaded) play("wrong");
+
             setShaked(t("notInWordList"));
             // window.toastr?.show(t("notInWordList"), {
             //   type: "normal",
@@ -85,9 +82,8 @@ export const useData = (len: number) => {
           }
         });
       } else {
-        if (soundsLoaded) {
-          play("wrong");
-        }
+        if (soundsLoaded) play("wrong");
+
         setShaked(t("notEnoughLetters"));
         // window.toastr?.show(t("notEnoughLetters"), {
         //   type: "normal",
@@ -120,8 +116,11 @@ export const useData = (len: number) => {
         clone.currentMay = addObj;
         return clone;
       });
+      if (soundsLoaded) play("key");
+
       return true;
     }
+
     return false;
   };
 
@@ -137,6 +136,7 @@ export const useData = (len: number) => {
         clone.currentMay = deletedObj;
         return clone;
       });
+      if (soundsLoaded) play("remove");
     }
   };
 

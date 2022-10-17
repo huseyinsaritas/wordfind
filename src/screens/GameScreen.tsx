@@ -121,12 +121,10 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
   };
 
   const onPressCancel = () => {
-    play("remove");
     removeCurrentMay();
   };
 
   const onPressKeyboard = (char: IChar) => {
-    play("key");
     addCurrentMay(char.c);
   };
 

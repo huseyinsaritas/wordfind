@@ -18,7 +18,6 @@ export type GameSounds = {
   bonus: Sound;
   noBonus: Sound;
   click: Sound;
-  // [key: string]: Sound;
 };
 
 export type GlobalStateType = {

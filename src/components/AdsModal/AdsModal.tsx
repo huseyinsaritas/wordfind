@@ -35,7 +35,7 @@ export const AdsModal: React.FC<Props> = ({ onEarned, onClosed, onFailed, onModa
               onModalClose();
             }}
           >
-            <Icon name="close" size={30} color="#fff" />
+            <Icon name="close" size={30} color={COLORS.COMMON.WHITE} />
           </TouchableOpacity>
           <View>
             <Text style={styles.header}>{t("clueModalHeader")}</Text>
@@ -43,7 +43,7 @@ export const AdsModal: React.FC<Props> = ({ onEarned, onClosed, onFailed, onModa
           </View>
           <TouchableOpacity onPress={() => setShowAds(true)}>
             <View style={styles.buttonPlay}>
-              <Icon name="play" size={20} color="#fff" />
+              <Icon name="play" size={20} color={COLORS.COMMON.WHITE} />
               <Text style={styles.buttonText}>{t("watchADS")}</Text>
             </View>
           </TouchableOpacity>
@@ -135,19 +135,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: COLORS.COMMON.GREEN_SUPER_LIGHT,
+    borderColor: COLORS.COMMON.WHITE,
     backgroundColor: COLORS.COMMON.GREEN,
-    color: COLORS.COMMON.COLOR_TONE1,
-    shadowColor: "#ccc",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
+    color: COLORS.COMMON.WHITE,
   },
   buttonText: {
     textAlign: "center",
     fontSize: 16,
-    color: COLORS.COMMON.GREEN_SUPER_LIGHT,
+    color: COLORS.COMMON.WHITE,
     fontFamily: FONT_FAMILY.Black,
     marginLeft: 5,
   },

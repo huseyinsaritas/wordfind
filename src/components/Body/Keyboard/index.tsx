@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IChar } from "../../../model/Char";
 import { StyleSheet, View } from "react-native";
-import { alphabetData } from "../../../constants/keys";
+import { alphabetData } from "../../../constants/Keys";
 import BackKey from "./BackKey";
 import EnterKey from "./EnterKey";
 import { Key } from "./Key";

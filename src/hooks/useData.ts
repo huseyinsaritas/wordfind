@@ -22,9 +22,8 @@ export const useData = (len: number) => {
 
   useEffect(() => {
     newGame();
-    if (soundsLoaded) play("game");
+    play("game");
   }, []);
-  // console.log(data);
 
   const newGame = async () => {
     setGameLoading(true);
@@ -41,14 +40,16 @@ export const useData = (len: number) => {
 
     if (data.mays.length < data.answer.length) {
       if (data?.answer.length === data?.currentMay.length) {
+        setKeysDisabled(true);
         api.isValidWord(data?.currentMay.join(""), state.lan ?? "").then((valid: boolean) => {
+          setKeysDisabled(false);
           if (valid === true) {
             setKeysDisabled(true);
             setTimeout(() => {
               setKeysDisabled(false);
             }, DISCLOSE_TIME_MS * data.answer.length);
 
-            if (soundsLoaded) play("success");
+            play("success");
 
             setData((prev) => {
               if (prev === undefined) return prev;
@@ -60,7 +61,7 @@ export const useData = (len: number) => {
               return clone;
             });
           } else {
-            if (soundsLoaded) play("wrong");
+            play("wrong");
 
             setShaked(t("notInWordList"));
             // window.toastr?.show(t("notInWordList"), {
@@ -82,7 +83,7 @@ export const useData = (len: number) => {
           }
         });
       } else {
-        if (soundsLoaded) play("wrong");
+        play("wrong");
 
         setShaked(t("notEnoughLetters"));
         // window.toastr?.show(t("notEnoughLetters"), {
@@ -116,7 +117,7 @@ export const useData = (len: number) => {
         clone.currentMay = addObj;
         return clone;
       });
-      if (soundsLoaded) play("key");
+      play("key");
 
       return true;
     }
@@ -136,7 +137,7 @@ export const useData = (len: number) => {
         clone.currentMay = deletedObj;
         return clone;
       });
-      if (soundsLoaded) play("remove");
+      play("remove");
     }
   };
 

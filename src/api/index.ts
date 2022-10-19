@@ -9,8 +9,7 @@ export const getRandomGame = async (len: number, lan?: string): Promise<{ id: nu
   return axios
     .get(apiUrl + "/game/" + len + "/" + lan)
     .then((res) => {
-      console.log(res);
-
+      // console.log(res);
       return res.data.data as { id: number; len: number; item: string };
     })
     .catch((err) => {

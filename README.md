@@ -13,11 +13,11 @@ eas.json > build.development.ios.simulator = true
 
 # yarn expo start --dev-client
 
-# eas build --profile preview --platform android --message "animated"
+# eas build --profile preview --platform android --message "update"
 
-# eas build --profile preview --platform ios --message "animated"
+# eas build --profile preview --platform ios --message "update"
 
-# eas update --branch preview --message "upp the app first"
+# eas update --branch preview --message "update"
 
 # eas update --branch preview --platform ios --message "score2"
 

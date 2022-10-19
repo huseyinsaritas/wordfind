@@ -14,6 +14,9 @@ const BackKey: React.FC<Props> = ({ disabled, onPress }) => {
   return (
     <TouchableOpacity
       disabled={disabled}
+      delayPressIn={0}
+      delayPressOut={0}
+      delayLongPress={0}
       style={[styles.backKey, { minWidth: state.lan === "en" ? Dimensions.get("window").width / 6.75 : Dimensions.get("window").width / 7.75 }]}
       onPress={onPress}
       activeOpacity={0.8}

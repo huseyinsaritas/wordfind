@@ -4,6 +4,7 @@ import { getNewDeviceId } from "../helper/getNewDeviceId";
 import * as Localization from "expo-localization";
 import { SupportedLanguages } from "../translations";
 import { getGameConf } from "../api";
+import { sounds } from "../constants/Sounds";
 
 export const fetchInitialState = async (): Promise<GlobalStateType> => {
   const { getStorageData, saveStorageData /* , resetStorageData */ } = useStorageData();
@@ -74,6 +75,9 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
 
   // await resetStorageData();
   const gameConf = await getGameConf();
+
+  const gameSounds = sounds;
+
   // console.log("gameConf", gameConf);
 
   const lan = await getAndCheckStorageData<string>("lan");
@@ -104,5 +108,6 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
     gameCount,
     playedGameCount,
     winCount,
+    gameSounds,
   };
 };

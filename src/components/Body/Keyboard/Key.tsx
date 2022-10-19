@@ -77,6 +77,10 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
       //     backgroundColor: pressed ? COLORS.COMMON.COLOR_TONE2 : theme.colors.background,
       //   },
       // ]}
+      // delayPressIn={0}
+      // delayPressOut={0}
+      // delayLongPress={0}
+      // activeOpacity={0.8}
       disabled={disabled}
       onPress={onPress}
     >

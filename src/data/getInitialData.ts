@@ -27,7 +27,7 @@ import * as api from "../api";
 export const getInitialData = async (len: number, lan?: string): Promise<IGameData | undefined> => {
   const apiDatas = await api.getRandomGame(len, lan);
   const answer = apiDatas.item.split("");
-  console.log("answer", answer);
+  // console.log("answer", answer);
 
   const initialData: IGameData = {
     answer,

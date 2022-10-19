@@ -1,97 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Sound from "react-native-sound";
 import { useGlobalState } from "../global/globalState";
 
 export const useSounds = () => {
-  const [loaded, setLoaded] = useState<boolean>(false);
   const { state } = useGlobalState();
-
-  // const gameRef = useRef<Sound | undefined>();
-  // const keyRef = useRef<Sound | undefined>();
-  // const removeRef = useRef<Sound | undefined>();
-  // const successRef = useRef<Sound | undefined>();
-  // const wrongRef = useRef<Sound | undefined>();
-  // const gameOverRef = useRef<Sound | undefined>();
-  // const gameWonRef = useRef<Sound | undefined>();
-  // const bonusRef = useRef<Sound | undefined>();
-  // const noBonusRef = useRef<Sound | undefined>();
-  // const clickRef = useRef<Sound | undefined>();
-
-  // useEffect(() => {
-  //   Sound.setCategory("Playback", true);
-  //   return () => {
-  //     if (gameRef) gameRef.current?.release();
-  //     if (keyRef) keyRef.current?.release();
-  //     if (removeRef) removeRef.current?.release();
-  //     if (successRef) successRef.current?.release();
-  //     if (wrongRef) wrongRef.current?.release();
-  //     if (gameOverRef) gameOverRef.current?.release();
-  //     if (gameWonRef) gameWonRef.current?.release();
-  //     if (bonusRef) bonusRef.current?.release();
-  //     if (noBonusRef) noBonusRef.current?.release();
-  //     if (clickRef) clickRef.current?.release();
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   Sound.setCategory("Playback", true);
-
-  //   const gameSoundPromise = new Sound(require("../../assets/music/game.wav"));
-  //   const keySoundPromise = new Sound(require("../../assets/music/key.wav"));
-  //   const removeSoundPromise = new Sound(require("../../assets/music/remove.wav"));
-  //   const successSoundPromise = new Sound(require("../../assets/music/enter.wav"));
-  //   const wrongSoundPromise = new Sound(require("../../assets/music/wrong.wav"));
-  //   const gameOverSoundPromise = new Sound(require("../../assets/music/game-over2.wav"));
-  //   const gameWonSoundPromise = new Sound(require("../../assets/music/game-won.wav"));
-  //   const bonusSoundPromise = new Sound(require("../../assets/music/bonus.wav"));
-  //   const noBonusSoundPromise = new Sound(require("../../assets/music/nobonus.wav"));
-  //   const clickSoundPromise = new Sound(require("../../assets/music/click.wav"));
-
-  //   Promise.all([
-  //     gameSoundPromise,
-  //     keySoundPromise,
-  //     removeSoundPromise,
-  //     successSoundPromise,
-  //     wrongSoundPromise,
-  //     gameOverSoundPromise,
-  //     gameWonSoundPromise,
-  //     bonusSoundPromise,
-  //     noBonusSoundPromise,
-  //     clickSoundPromise,
-  //   ])
-  //     .then((results) => {
-  //       gameRef.current = results[0];
-  //       keyRef.current = results[1];
-  //       removeRef.current = results[2];
-  //       successRef.current = results[3];
-  //       wrongRef.current = results[4];
-  //       gameOverRef.current = results[5];
-  //       gameWonRef.current = results[6];
-  //       bonusRef.current = results[7];
-  //       noBonusRef.current = results[8];
-  //       clickRef.current = results[9];
-  //       setLoaded(true);
-  //       console.log("all sounds loaded");
-
-  //       // if (state.sound === 1) results[0].sound.replayAsync();
-  //     })
-  //     .catch((err) => {
-  //       // console.error(err);
-  //     });
-
-  //   return () => {
-  //     gameRef.current?.release();
-  //     keyRef.current?.release();
-  //     removeRef.current?.release();
-  //     successRef.current?.release();
-  //     wrongRef.current?.release();
-  //     gameOverRef.current?.release();
-  //     gameWonRef.current?.release();
-  //     bonusRef.current?.release();
-  //     noBonusRef.current?.release();
-  //     clickRef.current?.release();
-  //   };
-  // }, []);
 
   useEffect(() => {
     Sound.setCategory("Playback", true);
@@ -101,74 +13,114 @@ export const useSounds = () => {
     if (state.sound === 1) {
       switch (sound) {
         case "game":
-          state.gameSounds?.game.play((success) => {
-            if (!success) {
-              console.error("play game error");
-            }
-          });
+          if (state.gameSounds?.game.isPlaying()) {
+            state.gameSounds?.game.setCurrentTime(0);
+          } else {
+            state.gameSounds?.game.play((success) => {
+              if (!success) {
+                console.error("play game error");
+              }
+            });
+          }
           break;
         case "key":
-          state.gameSounds?.key.play((success) => {
-            if (!success) {
-              console.error("play key error");
-            }
-          });
+          if (state.gameSounds?.key.isPlaying()) {
+            state.gameSounds?.key.setCurrentTime(0);
+          } else {
+            state.gameSounds?.key.play((success) => {
+              if (!success) {
+                console.error("play key error");
+              }
+            });
+          }
           break;
         case "remove":
-          state.gameSounds?.remove.play((success) => {
-            if (!success) {
-              console.error("play remove error");
-            }
-          });
+          if (state.gameSounds?.remove.isPlaying()) {
+            state.gameSounds?.remove.setCurrentTime(0);
+          } else {
+            state.gameSounds?.remove.play((success) => {
+              if (!success) {
+                console.error("play remove error");
+              }
+            });
+          }
           break;
         case "success":
-          state.gameSounds?.success.play((success) => {
-            if (!success) {
-              console.error("play success error");
-            }
-          });
+          if (state.gameSounds?.success.isPlaying()) {
+            state.gameSounds?.success.setCurrentTime(0);
+          } else {
+            state.gameSounds?.success.play((success) => {
+              if (!success) {
+                console.error("play success error");
+              }
+            });
+          }
           break;
         case "wrong":
-          state.gameSounds?.wrong.play((success) => {
-            if (!success) {
-              console.error("play wrong error");
-            }
-          });
+          if (state.gameSounds?.wrong.isPlaying()) {
+            state.gameSounds?.wrong.setCurrentTime(0);
+          } else {
+            state.gameSounds?.wrong.play((success) => {
+              if (!success) {
+                console.error("play wrong error");
+              }
+            });
+          }
           break;
         case "game-over":
-          state.gameSounds?.gameOver.play((success) => {
-            if (!success) {
-              console.error("play game-over error");
-            }
-          });
+          if (state.gameSounds?.gameOver.isPlaying()) {
+            state.gameSounds?.gameOver.setCurrentTime(0);
+          } else {
+            state.gameSounds?.gameOver.play((success) => {
+              if (!success) {
+                console.error("play game-over error");
+              }
+            });
+          }
           break;
         case "game-won":
-          state.gameSounds?.gameWon.play((success) => {
-            if (!success) {
-              console.error("play game-won error");
-            }
-          });
+          if (state.gameSounds?.gameWon.isPlaying()) {
+            state.gameSounds?.gameWon.setCurrentTime(0);
+          } else {
+            state.gameSounds?.gameWon.play((success) => {
+              if (!success) {
+                console.error("play game-won error");
+              }
+            });
+          }
           break;
         case "bonus":
-          state.gameSounds?.bonus.play((success) => {
-            if (!success) {
-              console.error("play bonus error");
-            }
-          });
+          if (state.gameSounds?.bonus.isPlaying()) {
+            state.gameSounds?.bonus.setCurrentTime(0);
+          } else {
+            state.gameSounds?.bonus.play((success) => {
+              if (!success) {
+                console.error("play bonus error");
+              }
+            });
+          }
           break;
         case "no-bonus":
-          state.gameSounds?.noBonus.play((success) => {
-            if (!success) {
-              console.error("play no-bonus error");
-            }
-          });
+          if (state.gameSounds?.noBonus.isPlaying()) {
+            state.gameSounds?.noBonus.setCurrentTime(0);
+          } else {
+            state.gameSounds?.noBonus.play((success) => {
+              if (!success) {
+                console.error("play no-bonus error");
+              }
+            });
+          }
           break;
         case "click":
-          state.gameSounds?.click.play((success) => {
-            if (!success) {
-              console.error("play click error");
-            }
-          });
+          if (state.gameSounds?.click.isPlaying()) {
+            state.gameSounds?.click.setCurrentTime(0);
+          } else {
+            state.gameSounds?.click.play((success) => {
+              if (!success) {
+                console.error("play click error");
+              }
+            });
+          }
           break;
         default:
           break;
@@ -176,5 +128,5 @@ export const useSounds = () => {
     }
   };
 
-  return { soundsLoaded: loaded, play };
+  return { play };
 };

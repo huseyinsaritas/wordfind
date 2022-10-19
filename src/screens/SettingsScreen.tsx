@@ -15,24 +15,23 @@ import { Theme } from "@react-navigation/native";
 import { useTheme, useThemedStyles } from "../hooks/useTheme";
 import { BannerAdSize } from "react-native-google-mobile-ads";
 import DropDownPicker from "react-native-dropdown-picker";
-import { useSounds } from "../hooks/useSounds";
 
 export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Settings">> = ({ navigation }) => {
   const [languageOpen, setLanguageOpen] = useState(false);
-  const { state, setState } = useGlobalState();
+  const { state, setState, playSound } = useGlobalState();
   const { t } = useLanguage();
-  const { play } = useSounds();
+
   const style = useThemedStyles(styles);
   const { toggleThemeType, isDarkTheme, theme, themeType } = useTheme();
 
   const onPressGoBack = () => {
-    play("click");
+    playSound("click");
     navigation.goBack();
   };
 
   const toggleSwitch = () => {
     setLanguageOpen(false);
-    setState((prev) => ({ ...prev, sound: prev.sound === 1 ? 0 : 1 }));
+    setState((prev) => ({ ...prev, soundsOn: prev.soundsOn === 1 ? 0 : 1 }));
   };
 
   return (
@@ -44,13 +43,13 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
           <Switch
             style={style.input}
             trackColor={{ false: COLORS.COMMON.BLACK, true: COLORS.COMMON.PALE_WHITE }}
-            thumbColor={state.sound ? COLORS.COMMON.BLUE : COLORS.COMMON.COLOR_TONE2}
+            thumbColor={state.soundsOn ? COLORS.COMMON.BLUE : COLORS.COMMON.COLOR_TONE2}
             // ios_backgroundColor={COLORS.COMMON.BLACK}
             onValueChange={() => {
-              play("click");
+              playSound("click");
               toggleSwitch();
             }}
-            value={state.sound === 1}
+            value={state.soundsOn === 1}
           />
         </View>
         <View style={style.form}>
@@ -61,7 +60,7 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
             thumbColor={isDarkTheme ? COLORS.COMMON.BLUE : COLORS.COMMON.COLOR_TONE2}
             // ios_backgroundColor={COLORS.COMMON.BLACK}
             onValueChange={() => {
-              play("click");
+              playSound("click");
               setLanguageOpen(false);
               toggleThemeType();
             }}
@@ -95,7 +94,7 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
             items={SupportedLanguages}
             setOpen={setLanguageOpen}
             onSelectItem={(item) => {
-              play("click");
+              playSound("click");
               setState((prev) => ({ ...prev, lan: item.value }));
             }}
             placeholder={t("languages")}

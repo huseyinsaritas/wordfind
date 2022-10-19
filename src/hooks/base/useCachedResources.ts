@@ -4,7 +4,16 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 
 export default function useCachedResources() {
+  const [completed, setCompleted] = useState(false);
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+
+  useEffect(() => {
+    if (isLoadingComplete) {
+      SplashScreen.hideAsync().finally(() => {
+        setCompleted(true);
+      });
+    }
+  }, [isLoadingComplete]);
 
   // Load any resources or data that we need prior to rendering the app
   useEffect(() => {
@@ -23,12 +32,11 @@ export default function useCachedResources() {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
-        SplashScreen.hideAsync();
       }
     }
 
     loadResourcesAndDataAsync();
   }, []);
 
-  return isLoadingComplete;
+  return { completed };
 }

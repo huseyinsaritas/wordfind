@@ -53,27 +53,10 @@
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
-    },
-    "plugins": ["expo-tracking-transparency"]
+    }
   },
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-3105662444743172~9118850389",
     "ios_app_id": "ca-app-pub-3105662444743172~8927278696"
-  },
-  "plugins": [
-    [
-      "expo-tracking-transparency",
-      {
-        "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
-      }
-    ],
-    [
-      "expo-build-properties",
-      {
-        "android": {
-          "compileSdkVersion": 33
-        }
-      }
-    ]
-  ]
+  }
 }

@@ -9,18 +9,18 @@ import { DISCLOSE_TIME_MS, FONT_FAMILY } from "../constants/Layout";
 import { useLanguage } from "../hooks/useLanguage";
 import { useThemedStyles } from "../hooks/useTheme";
 import { Theme } from "@react-navigation/native";
-import { useSounds } from "../hooks/useSounds";
+import { useGlobalState } from "../global/globalState";
 
 export const InfoScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Info">> = ({ navigation }) => {
   const animationDuration = DISCLOSE_TIME_MS;
   const rotateAnimation = new Animated.Value(0);
   const { t } = useLanguage();
-  // const { play } = useSounds();
+  const { playSound } = useGlobalState();
 
   const style = useThemedStyles(styles);
 
   const onPressGoBack = () => {
-    // play("click");
+    playSound("click");
     navigation.goBack();
   };
 

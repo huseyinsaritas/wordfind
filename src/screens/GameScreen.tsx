@@ -16,7 +16,7 @@ import { Background } from "../components/Base/Background";
 import { AdsModal } from "../components/AdsModal/AdsModal";
 import { getRandomClueChar } from "../util";
 import { BackHandler } from "react-native";
-import { useSounds } from "../hooks/useSounds";
+import { useGlobalState } from "../global/globalState";
 import { useTheme } from "../hooks/useTheme";
 
 export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation, route }) => {
@@ -25,20 +25,20 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
   const [clue, setClue] = useState<{ showAds: boolean; remaining: number }>({ showAds: false, remaining: 3 });
   const [clueChars, setClueChars] = useState<string[]>([]);
   const { t } = useLanguage();
-  const { play } = useSounds();
+  const { playSound } = useGlobalState();
   const { theme } = useTheme();
 
   const onPressGoBack = () => {
-    play("click");
+    playSound("click");
     if (gameFinished) navigation.replace("Home");
     else
       Alert.alert(t("areYouSure"), t("leaveMessage"), [
-        { text: t("continue"), style: "cancel", onPress: () => play("click") },
+        { text: t("continue"), style: "cancel", onPress: () => playSound("click") },
         {
           text: t("exitGame"),
           style: "destructive",
           onPress: () => {
-            play("click");
+            playSound("click");
             navigation.replace("Home");
           },
         },
@@ -69,9 +69,9 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
   useEffect(() => {
     if (gameFinished) {
       if (gameWon) {
-        play("game-won");
+        playSound("gameWon");
       } else {
-        play("game-over");
+        playSound("gameOver");
       }
     }
   }, [gameFinished]);
@@ -85,7 +85,7 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
         newClueChars.push(char);
         setClueChars(newClueChars);
         setClue({ ...clue, remaining: clue.remaining - 1 });
-        play("bonus");
+        playSound("bonus");
       } else {
         window.toastr?.show(t("noTips"), {
           type: "normal",
@@ -103,7 +103,7 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
       }
     } else {
       setClue({ ...clue, showAds: true });
-      play("no-bonus");
+      playSound("noBonus");
     }
   };
 

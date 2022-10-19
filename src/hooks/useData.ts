@@ -5,24 +5,24 @@ import { deepCopy, getMayRows } from "../util";
 import { useGlobalState } from "../global/globalState";
 import * as api from "../api";
 import { DISCLOSE_TIME_MS } from "../constants/Layout";
-import { useSounds } from "./useSounds";
+
 import { useTime } from "./useTime";
 import { useLanguage } from "./useLanguage";
 import { useShake } from "./useShake";
 
 export const useData = (len: number) => {
-  const { state } = useGlobalState();
+  const { state, playSound } = useGlobalState();
   const [gameLoading, setGameLoading] = useState(true);
   const [keysDisabled, setKeysDisabled] = useState(false);
   const [data, setData] = useState<IGameData>();
-  const { play, soundsLoaded } = useSounds();
+
   const { timer, pauseTimer, resetTime, startTimer } = useTime();
   const { t } = useLanguage();
   const { shake, setShaked } = useShake();
 
   useEffect(() => {
     newGame();
-    play("game");
+    playSound("game");
   }, []);
 
   const newGame = async () => {
@@ -49,7 +49,7 @@ export const useData = (len: number) => {
               setKeysDisabled(false);
             }, DISCLOSE_TIME_MS * data.answer.length);
 
-            play("success");
+            playSound("success");
 
             setData((prev) => {
               if (prev === undefined) return prev;
@@ -61,7 +61,7 @@ export const useData = (len: number) => {
               return clone;
             });
           } else {
-            play("wrong");
+            playSound("wrong");
 
             setShaked(t("notInWordList"));
             // window.toastr?.show(t("notInWordList"), {
@@ -83,7 +83,7 @@ export const useData = (len: number) => {
           }
         });
       } else {
-        play("wrong");
+        playSound("wrong");
 
         setShaked(t("notEnoughLetters"));
         // window.toastr?.show(t("notEnoughLetters"), {
@@ -117,7 +117,7 @@ export const useData = (len: number) => {
         clone.currentMay = addObj;
         return clone;
       });
-      play("key");
+      playSound("key");
 
       return true;
     }
@@ -137,7 +137,7 @@ export const useData = (len: number) => {
         clone.currentMay = deletedObj;
         return clone;
       });
-      play("remove");
+      playSound("remove");
     }
   };
 

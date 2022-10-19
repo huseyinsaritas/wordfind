@@ -11,9 +11,9 @@ import Toast from "react-native-toast-notifications";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
+  const { completed } = useCachedResources();
 
-  if (!isLoadingComplete) return null;
+  if (!completed) return null;
 
   return (
     <FullBackground>

@@ -14,13 +14,12 @@ import { CONF } from "../conf";
 import { Logo } from "../components/Base/Logo/Logo";
 import { useTheme, useThemedStyles } from "../hooks/useTheme";
 import { Theme } from "@react-navigation/native";
-import { useSounds } from "../hooks/useSounds";
 
 export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Home">> = ({ navigation }) => {
   const [length, setLength] = useState<number>();
-  const { state, setState } = useGlobalState();
+  const { state, setState, playSound } = useGlobalState();
   const { t, l } = useLanguage();
-  const { play } = useSounds();
+
   const { theme } = useTheme();
   const style = useThemedStyles(styles);
 
@@ -29,7 +28,7 @@ export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "H
   const onGame = () => {
     if (length) {
       const newGameCount = (state.gameCount ?? 0) + 1;
-      play("click");
+      playSound("click");
       setState((prev) => ({ ...prev, gameCount: newGameCount }));
       navigation.replace("GamePre", {
         length,
@@ -49,7 +48,7 @@ export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "H
               style={style.headerItem}
               size={25}
               onPress={() => {
-                play("click");
+                playSound("click");
                 navigation.navigate("Settings");
               }}
             />
@@ -60,7 +59,7 @@ export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "H
               style={style.headerItem}
               size={30}
               onPress={() => {
-                play("click");
+                playSound("click");
                 navigation.navigate("Info");
               }}
             />
@@ -71,7 +70,7 @@ export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "H
           <TouchableOpacity
             style={[style.button, length === 5 && style.selectedButton]}
             onPress={() => {
-              play("click");
+              playSound("click");
               setLength(5);
             }}
           >
@@ -80,7 +79,7 @@ export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "H
           <TouchableOpacity
             style={[style.button, length === 6 && style.selectedButton]}
             onPress={() => {
-              play("click");
+              playSound("click");
               setLength(6);
             }}
           >
@@ -89,7 +88,7 @@ export const HomeScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "H
           <TouchableOpacity
             style={[style.button, length === 7 && style.selectedButton]}
             onPress={() => {
-              play("click");
+              playSound("click");
               setLength(7);
             }}
           >

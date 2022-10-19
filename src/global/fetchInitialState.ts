@@ -4,7 +4,7 @@ import { getNewDeviceId } from "../helper/getNewDeviceId";
 import * as Localization from "expo-localization";
 import { SupportedLanguages } from "../translations";
 import { getGameConf } from "../api";
-import { sounds } from "../constants/Sounds";
+import { loadSounds } from "./allSounds";
 
 export const fetchInitialState = async (): Promise<GlobalStateType> => {
   const { getStorageData, saveStorageData /* , resetStorageData */ } = useStorageData();
@@ -22,7 +22,7 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
         return deviceLan as T;
       }
 
-      if (key === "sound") {
+      if (key === "soundsOn") {
         await saveStorageData(key, 1);
         return 1 as T;
       }
@@ -74,14 +74,13 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
   };
 
   // await resetStorageData();
+  const allSounds = await loadSounds();
   const gameConf = await getGameConf();
-
-  const gameSounds = sounds;
 
   // console.log("gameConf", gameConf);
 
   const lan = await getAndCheckStorageData<string>("lan");
-  const sound = await getAndCheckStorageData<number>("sound");
+  const soundsOn = await getAndCheckStorageData<number>("soundsOn");
   const deviceId = await getAndCheckStorageData<string>("deviceId");
   const username = await getAndCheckStorageData<string>("username");
   const gameCount = await getAndCheckStorageData<number>("gameCount");
@@ -102,12 +101,12 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
     loading: false,
     gameConf,
     lan,
-    sound,
+    soundsOn,
     deviceId,
     username,
     gameCount,
     playedGameCount,
     winCount,
-    gameSounds,
+    allSounds,
   };
 };

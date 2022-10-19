@@ -68,7 +68,7 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
   const viewStyle = [styles.key, { ...animatedStyle }];
 
   return (
-    <Pressable
+    <TouchableOpacity
       // delayHoverIn={0.1}
       // delayHoverOut={0.1}
       // android_ripple={{ color: COLORS.COMMON.COLOR_TONE2, foreground: false, borderless: false }}
@@ -77,17 +77,17 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
       //     backgroundColor: pressed ? COLORS.COMMON.COLOR_TONE2 : theme.colors.background,
       //   },
       // ]}
-      // delayPressIn={0}
-      // delayPressOut={0}
-      // delayLongPress={0}
-      // activeOpacity={0.8}
+      delayPressIn={0}
+      delayPressOut={0}
+      delayLongPress={0}
+      activeOpacity={0.8}
       disabled={disabled}
       onPress={onPress}
     >
       <Animated.View style={viewStyle}>
         <Text style={styles.font}>{val}</Text>
       </Animated.View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

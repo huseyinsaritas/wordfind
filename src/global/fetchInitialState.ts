@@ -4,7 +4,7 @@ import { getNewDeviceId } from "../helper/getNewDeviceId";
 import * as Localization from "expo-localization";
 import { SupportedLanguages } from "../translations";
 import { getGameConf } from "../api";
-import { loadSounds } from "./allSounds";
+import { OneAv } from "../class/OneAv";
 
 export const fetchInitialState = async (): Promise<GlobalStateType> => {
   const { getStorageData, saveStorageData /* , resetStorageData */ } = useStorageData();
@@ -74,7 +74,9 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
   };
 
   // await resetStorageData();
-  const allSounds = await loadSounds();
+  // const allSounds = await loadSounds();
+  const oneAv: OneAv = await OneAv.getInstance();
+  const allSounds = oneAv.all;
   const gameConf = await getGameConf();
 
   // console.log("gameConf", gameConf);

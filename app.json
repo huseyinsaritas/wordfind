@@ -26,7 +26,10 @@
     "ios": {
       "buildNumber": "1.0.0",
       "supportsTablet": true,
-      "bundleIdentifier": "com.ayiyazilim.wordfind"
+      "bundleIdentifier": "com.ayiyazilim.wordfind",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app does not require access to the microphone."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -50,7 +53,15 @@
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "microphonePermission": false
+        }
+      ]
+    ]
   },
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-3105662444743172~9118850389",

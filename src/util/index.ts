@@ -1,3 +1,4 @@
+import { Audio } from "expo-av";
 import { COLORS } from "../constants/Colors";
 import { MayRow, MayRowChar } from "../model/GameData";
 import { IRowItemColor } from "../model/RowItemColor";
@@ -138,4 +139,10 @@ export const secondsToTime = (e: number) => {
       .padStart(2, "0");
 
   return h + ":" + m + ":" + s;
+};
+
+export const playSound = (s: Audio.SoundObject) => {
+  s.sound.replayAsync().catch((err) => {
+    console.error("play." + s.status.isLoaded + ".Error", err.message);
+  });
 };

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Platform, Text } from "react-native";
+import { Platform } from "react-native";
 import { InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
 import { CONF } from "../../conf";
-import { Button } from "../Base/Button/Button";
+// import { Button } from "../Base/Button/Button";
 import { Loading } from "../Base/Loading";
 
 const adUnitIdInterstitial = __DEV__ ? TestIds.INTERSTITIAL : Platform.select(CONF.ADMOB.interstitial) || "";
@@ -54,12 +54,12 @@ export const AdInterstitial: React.FC<{ onClosed: () => void; onFailed: () => vo
   // return <Loading message="" />;
 
   return <></>;
-  return (
-    <Button
-      text="Show Interstitial"
-      onPress={() => {
-        interstitial.show();
-      }}
-    />
-  );
+  // return (
+  //   <Button
+  //     text="Show Interstitial"
+  //     onPress={() => {
+  //       interstitial.show();
+  //     }}
+  //   />
+  // );
 };

@@ -2,7 +2,7 @@ import Sound from "react-native-sound";
 
 export const loadSounds = async (): Promise<Sound[]> => {
   const gameSoundPromise = new Promise<Sound>((resolve) => {
-    const s = new Sound(require("../../assets/music/game.wav"), (err) => {
+    const s = new Sound(require("../../assets/music/game.wav"), (err: any) => {
       if (err) {
         console.error("gameSoundPromise.load.err", err);
       }
@@ -10,7 +10,7 @@ export const loadSounds = async (): Promise<Sound[]> => {
     });
   });
   const keySoundPromise = new Promise<Sound>((resolve) => {
-    const s = new Sound(require("../../assets/music/key.wav"), (err) => {
+    const s = new Sound(require("../../assets/music/key.wav"), (err: any) => {
       if (err) {
         console.error("keySoundPromise.load.err", err);
       }

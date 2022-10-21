@@ -41,16 +41,9 @@ export const useData = (len: number) => {
     if (data.mays.length < data.answer.length) {
       if (data?.answer.length === data?.currentMay.length) {
         setKeysDisabled(true);
+
         api.isValidWord(data?.currentMay.join(""), state.lan ?? "").then((valid: boolean) => {
-          setKeysDisabled(false);
           if (valid === true) {
-            setKeysDisabled(true);
-            setTimeout(() => {
-              setKeysDisabled(false);
-            }, DISCLOSE_TIME_MS * data.answer.length);
-
-            playSound("success");
-
             setData((prev) => {
               if (prev === undefined) return prev;
               const clone = deepCopy(prev);
@@ -60,48 +53,24 @@ export const useData = (len: number) => {
               clone.mays.push(mayObj);
               return clone;
             });
+
+            setTimeout(() => {
+              setKeysDisabled(false);
+            }, DISCLOSE_TIME_MS * data.answer.length);
+
+            playSound("success");
           } else {
             playSound("wrong");
-
+            setKeysDisabled(false);
             setShaked(t("notInWordList"));
-            // window.toastr?.show(t("notInWordList"), {
-            //   type: "normal",
-            //   animationType: "zoom-in",
-            //   placement: "top",
-            //   animationDuration: 200,
-            //   duration: 1500,
-            //   normalColor: theme.colors.notification,
-            //   style: {
-            //     backgroundColor: theme.colors.notification,
-            //   },
-            //   textStyle: {
-            //     color: theme.colors.primary,
-            //   },
-            // });
-
             return false;
           }
         });
       } else {
         playSound("wrong");
-
         setShaked(t("notEnoughLetters"));
-        // window.toastr?.show(t("notEnoughLetters"), {
-        //   type: "normal",
-        //   animationType: "zoom-out",
-        //   placement: "top",
-        //   animationDuration: 200,
-        //   duration: 1500,
-        //   style: {
-        //     backgroundColor: theme.colors.notification,
-        //   },
-        //   textStyle: {
-        //     color: theme.colors.primary,
-        //   },
-        // });
       }
     }
-
     return false;
   };
 

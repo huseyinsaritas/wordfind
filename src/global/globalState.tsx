@@ -15,10 +15,6 @@ const GlobalStateProvider: React.FC<{ children: React.ReactNode; value?: Partial
   const [state, setState] = useState(value);
 
   useEffect(() => {
-    Sound.setCategory("Playback", true);
-  }, []);
-
-  useEffect(() => {
     const initState = async () => {
       const initialStateData = await fetchInitialState();
       setState(initialStateData);

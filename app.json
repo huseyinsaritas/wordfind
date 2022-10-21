@@ -5,7 +5,7 @@
     "currentFullName": "@ayiyazilim/WordFind",
     "privacy": "unlisted",
     "sdkVersion": "46.0.0",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "platforms": ["ios", "android", "web"],
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -23,29 +23,39 @@
       "url": "https://u.expo.dev/ec090143-64a0-4f38-8383-5c85886c1e70"
     },
     "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "buildNumber": "1.0.0",
-      "supportsTablet": true,
-      "bundleIdentifier": "com.ayiyazilim.wordfind",
-      "infoPlist": {
-        "NSMicrophoneUsageDescription": "This app does not require access to the microphone."
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#000"
-      },
-      "versionCode": 2,
-      "package": "com.ayiyazilim.wordfind",
-      "permissions": ["INTERNET"],
-      "userInterfaceStyle": "automatic"
-    },
     "web": {
       "favicon": "./assets/favicon.png",
       "name": "wordfind",
       "shortName": "wordfind"
     },
+    "android": {
+      "versionCode": 4,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#000"
+      },
+      "package": "com.ayiyazilim.wordfind",
+      "permissions": ["INTERNET"],
+      "userInterfaceStyle": "automatic",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3105662444743172~9118850389"
+      }
+    },
+    "ios": {
+      "buildNumber": "1.0.3",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ayiyazilim.wordfind",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "This app does not to access your photo library.",
+        "NSCameraUsageDescription": "This app does not require to access your camera.",
+        "NSMicrophoneUsageDescription": "This app does not require access to the microphone.",
+        "NSUserTrackingUsageDescription": "A message that informs the user why an app is requesting permission to use data for tracking the user or the device."
+      },
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3105662444743172~8927278696"
+      }
+    },
+
     "extra": {
       "eas": {
         "projectId": "ec090143-64a0-4f38-8383-5c85886c1e70"
@@ -58,7 +68,15 @@
       [
         "expo-image-picker",
         {
+          "photosPermission": false,
+          "cameraPermission": false,
           "microphonePermission": false
+        }
+      ],
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
       ]
     ]

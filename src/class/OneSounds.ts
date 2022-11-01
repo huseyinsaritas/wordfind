@@ -50,7 +50,7 @@ export class OneSounds {
       });
     });
     const gameOverSoundPromise = new Promise<Sound>((resolve) => {
-      const s = new Sound(require("../../assets/music/game-over2.wav"), (err: any) => {
+      const s = new Sound(require("../../assets/music/game-over.wav"), (err: any) => {
         if (err) {
           console.error("gameOverSoundPromise.load.err", err);
         }
@@ -82,7 +82,7 @@ export class OneSounds {
       });
     });
     const clickSoundPromise = new Promise<Sound>((resolve) => {
-      const s = new Sound(require("../../assets/music/click2.wav"), (err: any) => {
+      const s = new Sound(require("../../assets/music/click.wav"), (err: any) => {
         if (err) {
           console.error("clickSoundPromise.load.err", err);
         }

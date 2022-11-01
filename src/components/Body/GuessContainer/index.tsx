@@ -37,9 +37,14 @@ const styles = StyleSheet.create({
   body: {
     display: "flex",
     flexDirection: "column",
+    position: "absolute",
+    width: "100%",
     height: "100%",
-    paddingBottom: 200,
-    // height: Dimensions.get("window").width > 500 ? Dimensions.get("window").height - 390 : Dimensions.get("window").height - 460,
+    // height: "56%",
+    // paddingBottom: 200,
+    // height: Dimensions.get("window").height / 2.5,
+    top: 0,
     justifyContent: "center",
+    paddingBottom: 250,
   },
 });

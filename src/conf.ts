@@ -2,8 +2,8 @@ export const CONF = {
   VER: "1.0.0",
 
   LINKS: {
-    APPSTORE: "https://apps.apple.com/",
-    GOOGLEPLAY: "https://play.google.com/",
+    // APPSTORE: "https://apps.apple.com/",
+    GOOGLEPLAY: "https://play.google.com/store/apps/details?id=com.ayiyazilim.wordfind",
   },
 
   ADMOB: {
@@ -26,7 +26,7 @@ export const CONF = {
   },
 
   // API_BASE_URL: "http://192.168.1.102:8000",
-  API_BASE_URL: "http://wordfind.ayiyazilim.com",
+  API_BASE_URL: "https://wordfind.ayiyazilim.com",
 };
 
 // P5VJ-GCTZ-F5YM-Y4U2-U83K-3KG3-2SJY

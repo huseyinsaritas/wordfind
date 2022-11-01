@@ -14,11 +14,11 @@ export class OneAv {
     const removeSoundPromise = Audio.Sound.createAsync(require("../../assets/music/remove.wav"));
     const successSoundPromise = Audio.Sound.createAsync(require("../../assets/music/enter.wav"));
     const wrongSoundPromise = Audio.Sound.createAsync(require("../../assets/music/wrong.wav"));
-    const gameOverSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game-over2.wav"));
+    const gameOverSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game-over.wav"));
     const gameWonSoundPromise = Audio.Sound.createAsync(require("../../assets/music/game-won.wav"));
     const bonusSoundPromise = Audio.Sound.createAsync(require("../../assets/music/bonus.wav"));
     const noBonusSoundPromise = Audio.Sound.createAsync(require("../../assets/music/nobonus.wav"));
-    const clickSoundPromise = Audio.Sound.createAsync(require("../../assets/music/click2.wav"));
+    const clickSoundPromise = Audio.Sound.createAsync(require("../../assets/music/click.wav"));
 
     const allSounds = await Promise.all<Audio.SoundObject>([
       gameSoundPromise,

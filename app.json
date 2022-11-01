@@ -5,7 +5,7 @@
     "currentFullName": "@ayiyazilim/WordFind",
     "privacy": "unlisted",
     "sdkVersion": "46.0.0",
-    "version": "1.0.3",
+    "version": "1.0.6",
     "platforms": ["ios", "android", "web"],
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -29,30 +29,24 @@
       "shortName": "wordfind"
     },
     "android": {
-      "versionCode": 4,
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#000"
       },
       "package": "com.ayiyazilim.wordfind",
       "permissions": ["INTERNET"],
-      "userInterfaceStyle": "automatic",
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3105662444743172~9118850389"
-      }
+      "userInterfaceStyle": "automatic"
     },
     "ios": {
-      "buildNumber": "1.0.3",
+      "buildNumber": "1.0.6",
       "supportsTablet": true,
       "bundleIdentifier": "com.ayiyazilim.wordfind",
-      "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "This app does not to access your photo library.",
-        "NSCameraUsageDescription": "This app does not require to access your camera.",
-        "NSMicrophoneUsageDescription": "This app does not require access to the microphone.",
-        "NSUserTrackingUsageDescription": "A message that informs the user why an app is requesting permission to use data for tracking the user or the device."
-      },
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-3105662444743172~8927278696"
+      },
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app does not require access to the microphone."
       }
     },
 
@@ -66,17 +60,9 @@
     },
     "plugins": [
       [
-        "expo-image-picker",
+        "expo-av",
         {
-          "photosPermission": false,
-          "cameraPermission": false,
           "microphonePermission": false
-        }
-      ],
-      [
-        "expo-tracking-transparency",
-        {
-          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
       ]
     ]

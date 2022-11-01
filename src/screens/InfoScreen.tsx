@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Animated, Dimensions, StyleSheet, Text, View } from "react-native";
+import { Animated, Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Background } from "../components/Base/Background";
 import { RootScreenParamList } from "../types";
@@ -56,75 +56,78 @@ export const InfoScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "I
         <Text style={style.infoHeaderText}>{t("howToPlayDesc2")}</Text>
       </View>
       <View style={style.horizontalLine} />
-      <View style={style.infoContent}>
-        <View style={style.infoRow}>
-          <View style={style.answersGroupContent}>
-            <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.COLOR_TONE4 }, { ...animatedStyle }]}>
-              <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoFirstRowFirstChar")}</Text>
-            </Animated.View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoFirstRowSecondChar")}</Text>
-            </View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoFirstRowThirdChar")}</Text>
-            </View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoFirstRowFourthChar")}</Text>
-            </View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoFirstRowFifthChar")}</Text>
-            </View>
-          </View>
-          <Text style={style.infoText}>
-            {t("infoFirstRowFirstChar")} {t("isNotInTheWord")}
-          </Text>
-        </View>
 
-        <View style={style.infoRow}>
-          <View style={style.answersGroupContent}>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoSecondRowFirstChar")}</Text>
+      <ScrollView style={style.bodyScroll}>
+        <View style={style.infoContent}>
+          <View style={style.infoRow}>
+            <View style={style.answersGroupContent}>
+              <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.COLOR_TONE4 }, { ...animatedStyle }]}>
+                <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoFirstRowFirstChar")}</Text>
+              </Animated.View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoFirstRowSecondChar")}</Text>
+              </View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoFirstRowThirdChar")}</Text>
+              </View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoFirstRowFourthChar")}</Text>
+              </View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoFirstRowFifthChar")}</Text>
+              </View>
             </View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoSecondRowSecondChar")}</Text>
-            </View>
-            <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.YELLOW }, { ...animatedStyle }]}>
-              <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoSecondRowThirdChar")}</Text>
-            </Animated.View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoSecondRowFourthChar")}</Text>
-            </View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoSecondRowFifthChar")}</Text>
-            </View>
+            <Text style={style.infoText}>
+              {t("infoFirstRowFirstChar")} {t("isNotInTheWord")}
+            </Text>
           </View>
-          <Text style={style.infoText}>
-            {t("infoSecondRowThirdChar")} {t("wrongSpot")}
-          </Text>
-        </View>
-        <View style={style.infoRow}>
-          <View style={style.answersGroupContent}>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoThirdRowFirstChar")}</Text>
+
+          <View style={style.infoRow}>
+            <View style={style.answersGroupContent}>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoSecondRowFirstChar")}</Text>
+              </View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoSecondRowSecondChar")}</Text>
+              </View>
+              <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.YELLOW }, { ...animatedStyle }]}>
+                <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoSecondRowThirdChar")}</Text>
+              </Animated.View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoSecondRowFourthChar")}</Text>
+              </View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoSecondRowFifthChar")}</Text>
+              </View>
             </View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoThirdRowSecondChar")}</Text>
-            </View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoThirdRowThirdChar")}</Text>
-            </View>
-            <View style={style.answerItem}>
-              <Text style={style.tStyle}>{t("infoThirdRowFourthChar")}</Text>
-            </View>
-            <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.GREEN }, { ...animatedStyle }]}>
-              <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoThirdRowFifthChar")}</Text>
-            </Animated.View>
+            <Text style={style.infoText}>
+              {t("infoSecondRowThirdChar")} {t("wrongSpot")}
+            </Text>
           </View>
-          <Text style={style.infoText}>
-            {t("infoThirdRowFifthChar")} {t("correctSpot")}
-          </Text>
+          <View style={style.infoRow}>
+            <View style={style.answersGroupContent}>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoThirdRowFirstChar")}</Text>
+              </View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoThirdRowSecondChar")}</Text>
+              </View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoThirdRowThirdChar")}</Text>
+              </View>
+              <View style={style.answerItem}>
+                <Text style={style.tStyle}>{t("infoThirdRowFourthChar")}</Text>
+              </View>
+              <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.GREEN }, { ...animatedStyle }]}>
+                <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoThirdRowFifthChar")}</Text>
+              </Animated.View>
+            </View>
+            <Text style={style.infoText}>
+              {t("infoThirdRowFifthChar")} {t("correctSpot")}
+            </Text>
+          </View>
         </View>
-      </View>
+      </ScrollView>
       <View style={style.infoButtonContent}>
         <Button style={style.infoButton} text={t("understood")} backgroundColor={COLORS.COMMON.DARKANDGREEN} onPress={onPressGoBack} />
       </View>
@@ -154,8 +157,12 @@ const styles = (theme: Theme) =>
     horizontalLine: {
       width: "100%",
       height: 2,
-      marginVertical: 20,
-      backgroundColor: COLORS.COMMON.COLOR_TONE4,
+      marginTop: 20,
+      backgroundColor: theme.colors.text,
+    },
+    bodyScroll: {
+      display: "flex",
+      flex: 1,
     },
     infoContent: {
       width: "100%",
@@ -197,7 +204,6 @@ const styles = (theme: Theme) =>
       marginTop: 10,
     },
     infoButtonContent: {
-      position: "absolute",
       width: "100%",
       display: "flex",
       alignItems: "center",
@@ -206,9 +212,11 @@ const styles = (theme: Theme) =>
       left: 0,
       right: 0,
       bottom: 20,
-      height: 40,
+      height: 45,
+      backgroundColor: theme.colors.background,
     },
     infoButton: {
+      position: "absolute",
       width: Dimensions.get("window").width > 500 ? "50%" : "100%",
     },
   });

@@ -7,6 +7,7 @@ export type Texts = {
   newGame: string;
   startGame: string;
   mainPage: string;
+  submit: string;
   // Settings
   gameSounds: string;
 
@@ -94,6 +95,7 @@ export const languages: {
     newGame: "NEW GAME",
     startGame: "START GAME",
     mainPage: "MAIN PAGE",
+    submit: "SUBMIT",
     // Profile
     gameCount: "Game Count",
     id: "Id",
@@ -170,6 +172,7 @@ export const languages: {
     startGame: "OYUNA BAŞLA",
     newGame: "YENİ OYUN",
     mainPage: "ANA SAYFA",
+    submit: "DENE",
     // Profile
     gameCount: "Oyun Sayısı",
     id: "Id",

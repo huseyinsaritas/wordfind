@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { useTheme } from "../../../hooks/useTheme";
 import { MayRow } from "../../../model/GameData";
 import { RowItem } from "./RowItem";
 
@@ -10,14 +9,12 @@ type Props = {
 };
 
 export const CompletedRow: React.FC<Props> = ({ may, border }) => {
-  const { themeType } = useTheme();
-
   return (
     <View style={styles.answersGroupWrapper}>
       <View style={styles.answersGroupContent}>
         {may.chars.map((r, i) => {
           const color = r.state === 2 ? "green" : r.state === 1 ? "yellow" : "darkgray";
-          return <RowItem val={r.char} color={color} key={i} id={i} animation border={border} lightTheme={themeType === "light"} />;
+          return <RowItem val={r.char} color={color} key={i} id={i} animation border={border} />;
         })}
       </View>
     </View>

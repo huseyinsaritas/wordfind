@@ -28,7 +28,7 @@ export const useData = (len: number) => {
   const newGame = async () => {
     setGameLoading(true);
     const data = await getInitialData(len, state.lan ?? "");
-    console.log("newGame.data", data);
+    // console.log("newGame.data", data);
     setData(data);
     setGameLoading(false);
     resetTime();

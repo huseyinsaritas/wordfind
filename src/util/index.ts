@@ -140,9 +140,3 @@ export const secondsToTime = (e: number) => {
 
   return h + ":" + m + ":" + s;
 };
-
-export const playSound = (s: Audio.SoundObject) => {
-  s.sound.replayAsync().catch((err) => {
-    console.error("play." + s.status.isLoaded + ".Error", err.message);
-  });
-};

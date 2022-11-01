@@ -12,10 +12,9 @@ type Props = {
   id?: number;
   animation?: boolean;
   border: boolean;
-  lightTheme?: boolean;
 };
 
-export const RowItem: React.FC<Props> = ({ val, color, id = 0, animation = false, border, lightTheme }) => {
+export const RowItem: React.FC<Props> = ({ val, color, id = 0, animation = false, border }) => {
   const { theme } = useTheme();
   const [rowColor, setRowColor] = useState<string>();
   const [borderColor, setBorderColor] = useState<string>(COLORS.COMMON.GRAY);
@@ -36,7 +35,7 @@ export const RowItem: React.FC<Props> = ({ val, color, id = 0, animation = false
       if (!border) {
         setBorderColor("transparent");
       }
-      if (lightTheme) {
+      if (!theme.dark && animation) {
         setCharColor(COLORS.COMMON.WHITE);
       }
     });
@@ -54,7 +53,6 @@ export const RowItem: React.FC<Props> = ({ val, color, id = 0, animation = false
       },
     ],
     borderColor,
-    color: charColor,
   };
 
   return (
@@ -68,8 +66,8 @@ const styles = StyleSheet.create({
   answerItem: {
     borderWidth: 2,
     borderRadius: 6,
-    width: Dimensions.get("window").width < 500 ? Dimensions.get("window").height / 20 : Dimensions.get("window").width / 20,
-    height: Dimensions.get("window").width < 500 ? Dimensions.get("window").height / 20 : Dimensions.get("window").width / 20,
+    width: Dimensions.get("window").height < 845 ? Dimensions.get("window").width / 9.5 : Dimensions.get("window").width / 20,
+    height: Dimensions.get("window").height < 845 ? Dimensions.get("window").width / 9.5 : Dimensions.get("window").width / 20,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

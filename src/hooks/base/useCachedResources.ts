@@ -1,28 +1,19 @@
 import { FontAwesome } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import { useEffect, useState } from "react";
 
 export default function useCachedResources() {
   const [completed, setCompleted] = useState(false);
-  const [permissionComplete, setPermissionComplete] = useState(false);
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
   useEffect(() => {
-    if (permissionComplete && isLoadingComplete) {
+    if (isLoadingComplete) {
       SplashScreen.hideAsync().finally(() => {
         setCompleted(true);
       });
     }
-  }, [permissionComplete, isLoadingComplete]);
-
-  useEffect(() => {
-    setTimeout(async () => {
-      const { status } = await requestTrackingPermissionsAsync();
-      setPermissionComplete(true);
-    }, 600);
-  }, []);
+  }, [isLoadingComplete]);
 
   // Load any resources or data that we need prior to rendering the app
   useEffect(() => {

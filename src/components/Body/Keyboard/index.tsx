@@ -3,12 +3,12 @@ import { IChar } from "../../../model/Char";
 import { StyleSheet, View } from "react-native";
 import { alphabetData } from "../../../constants/Keys";
 import BackKey from "./BackKey";
-import EnterKey from "./EnterKey";
 import { Key } from "./Key";
 import { isBorder } from "../../../util";
 import { FONT_FAMILY } from "../../../constants/Layout";
 import { useGlobalState } from "../../../global/globalState";
 import { IGameData, MayRow, MayRowChar } from "../../../model/GameData";
+import SubmitButton from "./SubmitButton";
 
 type Props = {
   onPress: (char: IChar) => void;
@@ -52,34 +52,72 @@ export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCance
   });
 
   return (
-    <View style={styles.keyboard}>
-      <View style={styles.keys}>
-        {lines.map((line, index) => {
-          return (
-            <View key={index} style={styles.line}>
-              {line.map((key, i) => {
-                const s = uniqueMayRowChar.find((x) => x.char === key.c)?.state;
-                const color = s === 2 ? "green" : s === 1 ? "yellow" : s === 0 ? "darkgray" : "gray";
-                return (
-                  <Key
-                    key={i + 1}
-                    val={key.c}
-                    onPress={() => {
-                      onPress(key);
-                    }}
-                    color={color}
-                    isBorder={border[key.c]}
-                    disabled={keysDisabled || gameFinished}
-                    answer={data.answer}
-                  />
-                );
-              })}
-            </View>
-          );
-        })}
+    <View>
+      <View style={styles.keyboard}>
+        <View style={styles.keys}>
+          <View style={styles.line}>
+            {lines[0].map((key, i) => {
+              const s = uniqueMayRowChar.find((x) => x.char === key.c)?.state;
+              const color = s === 2 ? "green" : s === 1 ? "yellow" : s === 0 ? "darkgray" : "gray";
+              return (
+                <Key
+                  key={i + 1}
+                  val={key}
+                  onPress={() => {
+                    onPress(key);
+                  }}
+                  color={color}
+                  isBorder={border[key.c]}
+                  disabled={keysDisabled || gameFinished}
+                  answer={data.answer}
+                />
+              );
+            })}
+          </View>
+          <View style={styles.line}>
+            {lines[1].map((key, i) => {
+              const s = uniqueMayRowChar.find((x) => x.char === key.c)?.state;
+              const color = s === 2 ? "green" : s === 1 ? "yellow" : s === 0 ? "darkgray" : "gray";
+              return (
+                <Key
+                  key={i + 1}
+                  val={key}
+                  onPress={() => {
+                    onPress(key);
+                  }}
+                  color={color}
+                  isBorder={border[key.c]}
+                  disabled={keysDisabled || gameFinished}
+                  answer={data.answer}
+                />
+              );
+            })}
+          </View>
+          <View style={styles.line}>
+            {lines[2].map((key, i) => {
+              const s = uniqueMayRowChar.find((x) => x.char === key.c)?.state;
+              const color = s === 2 ? "green" : s === 1 ? "yellow" : s === 0 ? "darkgray" : "gray";
+              return (
+                <Key
+                  key={i + 1}
+                  val={key}
+                  onPress={() => {
+                    onPress(key);
+                  }}
+                  color={color}
+                  isBorder={border[key.c]}
+                  disabled={keysDisabled || gameFinished}
+                  answer={data.answer}
+                />
+              );
+            })}
+            <BackKey onPress={onPressCancel} disabled={keysDisabled || gameFinished} />
+          </View>
+        </View>
       </View>
-      <EnterKey onPress={onPressSubmit} disabled={keysDisabled || gameFinished} />
-      <BackKey onPress={onPressCancel} disabled={keysDisabled || gameFinished} />
+      <View style={styles.submitButton}>
+        <SubmitButton onPress={onPressSubmit} disabled={keysDisabled || gameFinished} />
+      </View>
     </View>
   );
 };
@@ -109,5 +147,10 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     color: "#fff",
     fontFamily: FONT_FAMILY.Black,
+  },
+  submitButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

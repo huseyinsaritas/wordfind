@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   },
   banner: {
     zIndex: 2,
-    marginTop: 5,
     marginBottom: 2,
     textAlign: "center",
     alignItems: "center",

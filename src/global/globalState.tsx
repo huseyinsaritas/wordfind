@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, Dispatch, SetStateAction, u
 import { useStorageData } from "../hooks/useStorageData";
 import { fetchInitialState } from "./fetchInitialState";
 import { GlobalStateStorageKeys, GlobalStateType } from "./type";
-import { playSound as playSoundHelp } from "../util";
+import { playOneAv as playSoundHelp } from "../helper/playSound";
 import { Audio } from "expo-av";
 
 const GlobalStateContext = createContext({

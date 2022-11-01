@@ -17,11 +17,11 @@ const BackKey: React.FC<Props> = ({ disabled, onPress }) => {
       delayPressIn={0}
       delayPressOut={0}
       delayLongPress={0}
-      style={[styles.backKey, { minWidth: state.lan === "en" ? Dimensions.get("window").width / 6.75 : Dimensions.get("window").width / 7.75 }]}
+      style={[styles.backKey, { minWidth: state.lan === "en" ? Dimensions.get("window").width / 6.75 : Dimensions.get("window").width / 6 }]}
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <Icon name="delete" size={32} color="#fff" />
+      <Icon name="delete" size={40} color="#fff" />
     </TouchableOpacity>
   );
 };
@@ -29,8 +29,9 @@ const BackKey: React.FC<Props> = ({ disabled, onPress }) => {
 const styles = StyleSheet.create({
   backKey: {
     minWidth: Dimensions.get("window").width / 8,
+    width: 20,
     height: 55,
-    marginVertical: 1,
+    marginLeft: 2,
     borderRadius: 4,
     justifyContent: "center",
     alignContent: "center",
@@ -43,9 +44,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    position: "absolute",
-    right: 2,
-    bottom: 2,
+    // position: "absolute",
+    // right: 2,
+    // bottom: 2,
   },
 });
 

@@ -5,9 +5,10 @@ import { DISCLOSE_TIME_MS, FONT_FAMILY } from "../../../constants/Layout";
 import { getColor } from "../../../util";
 import { useGlobalState } from "../../../global/globalState";
 import { useTheme } from "../../../hooks/useTheme";
+import { IChar } from "../../../model/Char";
 
 type Props = {
-  val: string;
+  val: IChar;
   color?: string;
   isBorder?: boolean;
   onPress: () => void;
@@ -20,7 +21,7 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
   const [keyBgColor, setKeyBgColor] = useState<string>(currentColor);
   const { state } = useGlobalState();
   const { theme } = useTheme();
-  if (val === "") return <View style={styles.key} />;
+  if (val.c === "") return <View style={styles.key} />;
 
   const opacityAnimation = new Animated.Value(0);
 
@@ -59,7 +60,7 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
 
   const animatedStyle = {
     backgroundColor: keyBgColor,
-    borderWidth: isBorder ? 2 : 0,
+    borderWidth: isBorder ? 3 : 0,
     borderColor: isBorder ? theme.colors.border : currentColor,
     opacity: isBorder ? opacity : 1,
     minWidth: state.lan === "en" ? Dimensions.get("window").width / 11 : Dimensions.get("window").width / 12,
@@ -85,7 +86,7 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
       onPress={onPress}
     >
       <Animated.View style={viewStyle}>
-        <Text style={styles.font}>{val}</Text>
+        <Text style={styles.font}>{val.c}</Text>
       </Animated.View>
     </TouchableOpacity>
   );

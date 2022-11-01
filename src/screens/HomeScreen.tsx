@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Platform } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Platform, Dimensions } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FONT_FAMILY } from "../constants/Layout";
 import { RootScreenParamList } from "../types";
@@ -124,11 +124,12 @@ const styles = (theme: Theme) =>
       paddingVertical: Platform.OS === "ios" ? 10 : 30,
     },
     info: {
-      position: "absolute",
+      // position: "absolute",
+      height: Dimensions.get("window").height / 2,
       width: "100%",
       textAlign: "center",
       alignItems: "center",
-      top: "40%",
+      justifyContent: "center",
       zIndex: 1,
     },
     start: {
@@ -136,13 +137,14 @@ const styles = (theme: Theme) =>
       width: "100%",
       textAlign: "center",
       alignItems: "center",
-      top: "85%",
+      bottom: 50,
+      // top: "85%",
       zIndex: 1,
     },
     button: {
       width: 275,
       height: 60,
-      marginTop: 30,
+      marginTop: 20,
       paddingHorizontal: 8,
       display: "flex",
       justifyContent: "center",

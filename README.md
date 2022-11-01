@@ -27,4 +27,18 @@ eas.json > build.development.ios.simulator = true
 
 # eas build --profile production --platform ios
 
+# eas build -p all --profile production
+
+# eas submit -p ios --latest
+
+#### UPDATES
+
+# eas update --branch preview
+
+# eas update --branch production
+
+#### UPDATES
+
+# sudo xcode-select --reset
+
 Project @ayiyazilim

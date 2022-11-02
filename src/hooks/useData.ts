@@ -110,5 +110,19 @@ export const useData = (len: number) => {
     }
   };
 
-  return { gameLoading, data, addCurrentMay, removeCurrentMay, submitData, newGame, shake, keysDisabled, timer, pauseTimer };
+  const removeAllCurrentMay = () => {
+    if (data === undefined) return false;
+
+    if (0 < data.currentMay.length) {
+      setData((prev) => {
+        if (prev === undefined) return prev;
+        const clone = deepCopy(prev);
+        clone.currentMay = [];
+        return clone;
+      });
+      playSound("remove");
+    }
+  };
+
+  return { gameLoading, data, addCurrentMay, removeCurrentMay, removeAllCurrentMay, submitData, newGame, shake, keysDisabled, timer, pauseTimer };
 };

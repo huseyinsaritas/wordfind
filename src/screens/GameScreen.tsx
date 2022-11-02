@@ -21,7 +21,7 @@ import { useTheme } from "../hooks/useTheme";
 
 export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Game">> = ({ navigation, route }) => {
   const { length } = route.params;
-  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, submitData, newGame, shake, gameWon, keysDisabled, timer } = useGame(length);
+  const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, removeAllCurrentMay, submitData, newGame, shake, gameWon, keysDisabled, timer } = useGame(length);
   const [clue, setClue] = useState<{ showAds: boolean; remaining: number }>({ showAds: false, remaining: 3 });
   const [clueChars, setClueChars] = useState<string[]>([]);
   const { t } = useLanguage();
@@ -124,6 +124,10 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
     removeCurrentMay();
   };
 
+  const onLongPressCancel = () => {
+    removeAllCurrentMay();
+  };
+
   const onPressKeyboard = (char: IChar) => {
     addCurrentMay(char.c);
   };
@@ -155,6 +159,7 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
           onPressKeyboard={onPressKeyboard}
           onPressSubmit={onPressSubmit}
           onPressCancel={onPressCancel}
+          onLongPressCancel={onLongPressCancel}
           gameFinished={gameFinished}
           shake={shake}
           gameWon={gameWon}

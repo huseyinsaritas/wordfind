@@ -6,17 +6,17 @@ import { useGlobalState } from "../../../global/globalState";
 
 type Props = {
   onPress?: () => void;
+  onLongPress?: () => void;
   disabled?: boolean;
 };
 
-const BackKey: React.FC<Props> = ({ disabled, onPress }) => {
+const BackKey: React.FC<Props> = ({ disabled, onPress, onLongPress }) => {
   const { state } = useGlobalState();
   return (
     <TouchableOpacity
       disabled={disabled}
-      delayPressIn={0}
-      delayPressOut={0}
-      delayLongPress={0}
+      delayLongPress={500}
+      onLongPress={onLongPress}
       style={[styles.backKey, { minWidth: state.lan === "en" ? Dimensions.get("window").width / 6.75 : Dimensions.get("window").width / 6 }]}
       onPress={onPress}
       activeOpacity={0.8}

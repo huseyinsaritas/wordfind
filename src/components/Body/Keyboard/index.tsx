@@ -14,13 +14,14 @@ type Props = {
   onPress: (char: IChar) => void;
   onPressSubmit: () => void;
   onPressCancel: () => void;
+  onLongPressCancel: () => void;
   data: IGameData;
   gameFinished?: boolean;
   clueChars: string[];
   keysDisabled: boolean;
 };
 
-export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCancel, data, gameFinished, clueChars, keysDisabled }) => {
+export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCancel, onLongPressCancel, data, gameFinished, clueChars, keysDisabled }) => {
   const { state } = useGlobalState();
 
   const alphabet = state.lan === "en" ? alphabetData.EN : alphabetData.TR;
@@ -111,7 +112,7 @@ export const Keyboard: React.FC<Props> = ({ onPress, onPressSubmit, onPressCance
                 />
               );
             })}
-            <BackKey onPress={onPressCancel} disabled={keysDisabled || gameFinished} />
+            <BackKey onPress={onPressCancel} onLongPress={onLongPressCancel} disabled={keysDisabled || gameFinished} />
           </View>
         </View>
       </View>

@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, answer }) => {
-  const currentColor = COLORS.COMMON.COLOR_TONE2;
+  const currentColor = COLORS.COMMON.GRAY;
   const [keyBgColor, setKeyBgColor] = useState<string>(currentColor);
   const { state } = useGlobalState();
   const { theme } = useTheme();
@@ -72,10 +72,10 @@ export const Key: React.FC<Props> = ({ val, color, isBorder, onPress, disabled, 
     <TouchableOpacity
       // delayHoverIn={0.1}
       // delayHoverOut={0.1}
-      // android_ripple={{ color: COLORS.COMMON.COLOR_TONE2, foreground: false, borderless: false }}
+      // android_ripple={{ color: COLORS.COMMON.GRAY, foreground: false, borderless: false }}
       // style={({ pressed }) => [
       //   {
-      //     backgroundColor: pressed ? COLORS.COMMON.COLOR_TONE2 : theme.colors.background,
+      //     backgroundColor: pressed ? COLORS.COMMON.GRAY : theme.colors.background,
       //   },
       // ]}
       delayPressIn={0}
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.COMMON.COLOR_TONE2,
-    color: COLORS.COMMON.COLOR_TONE1,
+    backgroundColor: COLORS.COMMON.GRAY,
+    color: COLORS.COMMON.WHITE,
   },
   font: {
     fontSize: 25,

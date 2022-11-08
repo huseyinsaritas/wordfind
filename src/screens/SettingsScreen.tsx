@@ -43,7 +43,7 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
           <Switch
             style={style.input}
             trackColor={{ false: COLORS.COMMON.BLACK, true: COLORS.COMMON.PALE_WHITE }}
-            thumbColor={state.soundsOn ? COLORS.COMMON.BLUE : COLORS.COMMON.COLOR_TONE2}
+            thumbColor={state.soundsOn ? COLORS.COMMON.BLUE : COLORS.COMMON.GRAY}
             // ios_backgroundColor={COLORS.COMMON.BLACK}
             onValueChange={() => {
               playSound("click");
@@ -57,7 +57,7 @@ export const SettingsScreen: React.FC<NativeStackScreenProps<RootScreenParamList
           <Switch
             style={style.input}
             trackColor={{ false: COLORS.COMMON.BLACK, true: COLORS.COMMON.PALE_WHITE }}
-            thumbColor={isDarkTheme ? COLORS.COMMON.BLUE : COLORS.COMMON.COLOR_TONE2}
+            thumbColor={isDarkTheme ? COLORS.COMMON.BLUE : COLORS.COMMON.GRAY}
             // ios_backgroundColor={COLORS.COMMON.BLACK}
             onValueChange={() => {
               playSound("click");

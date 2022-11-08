@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: COLORS.COMMON.GREEN_SUPER_LIGHT,
-    backgroundColor: COLORS.COMMON.COLOR_TONE3,
-    color: COLORS.COMMON.COLOR_TONE1,
+    borderColor: COLORS.COMMON.WHITE,
+    backgroundColor: COLORS.COMMON.BLACK,
+    color: COLORS.COMMON.WHITE,
     shadowColor: "#ccc",
     shadowOffset: {
       width: 0,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     fontSize: 16,
-    color: COLORS.COMMON.GREEN_SUPER_LIGHT,
+    color: COLORS.COMMON.WHITE,
     fontFamily: FONT_FAMILY.Black,
   },
 });

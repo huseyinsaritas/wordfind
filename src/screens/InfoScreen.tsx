@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Animated, Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Animated, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Background } from "../components/Base/Background";
 import { RootScreenParamList } from "../types";
@@ -10,6 +10,7 @@ import { useLanguage } from "../hooks/useLanguage";
 import { useThemedStyles } from "../hooks/useTheme";
 import { Theme } from "@react-navigation/native";
 import { useGlobalState } from "../global/globalState";
+import Icon from "@expo/vector-icons/Ionicons";
 
 export const InfoScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "Info">> = ({ navigation }) => {
   const animationDuration = DISCLOSE_TIME_MS;
@@ -59,9 +60,21 @@ export const InfoScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "I
 
       <ScrollView style={style.bodyScroll}>
         <View style={style.infoContent}>
+          {/* <View style={style.infoRow}>
+            <TouchableOpacity style={style.clue}>
+              <View style={style.clueContent}>
+                <Icon style={style.clueButton} name="ios-bulb" size={22} color={COLORS.COMMON.YELLOW} />
+                <Text style={style.clueText}>3</Text>
+              </View>
+            </TouchableOpacity>
+            <Text style={style.infoText}>{t("clueInfo")}</Text>
+          </View> */}
+          <View style={style.example}>
+            <Text style={style.exampleHeader}>{t("examples")}</Text>
+          </View>
           <View style={style.infoRow}>
             <View style={style.answersGroupContent}>
-              <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.COLOR_TONE4 }, { ...animatedStyle }]}>
+              <Animated.View style={[style.answerItem, { backgroundColor: COLORS.COMMON.DARKGRAY }, { ...animatedStyle }]}>
                 <Text style={[style.tStyle, { color: COLORS.COMMON.WHITE }]}>{t("infoFirstRowFirstChar")}</Text>
               </Animated.View>
               <View style={style.answerItem}>
@@ -127,10 +140,10 @@ export const InfoScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "I
             </Text>
           </View>
         </View>
+        <View style={style.infoButtonContent}>
+          <Button style={style.infoButton} text={t("understood")} backgroundColor={COLORS.COMMON.GREEN} onPress={onPressGoBack} />
+        </View>
       </ScrollView>
-      <View style={style.infoButtonContent}>
-        <Button style={style.infoButton} text={t("understood")} backgroundColor={COLORS.COMMON.DARKANDGREEN} onPress={onPressGoBack} />
-      </View>
     </Background>
   );
 };
@@ -154,6 +167,45 @@ const styles = (theme: Theme) =>
       paddingRight: 4,
       marginVertical: 10,
     },
+    example: {
+      width: "100%",
+      display: "flex",
+      marginLeft: 60,
+    },
+    exampleHeader: {
+      width: "100%",
+      color: theme.colors.text,
+      fontSize: 22,
+      fontWeight: "bold",
+      paddingLeft: 15,
+      paddingRight: 4,
+      marginVertical: 10,
+    },
+    clue: {
+      display: "flex",
+      width: 300,
+      alignItems: "flex-start",
+    },
+    clueContent: {
+      display: "flex",
+      flexDirection: "row",
+      width: 60,
+      marginTop: 5,
+      backgroundColor: COLORS.COMMON.GRAY,
+      borderRadius: 10,
+      paddingVertical: 2,
+      paddingHorizontal: 10,
+    },
+    clueButton: {
+      paddingRight: 5,
+      paddingTop: 2,
+    },
+    clueText: {
+      fontSize: 24,
+      color: "#fff",
+      fontFamily: FONT_FAMILY.Black,
+      paddingRight: 5,
+    },
     horizontalLine: {
       width: "100%",
       height: 2,
@@ -163,6 +215,7 @@ const styles = (theme: Theme) =>
     bodyScroll: {
       display: "flex",
       flex: 1,
+      height: "100%",
     },
     infoContent: {
       width: "100%",
@@ -172,7 +225,7 @@ const styles = (theme: Theme) =>
     },
     infoRow: {
       width: 300,
-      marginVertical: 20,
+      marginVertical: 15,
     },
     answersGroupContent: {
       display: "flex",
@@ -188,7 +241,7 @@ const styles = (theme: Theme) =>
       justifyContent: "center",
       marginHorizontal: 3,
       marginVertical: 5,
-      borderColor: COLORS.COMMON.COLOR_TONE4,
+      borderColor: COLORS.COMMON.GRAY,
     },
 
     tStyle: {
@@ -204,19 +257,17 @@ const styles = (theme: Theme) =>
       marginTop: 10,
     },
     infoButtonContent: {
+      // position: "absolute",
       width: "100%",
       display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      paddingHorizontal: 20,
+      justifyContent: "flex-end",
+      marginVertical: 15,
+      paddingHorizontal: 40,
       left: 0,
       right: 0,
-      bottom: 20,
-      height: 45,
-      backgroundColor: theme.colors.background,
+      // bottom: -Dimensions.get("window").height / 7,
     },
     infoButton: {
-      position: "absolute",
       width: Dimensions.get("window").width > 500 ? "50%" : "100%",
     },
   });

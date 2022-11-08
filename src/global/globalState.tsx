@@ -2,8 +2,9 @@ import React, { createContext, useState, useContext, Dispatch, SetStateAction, u
 import { useStorageData } from "../hooks/useStorageData";
 import { fetchInitialState } from "./fetchInitialState";
 import { GlobalStateStorageKeys, GlobalStateType } from "./type";
-import { playOneAv as playSoundHelp } from "../helper/playSound";
+import { playOne as playSoundHelp } from "../helper/playSound";
 import { Audio } from "expo-av";
+import Sound from "react-native-sound";
 
 const GlobalStateContext = createContext({
   state: {} as Partial<GlobalStateType>,
@@ -29,7 +30,7 @@ const GlobalStateProvider: React.FC<{ children: React.ReactNode; value?: Partial
       if (!state.soundsOn) return;
       if (!state.allSounds) return;
 
-      let s: Audio.SoundObject = state.allSounds[0];
+      let s: Audio.SoundObject | Sound = state.allSounds[0];
       switch (soundName) {
         case "game":
           s = state.allSounds[0];

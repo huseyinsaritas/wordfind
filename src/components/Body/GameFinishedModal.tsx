@@ -63,7 +63,7 @@ export const GameFinishedModal: React.FC<Props> = ({ data, gameWon, onPressHomeP
               </View>
             </View>
             <View style={styles.modalFooter}>
-              <Button text={t("newGame")} onPress={() => newGameClicked()} backgroundColor={COLORS.COMMON.DARKANDGREEN} />
+              <Button text={t("newGame")} onPress={() => newGameClicked()} backgroundColor={COLORS.COMMON.GREEN} />
               <Button text={t("mainPage")} onPress={() => homePageClicked()} />
             </View>
           </View>
@@ -122,14 +122,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: FONT_FAMILY.Black,
     marginHorizontal: 20,
-    color: COLORS.COMMON.COLOR_TONE1,
+    color: COLORS.COMMON.WHITE,
   },
   modalAnswer: {
     paddingVertical: 10,
     textAlign: "center",
     fontFamily: FONT_FAMILY.Black,
     fontSize: 16,
-    color: COLORS.COMMON.COLOR_TONE1,
+    color: COLORS.COMMON.WHITE,
   },
   graphContainer: {
     width: "100%",
@@ -145,12 +145,12 @@ const styles = StyleSheet.create({
   graph: {
     width: "100%",
     height: "100%",
-    backgroundColor: COLORS.COMMON.COLOR_TONE4,
+    backgroundColor: COLORS.COMMON.DARKGRAY,
     borderRadius: 25,
   },
   graphBar: {
     height: "100%",
-    backgroundColor: COLORS.COMMON.COLOR_TONE4,
+    backgroundColor: COLORS.COMMON.DARKGRAY,
     borderRadius: 25,
   },
   alignRight: {
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   numGuesses: {
     fontSize: 12,
     fontWeight: "bold",
-    color: COLORS.COMMON.COLOR_TONE1,
+    color: COLORS.COMMON.WHITE,
     paddingLeft: 5,
   },
   modalFooter: {

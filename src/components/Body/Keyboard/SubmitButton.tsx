@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.COMMON.COLOR_TONE2,
-    color: COLORS.COMMON.COLOR_TONE1,
-    borderColor: COLORS.COMMON.COLOR_TONE4,
+    // borderWidth: 1,
+    backgroundColor: COLORS.COMMON.GRAY,
+    // borderColor: COLORS.COMMON.DARKGRAY,
     shadowColor: "#ccc",
     shadowOffset: {
       width: 0,

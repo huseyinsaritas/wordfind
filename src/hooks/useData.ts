@@ -24,6 +24,7 @@ export const useData = (len: number) => {
     newGame();
     playSound("game");
   }, []);
+  console.log(data);
 
   const newGame = async () => {
     setGameLoading(true);

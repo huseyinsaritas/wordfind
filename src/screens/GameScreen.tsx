@@ -144,7 +144,18 @@ export const GameScreen: React.FC<NativeStackScreenProps<RootScreenParamList, "G
         onClosed={() => {
           setClue({ ...clue, showAds: false });
         }}
-        onFailed={() => {
+        onFailed={(err: string) => {
+          window.toastr?.show(t("noAdToShow"), {
+            type: "normal",
+            animationType: "zoom-in",
+            placement: "top",
+            style: {
+              backgroundColor: theme.colors.notification,
+            },
+            textStyle: {
+              color: theme.colors.primary,
+            },
+          });
           setClue({ ...clue });
         }}
         onModalClose={() => {

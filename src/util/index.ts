@@ -79,11 +79,11 @@ export const howMayFindCharByOneRow = (answer: string[], may: string[]): number 
 };
 
 export const getColor = (color?: string) => {
-  if (color === "gray") return COLORS.COMMON.COLOR_TONE2;
-  if (color === "darkgray") return COLORS.COMMON.COLOR_TONE4;
-  if (color === "green") return COLORS.COMMON.DARKANDGREEN;
+  if (color === "gray") return COLORS.COMMON.GRAY;
+  if (color === "darkgray") return COLORS.COMMON.DARKGRAY;
+  if (color === "green") return COLORS.COMMON.GREEN;
   if (color === "yellow") return COLORS.COMMON.YELLOW;
-  if (color === "white") return COLORS.COMMON.COLOR_TONE1;
+  if (color === "white") return COLORS.COMMON.WHITE;
 };
 
 export const deepCopy = <T>(value: T): T => {

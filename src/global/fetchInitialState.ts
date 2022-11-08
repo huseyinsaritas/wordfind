@@ -5,6 +5,8 @@ import * as Localization from "expo-localization";
 import { SupportedLanguages } from "../translations";
 import { getGameConf } from "../api";
 import { OneAv } from "../class/OneAv";
+import { OneSounds } from "../class/OneSounds";
+import { Platform } from "react-native";
 // import { OneSounds } from "../class/OneSounds";
 
 export const fetchInitialState = async (): Promise<GlobalStateType> => {
@@ -76,11 +78,14 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
 
   // await resetStorageData();
 
-  const oneAv: OneAv = await OneAv.getInstance();
-  const allSounds = oneAv.all;
+  // const oneAv: OneAv = await OneAv.getInstance();
+  // const allSounds = oneAv.all;
 
   // const oneSound: OneSounds = await OneSounds.getInstance();
   // const allSounds = oneSound.all;
+
+  const sounds = Platform.OS === "android" ? await OneSounds.getInstance() : await OneAv.getInstance();
+  const allSounds = sounds.all;
 
   const gameConf = await getGameConf();
 

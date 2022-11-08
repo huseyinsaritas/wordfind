@@ -3,13 +3,14 @@ import { Modal, StyleSheet, View, Text, TouchableOpacity, Dimensions } from "rea
 import { FONT_FAMILY } from "../../constants/Layout";
 import Icon from "@expo/vector-icons/Ionicons";
 import { COLORS } from "../../constants/Colors";
-import { AdRewardedInterstitial } from "../Adds/AdRewardedInterstitial";
+import { AdRewarded } from "../Adds/AdRewarded";
 import { useLanguage } from "../../hooks/useLanguage";
+import { useGlobalState } from "../../global/globalState";
 
 type Props = {
   onEarned: () => void;
   onClosed: () => void;
-  onFailed: () => void;
+  onFailed: (err: string) => void;
   onModalClose: () => void;
   show: boolean;
 };
@@ -17,6 +18,7 @@ type Props = {
 export const AdsModal: React.FC<Props> = ({ onEarned, onClosed, onFailed, onModalClose, show }) => {
   const [showAds, setShowAds] = useState<boolean>(false);
   const { t } = useLanguage();
+  const { playSound } = useGlobalState();
 
   return (
     <Modal
@@ -41,7 +43,12 @@ export const AdsModal: React.FC<Props> = ({ onEarned, onClosed, onFailed, onModa
             <Text style={styles.header}>{t("clueModalHeader")}</Text>
             <Text style={styles.subText}>{t("clueModalText")}</Text>
           </View>
-          <TouchableOpacity onPress={() => setShowAds(true)}>
+          <TouchableOpacity
+            onPress={() => {
+              playSound("click");
+              setShowAds(true);
+            }}
+          >
             <View style={styles.buttonPlay}>
               <Icon name="play" size={20} color={COLORS.COMMON.WHITE} />
               <Text style={styles.buttonText}>{t("watchADS")}</Text>
@@ -49,7 +56,7 @@ export const AdsModal: React.FC<Props> = ({ onEarned, onClosed, onFailed, onModa
           </TouchableOpacity>
         </View>
       </View>
-      <AdRewardedInterstitial
+      <AdRewarded
         show={showAds}
         onEarned={() => {
           onEarned();
@@ -108,7 +115,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: FONT_FAMILY.Black,
     minWidth: 150,
-    color: COLORS.COMMON.COLOR_TONE1,
+    color: COLORS.COMMON.WHITE,
+    fontSize: 20,
   },
   header: {
     color: "#fff",
@@ -119,13 +127,13 @@ const styles = StyleSheet.create({
   subText: {
     color: "#fff",
     textAlign: "center",
-    fontSize: 14,
+    fontSize: 15,
     marginVertical: 10,
   },
 
   buttonPlay: {
     height: 40,
-    paddingHorizontal: 20,
+    paddingHorizontal: 12,
     marginHorizontal: 10,
     marginVertical: 10,
     display: "flex",
@@ -138,6 +146,11 @@ const styles = StyleSheet.create({
     borderColor: COLORS.COMMON.WHITE,
     backgroundColor: COLORS.COMMON.GREEN,
     color: COLORS.COMMON.WHITE,
+    shadowColor: "#ccc",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
   },
   buttonText: {
     textAlign: "center",

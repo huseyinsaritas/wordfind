@@ -65,17 +65,17 @@ const styles = (theme: Theme) =>
     },
     gray: {
       borderWidth: 3,
-      borderColor: COLORS.COMMON.COLOR_TONE2,
+      borderColor: COLORS.COMMON.GRAY,
     },
     yellow: {
       borderWidth: 3,
       backgroundColor: COLORS.COMMON.YELLOW,
-      borderColor: COLORS.COMMON.COLOR_TONE2,
+      borderColor: COLORS.COMMON.GRAY,
     },
     green: {
       borderWidth: 3,
       backgroundColor: COLORS.COMMON.GREEN,
-      borderColor: COLORS.COMMON.COLOR_TONE2,
+      borderColor: COLORS.COMMON.GRAY,
     },
     tStyle: {
       fontSize: 25,

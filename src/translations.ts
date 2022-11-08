@@ -29,7 +29,9 @@ export type Texts = {
 
   clueModalHeader: string;
   clueModalText: string;
+  clueInfo: string;
   watchADS: string;
+  noAdToShow: string;
   noTips: string;
   notEnoughLetters: string;
   notInWordList: string;
@@ -50,6 +52,7 @@ export type Texts = {
   correctSpot: string;
   wrongSpot: string;
 
+  examples: string;
   infoFirstRowFirstChar: string;
   infoFirstRowSecondChar: string;
   infoFirstRowThirdChar: string;
@@ -116,7 +119,9 @@ export const languages: {
 
     clueModalHeader: "You have no tips",
     clueModalText: "You can earn more tips by watching ads",
+    clueInfo: "You can get letter by using the hint button.",
     watchADS: "Watch Ads",
+    noAdToShow: "No ad to show.",
     noTips: "You can't get any more tips",
 
     notEnoughLetters: "Not Enough Letters",
@@ -138,6 +143,7 @@ export const languages: {
     wrongSpot: "is in the word but in the wrong spot.",
     isNotInTheWord: "is not in the word.",
 
+    examples: "Examples",
     infoFirstRowFirstChar: "H",
     infoFirstRowSecondChar: "I",
     infoFirstRowThirdChar: "N",
@@ -192,7 +198,9 @@ export const languages: {
 
     clueModalHeader: "İpucu haklarınız bitti",
     clueModalText: "Reklam izleyerek daha fazla ipucu hakkı kazanabilirsiniz",
+    clueInfo: "İpucu butonunu kullanarak harf alabilirsiniz.",
     watchADS: "Reklam İzle",
+    noAdToShow: "Gösterilecek reklam yok.",
     noTips: "Daha fazla ipucu alamazsın.",
 
     notEnoughLetters: "Yetersiz Harf",
@@ -214,6 +222,7 @@ export const languages: {
     wrongSpot: "harfi kelimede var fakat yanlış yerde.",
     isNotInTheWord: "harfi kelimede yok.",
 
+    examples: "Örnekler",
     infoFirstRowFirstChar: "B",
     infoFirstRowSecondChar: "O",
     infoFirstRowThirdChar: "Y",

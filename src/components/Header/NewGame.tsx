@@ -28,8 +28,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderWidth: 1,
     borderColor: COLORS.COMMON.GREEN_SUPER_LIGHT,
-    backgroundColor: COLORS.COMMON.COLOR_TONE3,
-    color: COLORS.COMMON.COLOR_TONE1,
+    // backgroundColor: COLORS.COMMON.COLOR_TONE3,
     shadowColor: "#ccc",
     shadowOffset: {
       width: 0,

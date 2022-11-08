@@ -10,9 +10,9 @@ const rewarded = RewardedAd.createForAdRequest(adUnitIdRewarded, {
   requestNonPersonalizedAdsOnly: true,
 });
 
-export const AdRewarded: React.FC<{ show: boolean; onEarned: () => void; onClosed: () => void; onFailed: () => void }> = ({ show, onEarned, onClosed, onFailed }) => {
+export const AdRewarded: React.FC<{ show: boolean; onEarned: () => void; onClosed: () => void; onFailed: (err: string) => void }> = ({ show, onEarned, onClosed, onFailed }) => {
   const [rewardedLoaded, setRewardedLoaded] = useState(false);
-  const [err, setErr] = useState("");
+  const [err, setErr] = useState<string | undefined>();
 
   const loadRewarded = () => {
     const unsubscribeLoaded = rewarded.addAdEventListener(RewardedAdEventType.LOADED, () => {
@@ -32,7 +32,7 @@ export const AdRewarded: React.FC<{ show: boolean; onEarned: () => void; onClose
 
     const unsubscribeFail = rewarded.addAdEventListener(AdEventType.ERROR, (err) => {
       setErr(err.message);
-      onFailed();
+      onFailed(err.message);
       console.log("err", err.message);
     });
 

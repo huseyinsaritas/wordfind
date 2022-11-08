@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 2,
     marginTop: 5,
-    backgroundColor: COLORS.COMMON.COLOR_TONE4,
+    backgroundColor: COLORS.COMMON.DARKGRAY,
   },
   banner: {
     zIndex: 2,

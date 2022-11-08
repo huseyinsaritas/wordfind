@@ -1,4 +1,5 @@
 import { Audio } from "expo-av";
+import { Platform } from "react-native";
 import Sound from "react-native-sound";
 
 export const playOneAv = (s: Audio.SoundObject) => {
@@ -16,5 +17,13 @@ export const playOneSound = (s: Sound) => {
         console.error("play click error");
       }
     });
+  }
+};
+
+export const playOne = (s: Sound | Audio.SoundObject) => {
+  if (Platform.OS === "android") {
+    playOneSound(s as Sound);
+  } else {
+    playOneAv(s as Audio.SoundObject);
   }
 };

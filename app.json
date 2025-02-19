@@ -1,32 +1,37 @@
 {
   "expo": {
-    "name": "WordFind",
+    "name": "wordfind",
     "slug": "wordfind",
-    "currentFullName": "@ayiyazilim/WordFind",
-    "privacy": "unlisted",
-    "sdkVersion": "46.0.0",
+    "sdkVersion": "52.0.0",
     "version": "1.0.6",
-    "platforms": ["ios", "android", "web"],
+    "jsEngine": "hermes",
     "orientation": "portrait",
-    "userInterfaceStyle": "automatic",
+    "platforms": ["ios", "android", "web"],
     "icon": "./assets/icon.png",
     "scheme": "wordfind",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
-    },
+    "runtimeVersion": "1.0.0",
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/ec090143-64a0-4f38-8383-5c85886c1e70"
     },
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "owner": "ayiyazilim",
+    "userInterfaceStyle": "automatic",
     "assetBundlePatterns": ["**/*"],
-    "web": {
-      "favicon": "./assets/favicon.png",
-      "name": "wordfind",
-      "shortName": "wordfind"
+    "ios": {
+      "buildNumber": "1.0.6",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ayiyazilim.wordfind",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app does not require access to the microphone.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "versionCode": 6,
@@ -35,40 +40,20 @@
         "backgroundColor": "#000"
       },
       "package": "com.ayiyazilim.wordfind",
-      "permissions": ["INTERNET"],
-      "userInterfaceStyle": "automatic"
+      "permissions": ["INTERNET", "android.permission.MODIFY_AUDIO_SETTINGS"]
     },
-    "ios": {
-      "buildNumber": "1.0.6",
-      "supportsTablet": true,
-      "bundleIdentifier": "com.ayiyazilim.wordfind",
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3105662444743172~8927278696"
-      },
-      "infoPlist": {
-        "NSMicrophoneUsageDescription": "This app does not require access to the microphone."
-      }
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "name": "wordfind",
+      "shortName": "wordfind",
+      "favicon": "./assets/favicon.png"
     },
-
     "extra": {
       "eas": {
         "projectId": "ec090143-64a0-4f38-8383-5c85886c1e70"
       }
     },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
-    "plugins": [
-      [
-        "expo-av",
-        {
-          "microphonePermission": false
-        }
-      ]
-    ]
-  },
-  "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-3105662444743172~9118850389",
-    "ios_app_id": "ca-app-pub-3105662444743172~8927278696"
+    "plugins": ["expo-asset"]
   }
 }

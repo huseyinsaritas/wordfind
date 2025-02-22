@@ -1,13 +1,12 @@
 import axios from "axios";
-import { CONF } from "../utils/conf";
 import { GameConf } from "../context/type";
-// import { GameConf } from "../global/type";
+import { CONF } from "../utils/conf";
 
-const apiUrl = CONF.API_BASE_URL;
+const API_URL = CONF.API_BASE_URL;
 
 export const getRandomGame = async (len: number, lan?: string): Promise<{ id: number; len: number; item: string }> => {
   return axios
-    .get(apiUrl + "/word/" + len + "/" + lan)
+    .get(API_URL + "/word/" + len + "/" + lan)
     .then((res) => {
       // console.log(res);
       return res.data.data as { id: number; len: number; item: string };
@@ -20,7 +19,7 @@ export const getRandomGame = async (len: number, lan?: string): Promise<{ id: nu
 
 export const isValidWord = async (word: string, lan: string): Promise<boolean> => {
   return axios
-    .get(apiUrl + "/isValid/" + word + "/" + lan)
+    .get(API_URL + "/isValid/" + word + "/" + lan)
     .then((res) => {
       return res.data.data as boolean;
     })
@@ -32,7 +31,7 @@ export const isValidWord = async (word: string, lan: string): Promise<boolean> =
 
 export const getGameConf = async (): Promise<GameConf> => {
   return axios
-    .get(apiUrl + "/conf")
+    .get(API_URL + "/conf")
     .then((res) => res.data.data as GameConf)
     .catch((err) => {
       console.error("getGameConf.Error", err);

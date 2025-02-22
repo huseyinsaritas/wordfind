@@ -42,3 +42,4 @@ app-example
 api*.json
 android/
 ios/
+.env

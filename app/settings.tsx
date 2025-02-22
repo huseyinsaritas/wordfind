@@ -6,14 +6,14 @@ import GoBack from "../components/Base/IconButtons/GoBack";
 import { COLORS } from "../utils/constants/Colors";
 import { useGlobalState } from "../context/globalState";
 import { useLanguage } from "../hooks/useLanguage";
-// import { AdBanner } from "../components/Adds/AdBanner";
 import { FONT_FAMILY } from "../utils/constants/Layout";
 import { SupportedLanguages } from "../utils/translations";
 import Icon from "@expo/vector-icons/MaterialIcons";
 import { Theme } from "@react-navigation/native";
 import { useTheme, useThemedStyles } from "../hooks/useTheme";
-// import { BannerAdSize } from "react-native-google-mobile-ads";
 import DropDownPicker from "react-native-dropdown-picker";
+import { AdBanner } from "@/components/Adds/AdBanner";
+import { BannerAdSize } from "react-native-google-mobile-ads";
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -101,6 +101,9 @@ export default function SettingsScreen() {
             theme={themeType === "dark" ? "DARK" : "LIGHT"}
           />
         </View>
+      </View>
+      <View style={style.banner}>
+        <AdBanner size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
       </View>
     </Background>
   );
@@ -193,5 +196,14 @@ const styles = (theme: Theme) =>
       margin: 10,
       borderRadius: 4,
       color: COLORS.COMMON.WHITE,
+    },
+    banner: {
+      position: "absolute",
+      bottom: 0,
+      zIndex: 2,
+      marginBottom: 2,
+      textAlign: "center",
+      alignItems: "center",
+      width: "100%",
     },
   });

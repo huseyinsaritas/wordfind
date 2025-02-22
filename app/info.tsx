@@ -9,9 +9,11 @@ import { useLanguage } from "../hooks/useLanguage";
 import { useThemedStyles } from "../hooks/useTheme";
 import { Theme } from "@react-navigation/native";
 import { useGlobalState } from "../context/globalState";
+import { AdBanner } from "@/components/Adds/AdBanner";
+import { BannerAdSize } from "react-native-google-mobile-ads";
 
 export default function InfoScreen() {
-  const router = useRouter(); // ✅ expo-router navigasyon fonksiyonları
+  const router = useRouter();
   const animationDuration = DISCLOSE_TIME_MS;
   const rotateAnimation = new Animated.Value(0);
   const { t } = useLanguage();
@@ -21,7 +23,7 @@ export default function InfoScreen() {
 
   const onPressGoBack = () => {
     playSound("click");
-    router.back(); // ✅ expo-router ile geri gitme
+    router.back();
   };
 
   useEffect(() => {
@@ -139,6 +141,9 @@ export default function InfoScreen() {
           <Button style={style.infoButton} text={t("understood")} backgroundColor={COLORS.COMMON.GREEN} onPress={onPressGoBack} />
         </View>
       </ScrollView>
+      <View style={style.banner}>
+        <AdBanner size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
+      </View>
     </Background>
   );
 }
@@ -166,6 +171,13 @@ const styles = (theme: Theme) =>
       width: "100%",
       display: "flex",
       marginLeft: 60,
+    },
+    banner: {
+      zIndex: 2,
+      marginBottom: 2,
+      textAlign: "center",
+      alignItems: "center",
+      width: "100%",
     },
     exampleHeader: {
       width: "100%",

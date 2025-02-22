@@ -1,19 +1,18 @@
 import React from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { COLORS } from "../../utils/constants/Colors";
-// import { AdBanner } from "../Adds/AdBanner";
 import GoBack from "../Base/IconButtons/GoBack";
 import { HeaderContainer } from "./HeaderContainer";
 import { Clue } from "./Clue";
 import { useTheme } from "../../hooks/useTheme";
-// import { BannerAdSize } from "react-native-google-mobile-ads";
+import { AdBanner } from "../Adds/AdBanner";
+import { BannerAdSize } from "react-native-google-mobile-ads";
 
 type Props = {
   onPressGoBack: () => void;
   onPressClue: () => void;
   remainingClue: number;
   gameFinished: boolean;
-  // onPressNewGame: () => void;
 };
 
 export const Header: React.FC<Props> = ({ onPressGoBack, onPressClue, remainingClue, gameFinished /*, onPressNewGame*/ }) => {
@@ -22,18 +21,13 @@ export const Header: React.FC<Props> = ({ onPressGoBack, onPressClue, remainingC
     <>
       <HeaderContainer>
         <GoBack onPress={onPressGoBack} size={30} color={theme.colors.text} />
-        {/* <View style={styles.newGame}>
-          <NewGame onPress={onPressNewGame} />
-        </View> */}
-        {/* <View style={styles.rightButtons}> */}
-        <Clue gameFinished={gameFinished} remainingClue={remainingClue} onPressClue={onPressClue} />
 
-        {/* </View> */}
+        <Clue gameFinished={gameFinished} remainingClue={remainingClue} onPressClue={onPressClue} />
       </HeaderContainer>
       <View style={styles.horizontalLine} />
-      {/* <View style={styles.banner}>
+      <View style={styles.banner}>
         <AdBanner size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} />
-      </View> */}
+      </View>
     </>
   );
 };

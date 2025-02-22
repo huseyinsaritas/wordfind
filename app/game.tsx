@@ -12,19 +12,20 @@ import { DISCLOSE_TIME_MS } from "../utils/constants/Layout";
 import { GameFinishedModal } from "../components/Body/GameFinishedModal";
 import { Delayed } from "../components/Base/Delayed/Delayed";
 import { Background } from "../components/Base/Background";
-// import { AdsModal } from "../components/AdsModal/AdsModal";
+import { AdsModal } from "../components/AdsModal/AdsModal";
 import { getRandomClueChar } from "../utils/index";
 import { useGlobalState } from "../context/globalState";
 import { useTheme } from "../hooks/useTheme";
 
 export default function GameScreen() {
   const router = useRouter();
-  const { length } = useLocalSearchParams(); // ✅ route.params yerine bunu kullanıyoruz
+  const { length } = useLocalSearchParams();
   const { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, removeAllCurrentMay, submitData, newGame, shake, gameWon, keysDisabled, timer } = useGame(
     Number(length)
   );
   const [clue, setClue] = useState<{ showAds: boolean; remaining: number }>({ showAds: false, remaining: 3 });
   const [clueChars, setClueChars] = useState<string[]>([]);
+  const [refresh, setRefresh] = useState(0);
   const { t } = useLanguage();
   const { playSound } = useGlobalState();
   const { theme } = useTheme();
@@ -49,16 +50,15 @@ export default function GameScreen() {
     return true;
   };
 
+  const forceUpdate = () => setRefresh((prev) => prev + 1);
+
   useEffect(() => {
     const backAction = () => {
       onPressGoBack();
       return true;
     };
-
-    BackHandler.addEventListener("hardwareBackPress", backAction);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", backAction);
-    };
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+    return () => backHandler.remove();
   }, [gameFinished, router, playSound, t]);
 
   useEffect(() => {
@@ -67,13 +67,17 @@ export default function GameScreen() {
     }
   }, [gameFinished]);
 
+  useEffect(() => {
+    setClueChars((prev) => [...prev]);
+  }, [clue.showAds]);
+
   const onPressClue = () => {
     if (clue.remaining > 0) {
       if (!data) return;
       const char = getRandomClueChar(data.answer, data.mays, clueChars);
       if (clueChars.length < data.answer.length - 2 && char) {
-        setClueChars([...clueChars, char]);
-        setClue({ ...clue, remaining: clue.remaining - 1 });
+        setClueChars((prevChars) => [...prevChars, char]); // Önceki clue'ları kaybetme
+        setClue((prev) => ({ ...prev, remaining: prev.remaining - 1 }));
         playSound("bonus");
       } else {
         window.toastr?.show(t("noTips"), {
@@ -87,7 +91,7 @@ export default function GameScreen() {
         });
       }
     } else {
-      setClue({ ...clue, showAds: true });
+      setClue((prev) => ({ ...prev, showAds: true })); // Modalı aç
       playSound("noBonus");
     }
   };
@@ -121,10 +125,17 @@ export default function GameScreen() {
 
   return (
     <>
-      {/* <AdsModal
+      <AdsModal
         show={clue.showAds}
-        onEarned={() => setClue({ remaining: 3, showAds: false })}
-        onClosed={() => setClue({ ...clue, showAds: false })}
+        onEarned={() => {
+          setClue({ remaining: 3, showAds: false });
+          setClueChars([]);
+          playSound("bonus");
+          forceUpdate();
+        }}
+        onClosed={() => {
+          setClue((prev) => ({ ...prev, showAds: false }));
+        }}
         onFailed={() => {
           window.toastr?.show(t("noAdToShow"), {
             type: "normal",
@@ -133,10 +144,13 @@ export default function GameScreen() {
             style: { backgroundColor: theme.colors.notification },
             textStyle: { color: theme.colors.primary },
           });
-          setClue({ ...clue });
+          setClue((prev) => ({ ...prev }));
         }}
-        onModalClose={() => setClue({ ...clue, showAds: false })}
-      /> */}
+        onModalClose={() => {
+          setClue((prev) => ({ ...prev, showAds: false }));
+          forceUpdate();
+        }}
+      />
 
       <Background>
         <Header gameFinished={gameFinished} remainingClue={clue.remaining} onPressGoBack={onPressGoBack} onPressClue={onPressClue} />

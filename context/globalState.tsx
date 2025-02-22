@@ -57,10 +57,11 @@ const playSound = async (soundName: keyof typeof SOUND_FILES, soundsOn: number) 
       url: preloadedSounds[soundName],
       title: soundName,
       artist: "System",
-    }).then(() => {
-      TrackPlayer.play().catch(console.warn);
-    }).catch(console.warn);
-
+    })
+      .then(() => {
+        TrackPlayer.play().catch(console.warn);
+      })
+      .catch(console.warn);
   } catch (error) {
     console.error(`❌ Hata "${soundName}" çalınırken:`, error);
   }

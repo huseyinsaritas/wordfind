@@ -21,27 +21,19 @@ const setupPlayer = async () => {
         android: {
           appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
         },
-        capabilities: [
-          Capability.Play,
-          Capability.Pause,
-          Capability.Stop
-        ],
-        compactCapabilities: [
-          Capability.Play,
-          Capability.Pause,
-          Capability.Stop
-        ],
+        capabilities: [Capability.Play, Capability.Pause, Capability.Stop],
+        compactCapabilities: [Capability.Play, Capability.Pause, Capability.Stop],
       });
     }
   } catch (e) {
-    console.log('Error setting up player:', e);
+    console.log("Error setting up player:", e);
   }
 };
 
 setupPlayer();
 
 // Must be required like this
-require('@/utils/trackService');
+require("@/utils/trackService");
 
 export default function Layout() {
   const { completed } = useCachedResources();
@@ -61,6 +53,7 @@ export default function Layout() {
           <Toast ref={(ref) => (window.toastr = ref as any)} />
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="index" options={{ title: "Home" }} />
+            <Stack.Screen name="game-pre" options={{ animation: "fade", gestureEnabled: false }} />
             <Stack.Screen name="game" options={{ animation: "fade", gestureEnabled: false }} />
             <Stack.Screen name="info" />
             <Stack.Screen name="settings" />

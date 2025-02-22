@@ -1,5 +1,5 @@
 export const CONF = {
-  VER: "1.0.6",
+  VER: "2.0.1",
 
   LINKS: {
     APPSTORE: "https://apps.apple.com/",
@@ -25,7 +25,6 @@ export const CONF = {
     },
   },
 
-  // API_BASE_URL: "https://wordfind.ayiyazilim.com",
   API_BASE_URL: "http://192.168.1.102:8000",
 };
 

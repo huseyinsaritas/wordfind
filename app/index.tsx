@@ -30,7 +30,7 @@ export default function HomeScreen() {
       const newGameCount = (state.gameCount ?? 0) + 1;
       playSound("click");
       setState((prev) => ({ ...prev, gameCount: newGameCount }));
-      router.replace({ pathname: "/game", params: { length } });
+      router.replace({ pathname: "/game-pre", params: { length } });
     }
   };
 

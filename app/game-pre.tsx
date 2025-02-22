@@ -8,7 +8,7 @@ import { AdInterstitial } from "../components/Adds/AdInterstitial";
 
 export default function GamePreScreen() {
   const router = useRouter();
-  const { length } = useLocalSearchParams(); // ✅ route.params yerine bu kullanılıyor
+  const { length } = useLocalSearchParams(); 
   const { state } = useGlobalState();
   const [gameData, setGameData] = useState<IGameData>();
   const [showAd, setShowAd] = useState<boolean>((state.gameCount ?? 1) % (state.gameConf?.adsCycle ?? 3) === 0);
@@ -21,7 +21,7 @@ export default function GamePreScreen() {
 
   useEffect(() => {
     if (gameData && !showAd) {
-      router.replace({ pathname: "/game", params: { length } }); // ✅ Navigasyon expo-router uyumlu hale getirildi
+      router.replace({ pathname: "/game", params: { length } }); 
     }
   }, [gameData, showAd]);
 

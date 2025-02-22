@@ -3,13 +3,13 @@
     "name": "wordfind",
     "slug": "wordfind",
     "sdkVersion": "52.0.0",
-    "version": "1.0.6",
+    "version": "2.0.1",
     "jsEngine": "hermes",
     "orientation": "portrait",
     "platforms": ["ios", "android", "web"],
     "icon": "./assets/icon.png",
     "scheme": "wordfind",
-    "runtimeVersion": "1.0.0",
+    "runtimeVersion": "2.0.0",
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
@@ -25,7 +25,7 @@
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "1.0.6",
+      "buildNumber": "2.0.1",
       "supportsTablet": true,
       "bundleIdentifier": "com.ayiyazilim.wordfind",
       "infoPlist": {
@@ -54,6 +54,24 @@
         "projectId": "ec090143-64a0-4f38-8383-5c85886c1e70"
       }
     },
-    "plugins": ["expo-asset"]
+    "plugins": [
+      "expo-asset",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3105662444743172~9118850389",
+          "iosAppId": "ca-app-pub-3105662444743172~8927278696",
+          "userTrackingDescription": "This identifier will be used to deliver personalized ads to you."
+        }
+      ]
+    ]
   }
 }

@@ -16,12 +16,15 @@ type Props = {
 
 export const RowItem: React.FC<Props> = ({ val, color, id = 0, animation = false, border }) => {
   const { theme } = useTheme();
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [rowColor, setRowColor] = useState<string>();
   const [borderColor, setBorderColor] = useState<string>(COLORS.COMMON.GRAY);
   const [charColor, setCharColor] = useState<string>(theme.colors.text);
 
-  const itemSize = width < 400 ? width * 0.15 : width * 0.1;
+  // const itemSize = width < 400 ? width * 0.12 : width * 0.12;
+  const baseWidth = 375;
+  const scale = width / baseWidth;
+  const itemSize = Math.round(40 * scale);
   const scaleFont = (size: number) => size * PixelRatio.get();
 
   const animationDuration = DISCLOSE_TIME_MS;

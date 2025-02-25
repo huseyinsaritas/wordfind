@@ -1,4 +1,5 @@
 // import Sound from "react-native-sound";
+import { Audio } from "expo-av";
 
 export const GlobalStateStorageKeys = ["lan", "soundsOn", "deviceId", "username", "gameCount", "playedGameCount", "winCount"];
 
@@ -17,6 +18,6 @@ export type GlobalStateType = {
   gameCount: number;
   playedGameCount: number;
   winCount: number;
-  allSounds: { [key: string]: number };
-  // allSounds: Sound[];
+  // allSounds: { [key: string]: number };
+  allSounds: Audio.SoundObject[];
 };

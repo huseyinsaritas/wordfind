@@ -4,13 +4,12 @@ import { getNewDeviceId } from "../utils/helper/getNewDeviceId";
 import * as Localization from "expo-localization";
 import { SupportedLanguages } from "../utils/translations";
 import { getGameConf } from "../api";
-import { OneTrackPlayer } from "../class/OneTrackPlayer"; // ✅ Yeni TrackPlayer sınıfını dahil ettik
+import { OneAv } from "../class/OneAv";
+// import { Platform } from "react-native";
+// import { OneSounds } from "../class/OneSounds";
 
 export const fetchInitialState = async (): Promise<GlobalStateType> => {
-  const { getStorageData, saveStorageData } = useStorageData();
-
-  const oneTrackPlayer = await OneTrackPlayer.getInstance();
-  const trackIds = oneTrackPlayer.getAllSoundIds();
+  const { getStorageData, saveStorageData /* , resetStorageData */ } = useStorageData();
 
   const getAndCheckStorageData = async <T>(key: string): Promise<T> => {
     const val = await getStorageData<T>(key);
@@ -32,6 +31,7 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
 
       if (key === "deviceId") {
         const newDeviceId = getNewDeviceId();
+        // console.log("newDeviceId", newDeviceId);
         await saveStorageData(key, newDeviceId);
         return newDeviceId as T;
       }
@@ -57,14 +57,38 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
         await saveStorageData(key, 0);
         return 0 as T;
       }
+
+      // if (key === "version") {
+      //   const version = "1.0.0";
+      //   await saveStorageData(key, version);
+      //   return version as T;
+      // }
+
+      // if (key === "adsCycle") {
+      //   await saveStorageData(key, 3);
+      //   return 3 as T;
+      // }
     } catch (error) {
-      console.error("getAndCheckStorageData.Error", error);
+      // console.error("getAndCheckStorageData.Error", error);
     }
 
     return val as T;
   };
 
+  // await resetStorageData();
+
+  const oneAv: OneAv = await OneAv.getInstance();
+  const allSounds = oneAv.all;
+
+  // const oneSound: OneSounds = await OneSounds.getInstance();
+  // const allSounds = oneSound.all;
+
+  // const sounds = Platform.OS === "android" ? await OneSounds.getInstance() : await OneAv.getInstance();
+  // const allSounds = sounds.all;
+
   const gameConf = await getGameConf();
+
+  // console.log("gameConf", gameConf);
 
   const lan = await getAndCheckStorageData<string>("lan");
   const soundsOn = await getAndCheckStorageData<number>("soundsOn");
@@ -73,6 +97,16 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
   const gameCount = await getAndCheckStorageData<number>("gameCount");
   const playedGameCount = await getAndCheckStorageData<number>("playedGameCount");
   const winCount = await getAndCheckStorageData<number>("winCount");
+  // const version = await getAndCheckStorageData<string>("version");
+  // const adsCycle = await getAndCheckStorageData<number>("adsCycle");
+
+  // console.log("lan", lan);
+  // console.log("sound", sound);
+  // console.log("deviceId", deviceId);
+  // console.log("username", username);
+  // console.log("version", version);
+  // console.log("adsCycle", adsCycle);
+  // console.log("gameCount", gameCount);
 
   return {
     loading: false,
@@ -84,6 +118,6 @@ export const fetchInitialState = async (): Promise<GlobalStateType> => {
     gameCount,
     playedGameCount,
     winCount,
-    allSounds: trackIds,
+    allSounds,
   };
 };

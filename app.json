@@ -3,13 +3,13 @@
     "name": "wordfind",
     "slug": "wordfind",
     "sdkVersion": "52.0.0",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "jsEngine": "hermes",
     "orientation": "portrait",
     "platforms": ["ios", "android", "web"],
     "icon": "./assets/icon.png",
     "scheme": "wordfind",
-    "runtimeVersion": "2.0.0",
+    "runtimeVersion": "2.0.2",
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
@@ -25,7 +25,7 @@
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "2.0.1",
+      "buildNumber": "2.0.2",
       "supportsTablet": true,
       "bundleIdentifier": "com.ayiyazilim.wordfind",
       "infoPlist": {
@@ -62,6 +62,12 @@
           "ios": {
             "useFrameworks": "static"
           }
+        }
+      ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": false
         }
       ],
       [

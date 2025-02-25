@@ -5,13 +5,13 @@ declare global {
       show(
         arg0: string,
         arg1: {
-          type: string;
-          animationType: string;
-          placement: string;
+          type: "normal" | "success" | "warning" | "danger" | "custom";
+          animationType: "slide-in" | "zoom-in";
+          placement: "top" | "bottom";
           animationDuration?: number;
           duration?: number;
-          style: { backgroundColor: string };
-          textStyle: { color: string };
+          style?: { backgroundColor: string };
+          textStyle?: { color: string };
         }
       ): unknown;
       success: (message: string, title?: string) => void;

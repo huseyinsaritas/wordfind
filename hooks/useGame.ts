@@ -7,7 +7,7 @@ import { useLanguage } from "./useLanguage";
 import { useTheme } from "./useTheme";
 
 export const useGame = (len: number) => {
-  const { gameLoading, data, addCurrentMay, removeCurrentMay, removeAllCurrentMay, submitData, newGame, shake, keysDisabled, timer, pauseTimer } = useData(len);
+  const { gameLoading, data, addCurrentMay, removeCurrentMay, removeAllCurrentMay, submitData, newGame, shake, keysDisabled, timer, pauseTimer, isSubmitting } = useData(len);
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [gameWon, setGameWon] = useState<boolean>(false);
   const { state, setState } = useGlobalState();
@@ -77,5 +77,5 @@ export const useGame = (len: number) => {
     return finished;
   };
 
-  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, removeAllCurrentMay, submitData, newGame, shake, gameWon, keysDisabled, timer };
+  return { gameLoading, gameFinished, data, addCurrentMay, removeCurrentMay, removeAllCurrentMay, submitData, newGame, shake, gameWon, keysDisabled, timer, isSubmitting };
 };

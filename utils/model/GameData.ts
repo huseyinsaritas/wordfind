@@ -1,6 +1,6 @@
 export type MayRowChar = {
   char: string;
-  state: 0 | 1 | 2; // bulunamado | bulundu ama yerinde değil | yerinde ve bulundu
+  state: 0 | 1 | 2; // bulunamadı | bulundu ama yerinde değil | yerinde ve bulundu
 };
 export type MayRow = {
   chars: MayRowChar[];

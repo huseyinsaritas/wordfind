@@ -1,5 +1,5 @@
 export const CONF = {
-  VER: "2.0.1",
+  VER: "2.0.2",
 
   LINKS: {
     APPSTORE: "https://apps.apple.com/",
@@ -25,7 +25,8 @@ export const CONF = {
     },
   },
 
-  API_BASE_URL: "http://192.168.1.102:8000",
+  // API_BASE_URL: "http://192.168.1.102:8000",
+  API_BASE_URL: "https://wordfind.mustafasaritas.me",
 };
 
 // P5VJ-GCTZ-F5YM-Y4U2-U83K-3KG3-2SJY

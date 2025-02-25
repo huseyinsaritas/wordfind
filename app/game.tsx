@@ -74,24 +74,68 @@ export default function GameScreen() {
   const onPressClue = () => {
     if (clue.remaining > 0) {
       if (!data) return;
-      const char = getRandomClueChar(data.answer, data.mays, clueChars);
-      if (clueChars.length < data.answer.length - 2 && char) {
-        setClueChars((prevChars) => [...prevChars, char]); // Önceki clue'ları kaybetme
-        setClue((prev) => ({ ...prev, remaining: prev.remaining - 1 }));
-        playSound("bonus");
+
+      // Kullanıcının doğru tahmin ettiği harfleri bul (state === 2)
+      const correctChars = data.mays.flatMap((may) => may.chars.filter((char) => char.state === 1 || char.state === 2).map((char) => char.char));
+
+      // Kullanıcının doğru tahmin ettiği benzersiz harfleri bul
+      const uniqueCorrectChars = [...new Set(correctChars)];
+
+      // Kullanıcının alabileceği maksimum ipucu sayısını hesapla
+      const maxClues = data.answer.length - 2 - uniqueCorrectChars.length;
+
+      // Kullanıcının şu ana kadar aldığı ipucu sayısı
+      const usedClues = clueChars.length;
+
+      // Eğer kullanıcının alabileceği ipucu sayısı 0'dan büyükse ve daha fazla ipucu alabilirse
+      if (usedClues < maxClues) {
+        const char = getRandomClueChar(data.answer, data.mays, clueChars);
+        if (char) {
+          setClueChars((prevChars) => [...prevChars, char]);
+          setClue((prev) => ({ ...prev, remaining: prev.remaining - 1 }));
+          playSound("bonus");
+        } else {
+          // Eğer rastgele bir ipucu harfi bulunamazsa (örneğin, tüm harfler zaten biliniyorsa)
+          // Bu durumda, kullanıcıya "Daha fazla ipucu alamazsın." mesajını göster
+          window.toastr?.show(t("noMoreClues"), {
+            type: "normal",
+            animationType: "zoom-in",
+            placement: "top",
+            animationDuration: 200,
+            duration: 1500,
+            style: { backgroundColor: theme.colors.notification },
+            textStyle: { color: theme.colors.primary },
+          });
+        }
       } else {
-        window.toastr?.show(t("noTips"), {
-          type: "normal",
-          animationType: "zoom-in",
-          placement: "top",
-          animationDuration: 200,
-          duration: 1500,
-          style: { backgroundColor: theme.colors.notification },
-          textStyle: { color: theme.colors.primary },
-        });
+        // Kullanıcının daha fazla ipucu alamayacağı durumda
+        if (usedClues > 0) {
+          // Kullanıcı zaten ipucu almış, ancak daha fazla alamaz
+          window.toastr?.show(t("noMoreClues"), {
+            type: "normal",
+            animationType: "zoom-in",
+            placement: "top",
+            animationDuration: 200,
+            duration: 1500,
+            style: { backgroundColor: theme.colors.notification },
+            textStyle: { color: theme.colors.primary },
+          });
+        } else {
+          // Kullanıcı hiç ipucu almamış, ancak kelimenin çoğunu zaten bilmiş
+          window.toastr?.show(t("almostNoClues"), {
+            type: "normal",
+            animationType: "zoom-in",
+            placement: "top",
+            animationDuration: 200,
+            duration: 1500,
+            style: { backgroundColor: theme.colors.notification },
+            textStyle: { color: theme.colors.primary },
+          });
+        }
       }
     } else {
-      setClue((prev) => ({ ...prev, showAds: true })); // Modalı aç
+      // Kullanıcının ipucu hakkı kalmadığında reklam modalını aç
+      setClue((prev) => ({ ...prev, showAds: true }));
       playSound("noBonus");
     }
   };

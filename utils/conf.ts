@@ -2,7 +2,7 @@ export const CONF = {
   VER: "2.0.2",
 
   LINKS: {
-    APPSTORE: "https://apps.apple.com/",
+    APPSTORE: "https://apps.apple.com/us/app/word-find-game/id6443922989",
     GOOGLEPLAY: "https://play.google.com/store/apps/details?id=com.ayiyazilim.wordfind",
   },
 
@@ -25,9 +25,5 @@ export const CONF = {
     },
   },
 
-  // API_BASE_URL: "http://192.168.1.102:8000",
-  API_BASE_URL: "https://wordfind.mustafasaritas.me",
+  API_BASE_URL: "http://192.168.1.102:8000",
 };
-
-// P5VJ-GCTZ-F5YM-Y4U2-U83K-3KG3-2SJY
-// P5VJGCTZF5YMY4U2U83K3KG32SJY

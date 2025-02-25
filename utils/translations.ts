@@ -23,6 +23,7 @@ export type Texts = {
   exitGame: string;
   seeYouTomorrow: string;
   darkTheme: string;
+  serverErrorMessage: string;
 
   updateRequired: string;
   updateNow: string;
@@ -32,7 +33,8 @@ export type Texts = {
   clueInfo: string;
   watchADS: string;
   noAdToShow: string;
-  noTips: string;
+  noMoreClues: string;
+  almostNoClues: string;
   notEnoughLetters: string;
   notInWordList: string;
   youWin: string;
@@ -109,6 +111,7 @@ export const languages: {
     leaveMessage: "Your game will not be saved.",
     continue: "Continue",
     exitGame: "Exit Game",
+    serverErrorMessage: "Server error.Please try again later.",
 
     seeYouTomorrow: "See you tomorrow here..",
 
@@ -122,7 +125,8 @@ export const languages: {
     clueInfo: "You can get letter by using the hint button.",
     watchADS: "Watch Ads",
     noAdToShow: "No ad to show.",
-    noTips: "You can't get any more tips",
+    noMoreClues: "You can't get any more tips",
+    almostNoClues: "You can't get a clue, hang in there, you're almost done!",
 
     notEnoughLetters: "Not Enough Letters",
     notInWordList: "Not In Word List",
@@ -190,6 +194,7 @@ export const languages: {
     continue: "Devam",
     exitGame: "Oyundan Çık",
     seeYouTomorrow: "Yarın burada görüşmek üzere..",
+    serverErrorMessage: "Server hatası. Lütfen daha sonra tekrar deneyiniz.",
 
     darkTheme: "Koyu Tema",
 
@@ -201,7 +206,8 @@ export const languages: {
     clueInfo: "İpucu butonunu kullanarak harf alabilirsiniz.",
     watchADS: "Reklam İzle",
     noAdToShow: "Gösterilecek reklam yok.",
-    noTips: "Daha fazla ipucu alamazsın.",
+    noMoreClues: "Daha fazla ipucu alamazsın.",
+    almostNoClues: "İpucu alamazsın, dayan çok az kaldı!",
 
     notEnoughLetters: "Yetersiz Harf",
     notInWordList: "Kelime listesinde yok",
